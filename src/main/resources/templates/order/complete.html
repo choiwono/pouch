@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<th:block layout:fragment="css">
+</th:block>
+<th:block layout:fragment="script">
+</th:block>
+<div layout:fragment="content">
+    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
+        <div class="container text-center">
+            <h3>주문완료</h3>
+            <p class="lead" th:text="'주문번호:'+${orderNo}"></p>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container">
+        <div class="row">
+            <h3 th:text="${#strings.replace('주문 내역', ' ', '&nbsp;')}"></h3>
+            <div th:each="product: ${products}" th:if="${not #lists.isEmpty(products)}" class="col-lg-12">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item col-sm-12 border-bottom pt-5 pb-3">
+                        <span class="col-sm-3"><img src="http://placehold.it/100x100"></span>
+                        <span class="col-sm-3 font-weight-bold" th:text="${product.name}"></span>
+                        <span class="col-lg-3" th:id="'span-'+${product.id}" th:text="|수량 : ${product.amount}개|"></span>
+                        <span class="col-sm-3" th:text="${product.name}"></span>
+                        <span class="col-sm-3" th:text="${#numbers.formatInteger(product.price,3,'COMMA')}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nav class="fixed-bottom border-top navbar navbar-ligh justify-content-end" style="background-color: #fff;">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/main}" th:text="쇼핑계속하기"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/main}" th:text="홈으로"></a>
+            </li>
+        </ul>
+    </nav>
+</div>

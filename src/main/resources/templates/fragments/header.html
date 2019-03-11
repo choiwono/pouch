@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<header th:fragment="headerFragment">
+    <nav class="navbar shadow pb-3 pt-3 navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/main">LINE FRIENDS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <div class="btn-group dropdown-menu-sm-left">
+                            <form method="get" class="d-flex" action="/product/list">
+                                <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
+                                <button id="search-btn" type="button" class="btn" th:onclick="'javascript:showSearch()'">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/users/login}" th:text="로그인"></a>
+                                <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/users/join}" th:text="회원가입"></a>
+                                <a class="dropdown-item" th:href="@{/cart/list}" th:text="장바구니"></a>
+                                <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/order/record}">비회원 주문내역</a>
+                                <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/users/myorders}" th:text="주문리스트"></a>
+                                <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/users/wishlist}" th:text="찜리스트"></a>
+                                <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/logout}" th:text="로그아웃"></a>
+                            </div>
+                            <a th:href="@{/cart/list}" class="nav-link">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script type="text/javascript">
+        $(function() {
+            $("form").each(function () {
+                $(this).validate({
+                    rules: {
+                        loginPassword: {
+                            required: true
+                        },
+                        passwd: {
+                            required: "required"
+                        },
+                        passwd2: {
+                            required: true,
+                            equalTo: '#passwd'
+                        },
+                    }, messages: {
+
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element.form).find("input[id=" + element.id + "]")
+                            .addClass("error");
+                        $(element.form).find("input[id=" + element.id + "]")
+                            .removeClass("success");
+                        $(element.form).find("label[id=" + element.id + "-error"+"]")
+                            .remove();
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element.form).find("input[id=" + element.id + "]")
+                            .removeClass("error");
+                        $(element.form).find("input[id=" + element.id + "]")
+                            .addClass("success");
+                    },
+                    success: function () {
+
+                    },
+                    submitHandler: function (frm) {
+                        frm.submit();
+                    },
+                });
+            });
+            $('input[type="text"]').each(function () {
+                $(this).rules('add', {
+                    required: true,
+                    messages: {
+                        required: false
+                    }
+                });
+            });
+            $('input[type="password"]').each(function (){
+               $(this).rules('add',{
+                   required: true,
+                   messages: {
+                       required: false
+                   }
+               }) ;
+            });
+        })
+    </script>
+    <!-- <a th:href="@{/index}">index 페이지 이동</a>-->
+</header>
+</html>

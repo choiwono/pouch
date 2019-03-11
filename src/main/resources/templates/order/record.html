@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<th:block layout:fragment="css">
+</th:block>
+<th:block layout:fragment="script">
+</th:block>
+<div layout:fragment="content">
+    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
+        <div class="container text-center">
+            <h3>비회원 주문확인</h3>
+            <p class="lead">Guest OrderList</p>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container">
+        <div class="row">
+            <div th:each="order: ${orders}" th:if="${not #lists.isEmpty(orders)}" class="col-lg-12">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item col-sm-12 border-bottom pt-5 pb-3">
+                        <span class="col-sm-3"><img src="http://placehold.it/100x100"></span>
+                        <span th:text="${order}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
