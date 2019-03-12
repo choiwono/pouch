@@ -19,11 +19,12 @@ public class Board {
     @Lob
     private String url;
     private String email;
+    @Column(name="reg_date")
     private Date regDate;
     private int favorites;
     private int repository;
 
     @OneToMany
-    @JoinColumn(name="board")
+    @JoinColumn(name="board_id")
     private List<Message> messages;
 }

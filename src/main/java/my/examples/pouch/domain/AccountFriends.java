@@ -9,20 +9,21 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@Table(name="account_friends")
 @Getter
 @Setter
-@Table(name="friends")
-public class Friends {
+public class AccountFriends {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="reg_date")
     private Date regDate;
 
-    @OneToMany
-    @JoinTable(name="friends")
-    private List<Message> messages;
+    @ManyToOne
+    @JoinColumn(name="friends_id")
+    private Account account;
 
-    public Friends(){
+    public AccountFriends(){
         regDate = new Date();
     }
 }

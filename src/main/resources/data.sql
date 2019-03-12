@@ -1,4 +1,4 @@
-insert into account (id,email,name,nick_name,passwd,reg_date)
+/*insert into account (id,email,name,nick_name,passwd,reg_date)
 values(1,'treasureb1220@gmail.com','최원오','choiwono1','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
 
 insert into account (id,email,name,nick_name,passwd,reg_date)
@@ -21,4 +21,4 @@ insert into account_roles (account_id,role_id)
 values(2,2);
 
 insert into account_roles (account_id,role_id)
-values(3,1);
+values(3,1);*/

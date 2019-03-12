@@ -31,19 +31,16 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @ManyToMany
-    @JoinTable(name="account_friends",
-            joinColumns = {@JoinColumn(name = "account_id",referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "friends_id",referencedColumnName = "id")}
-    )
-    private List<Account> friends;
+    @OneToMany
+    @JoinColumn(name="account_id")
+    private Set<AccountFriends> accountFriends;
 
     @OneToMany
-    @JoinTable(name="account")
+    @JoinColumn(name="account_id")
     private List<Board> boards;
 
     @OneToMany
-    @JoinTable(name="account")
+    @JoinColumn(name="account_id")
     private List<Message> messages;
 
     public Account() {
