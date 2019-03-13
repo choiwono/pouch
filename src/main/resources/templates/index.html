@@ -7,19 +7,28 @@
 </th:block>
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+<script>
+    $(function() {
+        $(document).ready(function(){
+            $("#google_search_form").insertBefore($("nav.sub_menu"));
+        });
+    })
+</script>
 </th:block>
 <div layout:fragment="content">
-  <div class="container">
+  <div class="container d-flex justify-content-center">
      <div class="main m-5">
         <!-- Another variation with a button -->
-        <div class="input-group d-flex justify-content-center">
-          <input type="text" class="form-control m-0" style="max-width:500px;" placeholder="Google Search">
-          <div class="input-group-append">
-            <button class="btn btn-secondary" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
+         <form method="get" action="http://www.google.co.kr/search" target="_blank">
+         <div class="form-group input-group" id="google_search_form">
+              <input type="text" name="q" maxlength="255" value="" class="form-control m-0" style="max-width:500px;" placeholder="Google Search">
+              <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+         </div>
+         </form>
      </div>
   </div>
 </div>

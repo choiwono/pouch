@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,4 +29,8 @@ public class Tag{
             inverseJoinColumns ={@JoinColumn(name = "board_id",referencedColumnName = "id")}
     )
     private Set<Board> boards;
+
+    public Tag(){
+        boards = new HashSet<>();
+    }
 }
