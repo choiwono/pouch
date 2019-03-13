@@ -3,7 +3,9 @@ package my.examples.pouch.domain;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -27,4 +29,12 @@ public class Board {
     @OneToMany
     @JoinColumn(name="board_id")
     private List<Message> messages;
+
+    @ManyToMany(mappedBy = "boards")
+    private Set<Tag> tags;
+
+    public Board(){
+        tags = new HashSet<>();
+    }
+
 }

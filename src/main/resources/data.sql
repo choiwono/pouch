@@ -1,5 +1,5 @@
 insert into account (id,email,name,nick_name,passwd,reg_date)
-values(1,'treasureb1220@gmail.com','최원오','choiwono1','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
+values(1,'jaehee@gmail.com','박재희','jj','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
 
 insert into account (id,email,name,nick_name,passwd,reg_date)
 values(2,'treasureb1330@gmail.com','최원오','choiwono2','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
@@ -52,3 +52,4 @@ INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (2, 1);
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (3, 4);
+
