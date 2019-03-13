@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
@@ -25,30 +25,30 @@ public class AccountController {
                     required=false,defaultValue="false") String errorFlag,
             Model model){
         model.addAttribute("errorFlag",errorFlag);
-        return "users/login";
+        return "account/login";
     }
 
     @GetMapping("/join")
     public String joinform(){
-        return "users/join";
+        return "account/join";
     }
 
     @PostMapping("/join")
     public String joinform(@Valid Joinform joinform,
                            BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            return "users/joinfalse";
+            return "account/joinfalse";
         }
 
         if(!joinform.getPasswd().equals(joinform.getPasswd2())){
             model.addAttribute("notEqualPassword","비밀번호가 서로 일치하지않습니다.");
-            return "users/joinfalse";
+            return "account/joinfalse";
         }
 
         Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
         if(emailCheck != null){
             model.addAttribute("duplicateEmail","중복된 이메일이 존재합니다.");
-            return "users/joinfalse";
+            return "account/joinfalse";
         }
 
         Account account = new Account();
@@ -58,6 +58,6 @@ public class AccountController {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
         Account result = accountService.join(account);
-        return "/users/welcome";
+        return "/account/welcome";
     }
 }

@@ -3,8 +3,8 @@
 <header th:fragment="headerFragment">
     <nav class="navbar shadow pb-3 pt-3 navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/main">Pouch</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="/main">POUCH</a>
+            <button class="navbar-toggler" type="button" data-toggle="slide-collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -13,9 +13,9 @@
                         <div class="btn-group dropdown-menu-sm-left">
                             <form method="get" class="d-flex" action="/product/list">
                                 <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
-                                <button id="search-btn" type="button" class="btn" th:onclick="'javascript:showSearch()'">
+                                <a id="search-btn" class="nav-link bg-white cursor-pointer" th:onclick="'javascript:showSearch()'">
                                     <i class="fas fa-search"></i>
-                                </button>
+                                </a>
                             </form>
                         </div>
                     </li>
@@ -25,12 +25,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link cursor-pointer" data-toggle="modal" data-target="#exampleModal">
                             <i class="fas fa-plus"></i>
                         </a>
                     </li>
                     <li clas="nav-item">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle cursor-pointer" data-toggle="dropdown">
                             <i class="fas fa-user"></i>
                         </a>
                         <div class="dropdown-menu" style="left:85%;">
@@ -48,8 +48,26 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" method="post" action="/account/save">
+                    <div class="modal-body">
+                        <div class="form-group input-group m-0">
+                            <input type="text" name="url" maxlength="255" value="" class="form-control m-0" style="max-width:500px;" placeholder="http://...">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(function() {
             $('[data-toggle="slide-collapse"]').on('click', function() {
                 $navMenuCont = $($(this).data('target'));
                 $navMenuCont.animate({
@@ -58,12 +76,11 @@
                 $(".menu-overlay").fadeIn(500);
 
             });
+
             $(".menu-overlay").click(function(event) {
                 $(".navbar-toggle").trigger("click");
                 $(".menu-overlay").fadeOut(500);
             });
-        });
-        $(function() {
             $("form").each(function () {
                 $(this).validate({
                     rules: {
