@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<th:block layout:fragment="css">
+</th:block>
+<th:block layout:fragment="script">
+</th:block>
+<div layout:fragment="content">
+    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
+        <div class="container text-center">
+            <h3>내 주문목록</h3>
+            <p class="lead">My Orders</p>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container">
+        <div class="row">
+            <div th:each="order: ${orders}" class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100 border-0">
+                    <div class="card-body p-2">
+                        <p class="card-title m-2 d-flex justify-content-center">
+                            <span th:text="${#dates.format(order.regDate,'yyyy-MM-dd')}"></span>
+                        </p>
+                        <p class="d-flex justify-content-center m-2"
+                           th:text="${order.getOrderProductList().get(0).getName()+'외'+' '+order.getOrderProductList().size()+'건'}"></p>
+                        <p class="html-editor-bold d-flex justify-content-center m-2" th:text="${#numbers.formatInteger(order.totalPrice,3,'COMMA')}+'원'"></p>
+                        <!--<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

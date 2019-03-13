@@ -1,0 +1,114 @@
+body {
+    margin-top:20px;
+}
+
+header {
+    height:56px;
+}
+
+a {
+    color:#0a0a0a !important;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+.modal-backdrop{
+    z-index:0;
+}
+
+.form-control {
+    margin:15px 0px 15px 0px;
+}
+
+#search {
+    height:32px;
+    width:180px;
+}
+
+input.error {
+    border: 2px solid crimson;
+    border-radius:0.25rem;
+}
+
+input.success {
+    border: 2px solid dodgerblue;
+    border-radius:0.25rem;
+}
+
+label.error {
+    display:none !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.op-50 {
+    opacity:0.5;
+}
+
+.icon-color-yellow {
+    color: gold;
+}
+
+li {
+    list-style: none;
+}
+
+.errorFlag {
+    color:crimson;
+}
+
+.btn-delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#popupDiv {  /* 팝업창 css */
+    top : 0px;
+    position: absolute;
+    background: blue;
+    width: 500px;
+    height: 500px;
+    display: none;
+}
+
+#popup_mask { /* 팝업 배경 css */
+    position: fixed;
+    width: 100%;
+    height: 1000px;
+    top: 0px;
+    left: 0px;
+    display: none;
+    background-color:#000;
+    opacity: 0.8;
+}
+
+.main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
