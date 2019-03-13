@@ -7,6 +7,9 @@ values(2,'treasureb1330@gmail.com','최원오','choiwono2','{bcrypt}$2a$10$o3eFg
 insert into account (id,email,name,nick_name,passwd,reg_date)
 values(3,'admin','최원오','choiwono2','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
 
+insert into account (id,email,name,nick_name,passwd,reg_date)
+values(4,'jaehee@gmail.com','박재희','jaehee','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
+
 
 insert into roles (id,name,reg_date)
 values(1,'ADMIN',NOW());

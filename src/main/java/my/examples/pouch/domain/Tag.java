@@ -33,7 +33,6 @@ public class Tag {
     public Tag() {
         boards = new HashSet<>();
     }
-
 }
 
 

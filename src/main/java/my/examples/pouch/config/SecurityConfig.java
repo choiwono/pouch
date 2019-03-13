@@ -28,37 +28,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .logout() // logout설정
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout"))
             .logoutSuccessUrl("/main")
             .permitAll().and()
             .authorizeRequests() // 인가에 대한 설정
-            .antMatchers("/api/cart/**").permitAll()
-            .antMatchers("/api/cart/change").permitAll()
-            .antMatchers("/api/order").permitAll()
-            .antMatchers("/api/order/change").permitAll()
-            .antMatchers("/api/account/**").permitAll()
-            .antMatchers("/order/buy").permitAll()
-            .antMatchers("/order/writeform").permitAll()
-            .antMatchers("/order/directorder").permitAll()
-            .antMatchers("/order/complete").permitAll()
-            .antMatchers("/order/record").permitAll()
-            .antMatchers("/cart/**").permitAll()
-            .antMatchers("/users/join").permitAll()
-            .antMatchers("/users/welcome").permitAll()
-            .antMatchers("/users/login").permitAll()
-            .antMatchers("/users/wishlist").hasAnyRole("USER")
-            .antMatchers("/product/**").permitAll()
-            .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
-            //.antMatchers("/item/write").hasAnyRole("ADMIN")
+            .antMatchers("/").permitAll()
             .antMatchers("/main").permitAll()
+            .antMatchers("/account/join").permitAll()
+            .antMatchers("/account/welcome").permitAll()
+            .antMatchers("/account/login").permitAll()
+            .antMatchers("/api/**").permitAll()
             .antMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().fullyAuthenticated()
             .and()
             .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
-            .loginProcessingUrl("/users/login") // 로그인 화면
-            .loginPage("/users/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
+            .loginProcessingUrl("/account/login") // 로그인 화면
+            .loginPage("/account/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
             .usernameParameter("loginId")
             .passwordParameter("loginPassword")
-            .failureUrl("/users/login?fail=true").and().csrf().ignoringAntMatchers("/**");
+            .failureUrl("/account/login?fail=true").and().csrf().ignoringAntMatchers("/**");
     }
 }
