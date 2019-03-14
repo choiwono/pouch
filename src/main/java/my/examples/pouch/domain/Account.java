@@ -3,6 +3,7 @@ package my.examples.pouch.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.jdo.annotations.Join;
 import javax.persistence.*;
 import java.util.*;
 
@@ -31,9 +32,8 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @OneToMany
-    @JoinColumn(name="account_id")
-    private Set<AccountFriends> accountFriends;
+    @OneToOne(mappedBy = "account")
+    private AccountTheme accountTheme;
 
     @OneToMany
     @JoinColumn(name="account_id")
