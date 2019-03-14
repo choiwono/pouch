@@ -47,6 +47,11 @@ VALUES(3, 'jaehee@gmail.com',NOW(),0, '[Programming] 객체 지향 프로그래�
 INSERT INTO board(id, email, reg_date, repository, title, url, account_id)
 VALUES(4, 'treasureb1330@gmail.com',NOW(), 1, '[기술면접] HTTP란?', 'https://choiwono.github.io/http/', 2);
 
+INSERT INTO message(id,receive_id,sender_id,options,option_name,reg_date)
+VALUES(1,1,2,0,'모든목록 보내기',NOW());
+
+INSERT INTO message_record(id,accept,message_id)
+VALUES(1,'N',1);
 
 INSERT INTO tag(id, account_id, tag_name,counts,options,reg_date)
 VALUES (1,1,'JAVA',1,0,NOW());

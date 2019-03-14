@@ -18,7 +18,7 @@ public class Message {
     @Column(name="sender_id")
     private String senderId;
     @Column(nullable = false)
-    private int option;
+    private int options;
     @Column(name="option_name")
     private String optionName;
     @Column(name="reg_date")
