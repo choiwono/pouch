@@ -51,15 +51,6 @@ public class BoardRepositoryTest {
         }
     }
 
-    // email 주소에 해당하는 즐겨찾기 목록을 가져온다
-    @Test
-    public void favoriteByEmail() throws Exception {
-        List<Board> all = boardRepository.favoriteByEmail("jaehee@gmail.com");
-        for (Board list : all) {
-            System.out.println(list.getTitle() + " " + list.getUrl());
-        }
-    }
-
     // board id에 해당하는 태그 목록을 가져온다
     @Test
     public void getTagByBoardId() throws Exception {
