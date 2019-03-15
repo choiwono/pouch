@@ -4,29 +4,31 @@ import lombok.Getter;
 import lombok.Setter;
 import my.examples.pouch.dto.UseEnum;
 
-import javax.jdo.annotations.Join;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="message")
+@Table(name="message_option")
 @Getter
 @Setter
-public class Message {
+public class MessageOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="receive_id")
-    private String receiveId;
+    @Column(name="opt_name")
+    private String optName;
     @Enumerated(EnumType.STRING)
     @Column(name="use_yn")
     private UseEnum useYn;
     @Column(name="reg_date")
     private Date regDate;
 
-    public Message(){
+    @OneToMany
+    @JoinColumn(name="options_id")
+    private List<Message> messages;
+
+    public MessageOption(){
         regDate = new Date();
     }
 }
