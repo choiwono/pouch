@@ -32,9 +32,6 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "account")
-    private AccountTheme accountTheme;
-
     @OneToMany
     @JoinColumn(name="account_id")
     private List<Board> boards;
@@ -42,6 +39,10 @@ public class Account {
     @OneToMany
     @JoinColumn(name="account_id")
     private List<Message> messages;
+
+    @OneToMany
+    @JoinColumn(name="account_id")
+    private Set<AccountTheme> accountTheme;
 
     public Account() {
         regDate = new Date();

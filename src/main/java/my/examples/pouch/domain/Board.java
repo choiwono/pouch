@@ -26,12 +26,8 @@ public class Board {
     private Date regDate;
     private int repository;
 
-    @Column(name="repository_option")
-    private int repositoryOption;
-
-    @OneToMany
-    @JoinColumn(name="board_id")
-    private List<Message> messages;
+    @Column(name="board_option")
+    private int boardOption;
 
     @ManyToMany(mappedBy = "boards")
     private Set<Tag> tags;
