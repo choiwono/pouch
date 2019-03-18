@@ -44,6 +44,10 @@ public class Account {
     @JoinColumn(name="account_id")
     private Set<AccountTheme> accountTheme;
 
+    @OneToMany
+    @JoinColumn(name="account_id")
+    private Set<AccountCategory> accountCategories;
+
     public Account() {
         regDate = new Date();
         roles = new HashSet<>();
