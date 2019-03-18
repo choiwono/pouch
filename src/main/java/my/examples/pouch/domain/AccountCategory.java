@@ -2,32 +2,32 @@ package my.examples.pouch.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import my.examples.pouch.dto.UseEnum;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name="message_option")
+@Table(name="account_category")
 @Getter
 @Setter
-public class MessageOption {
+public class AccountCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="opt_type")
-    private int optType;
+    @Column(name="category_name")
+    private String categoryName;
     @Column(name="reg_date")
     private Date regDate;
-    @Column(name="type_id")
-    private Long typeId;
+    @Column(name="ordering")
+    private int ordering;
 
     @OneToMany
-    @JoinColumn(name="options_id")
-    private List<Message> messages;
+    @JoinColumn(name="account_category_id")
+    private List<Board> boards;
 
-    public MessageOption(){
+    public AccountCategory(){
         regDate = new Date();
     }
 }

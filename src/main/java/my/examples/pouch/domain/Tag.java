@@ -21,7 +21,6 @@ public class Tag {
     private String accountId;
     @Column(name="tag_name")
     private String tagName;
-    private int counts;
     private int options;
     @Column(name = "reg_date")
     private Date regDate;

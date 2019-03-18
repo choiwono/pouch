@@ -30,7 +30,4 @@ public class TagRepositoryTest {
             System.out.println(list.getTitle());
         }
     }
-
-
-
 }
