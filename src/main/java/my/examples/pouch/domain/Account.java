@@ -32,8 +32,7 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @OneToMany
-    @JoinColumn(name="account_id")
+    @OneToMany(mappedBy="account")
     private List<Board> boards;
 
     @OneToMany

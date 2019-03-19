@@ -2,6 +2,8 @@ package my.examples.pouch.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -24,16 +26,24 @@ public class Board {
 
     @Column(name="reg_date")
     private Date regDate;
-    private int repository;
+    private Long repository;
 
     @Column(name="board_option")
-    private int boardOption;
+    private Long boardOption;
 
     @ManyToMany(mappedBy = "boards")
     private Set<Tag> tags;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="account_category_id")
+    private AccountCategory accountCategory;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="account_id")
+    private Account account;
+
     public Board(){
         tags = new HashSet<>();
+        regDate = new Date();
     }
-
 }

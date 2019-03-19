@@ -23,8 +23,7 @@ public class AccountCategory {
     @Column(name="ordering")
     private int ordering;
 
-    @OneToMany
-    @JoinColumn(name="account_category_id")
+    @OneToMany(mappedBy = "accountCategory")
     private List<Board> boards;
 
     public AccountCategory(){
