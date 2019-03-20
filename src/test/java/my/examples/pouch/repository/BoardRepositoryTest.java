@@ -1,7 +1,6 @@
 package my.examples.pouch.repository;
 
-import my.examples.pouch.domain.Account;
-import my.examples.pouch.domain.Board;
+import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -27,8 +25,8 @@ public class BoardRepositoryTest {
 
     @Test
     public void findAll() throws Exception {
-        List<Board> all = boardRepository.findAll();
-        for (Board list : all) {
+        List<Link> all = boardRepository.findAll();
+        for (Link list : all) {
             System.out.println(list.getTitle() + " " + list.getUrl());
         }
     }
@@ -36,8 +34,8 @@ public class BoardRepositoryTest {
     //email 주소에 해당하는 board 목록을 가져온다
     @Test
     public void boardByEmail() throws Exception {
-        List<Board> all = boardRepository.boardByEmail("jaehee@gmail.com");
-        for (Board list : all) {
+        List<Link> all = boardRepository.boardByEmail("jaehee@gmail.com");
+        for (Link list : all) {
             System.out.println(list.getTitle() + " " + list.getUrl());
         }
     }
@@ -45,8 +43,8 @@ public class BoardRepositoryTest {
     // email 주소에 해당하는 repo 목록을 가져온다
     @Test
     public void repositoryByEmail() throws Exception {
-        List<Board> all = boardRepository.repositoryByEmail("jaehee@gmail.com");
-        for (Board list : all) {
+        List<Link> all = boardRepository.repositoryByEmail("jaehee@gmail.com");
+        for (Link list : all) {
             System.out.println(list.getTitle() + " " + list.getUrl());
         }
     }
