@@ -3,7 +3,6 @@ package my.examples.pouch.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.jdo.annotations.Join;
 import javax.persistence.*;
 import java.util.*;
 
@@ -32,20 +31,17 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @OneToMany(mappedBy="account")
-    private List<Board> boards;
-
-    @OneToMany
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
     private List<Message> messages;
 
-    @OneToMany
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
     private Set<AccountTheme> accountTheme;
 
-    @OneToMany
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
-    private Set<AccountCategory> accountCategories;
+    private Set<Category> accountCategories;
 
     public Account() {
         regDate = new Date();
