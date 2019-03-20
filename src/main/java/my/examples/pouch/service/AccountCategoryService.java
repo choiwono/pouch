@@ -2,17 +2,17 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.repository.AccountCategoryRepository;
+import my.examples.pouch.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountCategoryService {
-    private final AccountCategoryRepository accountCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional
     public Category getAccountCategory(Long id) {
-        return accountCategoryRepository.findMyCategory(id);
+        return categoryRepository.findMyCategory(id);
     }
 }
