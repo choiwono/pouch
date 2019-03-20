@@ -30,7 +30,7 @@ public class Tag {
             joinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "board_id", referencedColumnName = "id")}
     )
-    private Set<Board> boards;
+    private Set<Link> boards;
 
     public Tag() {
         boards = new HashSet<>();

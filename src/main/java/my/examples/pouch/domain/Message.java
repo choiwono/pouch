@@ -26,6 +26,10 @@ public class Message {
     @Column(name="reg_date")
     private Date regDate;
 
+    @OneToOne
+    @JoinColumn(name="options_id",referencedColumnName = "id")
+    private MessageOption messageOption;
+
     public Message(){
         regDate = new Date();
     }

@@ -6,13 +6,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="account_category")
+@Table(name="category")
 @Getter
 @Setter
-public class AccountCategory {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +22,11 @@ public class AccountCategory {
     @Column(name="ordering")
     private int ordering;
 
-    @OneToMany(mappedBy = "accountCategory")
-    private List<Board> boards;
+    @OneToMany(mappedBy = "accountCategory",
+            fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Link> boards;
 
-    public AccountCategory(){
+    public Category(){
         regDate = new Date();
     }
 }
