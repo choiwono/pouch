@@ -22,12 +22,13 @@ public class AccountTheme {
     @Column(name="link_option")
     private int linkOption;
     @Column(name="list_option")
-    private int listOption = 0;
+    private int listOption;
     @Column(name="background_id")
     private Long backgroundId;
     @Column(name="reg_date")
     private Date regDate;
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne
+    @JoinColumn(name="account_id",referencedColumnName = "id")
     private Account account;
 }
