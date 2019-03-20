@@ -1,3 +1,32 @@
+function addCategory(id) {
+    var amount = $('#'+id).val();
+    if(amount == null || 0){
+        amount = 1;
+    }
+    var JSONObject= {
+        "categoryId" : id,
+        "quantity" : amount
+    };
+    var jsonData = JSON.stringify( JSONObject );
+    $.ajax({
+        url : '/category',
+        method : 'post',
+        data : jsonData,
+        dataType: "text",
+        contentType: "application/json",
+        success : function (data) {
+            if(data == "success"){
+                alert("카테고리가 추가되었습니다");
+            } else if(data == "fail"){
+                alert("오류가 발생했습니다.");
+            }
+        },
+        error : function (data) {
+            alert("통신실패. 다시 시도해주시길 바랍니다.");
+        },
+        timeout: 3000
+    });
+}
 function addCart(id) {
     var amount = $('#'+id).val();
     if(amount == null || 0){
