@@ -1,7 +1,6 @@
 package my.examples.pouch.repository;
 
-import my.examples.pouch.domain.Board;
-import my.examples.pouch.domain.Tag;
+import my.examples.pouch.domain.Link;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class TagRepositoryTest {
     // tag id에 해당하는 board 목록을 가져온다
     @Test
     public void getBoardByTagId() throws Exception{
-        List<Board> all = tagRepository.getBoardByTagId(1L);
-        for (Board list : all) {
+        List<Link> all = tagRepository.getBoardByTagId(1L);
+        for (Link list : all) {
             System.out.println(list.getTitle());
         }
     }

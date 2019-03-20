@@ -2,18 +2,15 @@ package my.examples.pouch.controller.crawling;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
-import my.examples.pouch.domain.AccountCategory;
-import my.examples.pouch.domain.Board;
+import my.examples.pouch.domain.Category;
+import my.examples.pouch.domain.Link;
 import my.examples.pouch.repository.BoardRepository;
 import my.examples.pouch.service.AccountCategoryService;
 import my.examples.pouch.service.AccountService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +35,9 @@ public class CrawlingController {
         if(content == null){
             content = sub.attr("content");
         }
-        AccountCategory accountCategory = accountCategoryService.getAccountCategory(1L);
+        Category accountCategory = accountCategoryService.getAccountCategory(1L);
         Account account = accountService.findAccountByEmail(principal.getName());
-        Board board = new Board();
+        Link board = new Link();
         board.setTitle(content);
         board.setUrl(url);
         board.setEmail(principal.getName());

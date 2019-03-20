@@ -2,20 +2,18 @@ package my.examples.pouch.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="board")
+@Table(name="link")
 @Getter
 @Setter
-public class Board {
+public class Link {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,13 +34,13 @@ public class Board {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_category_id")
-    private AccountCategory accountCategory;
+    private Category accountCategory;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
 
-    public Board(){
+    public Link(){
         tags = new HashSet<>();
         regDate = new Date();
     }

@@ -2,11 +2,8 @@ package my.examples.pouch.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import my.examples.pouch.dto.UseEnum;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="message_option")
@@ -23,9 +20,8 @@ public class MessageOption {
     @Column(name="type_id")
     private Long typeId;
 
-    @OneToMany
-    @JoinColumn(name="options_id")
-    private List<Message> messages;
+    @OneToOne(mappedBy = "messageOption")
+    private Message message;
 
     public MessageOption(){
         regDate = new Date();

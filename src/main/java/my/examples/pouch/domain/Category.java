@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="category")
 @Getter
 @Setter
-public class AccountCategory {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +22,11 @@ public class AccountCategory {
     @Column(name="ordering")
     private int ordering;
 
-    @OneToMany(mappedBy = "accountCategory")
+    @OneToMany(mappedBy = "accountCategory",
+            fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Link> boards;
 
-    public AccountCategory(){
+    public Category(){
         regDate = new Date();
     }
 }
