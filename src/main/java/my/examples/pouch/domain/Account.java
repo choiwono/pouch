@@ -35,9 +35,8 @@ public class Account {
     @JoinColumn(name="account_id")
     private List<Message> messages;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="account_id")
-    private Set<AccountTheme> accountTheme;
+    @OneToOne(mappedBy = "account")
+    private AccountTheme accountTheme;
 
     @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
