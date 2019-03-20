@@ -6,10 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="account_category")
+@Table(name="category")
 @Getter
 @Setter
 public class AccountCategory {
@@ -24,7 +23,7 @@ public class AccountCategory {
     private int ordering;
 
     @OneToMany(mappedBy = "accountCategory")
-    private List<Board> boards;
+    private List<Link> boards;
 
     public AccountCategory(){
         regDate = new Date();
