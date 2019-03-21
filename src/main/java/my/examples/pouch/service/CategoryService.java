@@ -5,7 +5,6 @@ import my.examples.pouch.domain.Category;
 import my.examples.pouch.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
