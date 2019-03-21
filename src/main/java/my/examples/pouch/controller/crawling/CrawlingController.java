@@ -5,7 +5,7 @@ import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.repository.BoardRepository;
-import my.examples.pouch.service.AccountCategoryService;
+import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,10 +23,11 @@ import java.security.Principal;
 public class CrawlingController {
     private final BoardRepository boardRepository;
     private final AccountService accountService;
-    private final AccountCategoryService accountCategoryService;
+    private final CategoryService categoryService;
 
     @PostMapping("/save")
-    public String crawling(@RequestParam String url,
+    public String crawling(@RequestParam(required = true) String url,
+                           @RequestParam(required = true) Long categoryId,
                            Principal principal) throws Exception{
         Document doc = Jsoup.connect(url).get();
         Elements title = doc.select("title");
@@ -35,7 +36,7 @@ public class CrawlingController {
         if(content == null){
             content = sub.attr("content");
         }
-        Category accountCategory = accountCategoryService.getAccountCategory(1L);
+        Category category = categoryService.getAccountCategory(categoryId);
         Account account = accountService.findAccountByEmail(principal.getName());
         Link board = new Link();
         board.setTitle(content);
@@ -43,7 +44,7 @@ public class CrawlingController {
         board.setEmail(principal.getName());
         board.setBoardOption(0L);
         board.setRepository(account.getId());
-        board.setAccountCategory(accountCategory);
+        board.setAccountCategory(category);
         board.setAccount(account);
         boardRepository.save(board);
         return "index";
