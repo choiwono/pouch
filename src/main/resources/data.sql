@@ -8,7 +8,7 @@ insert into account (id,email,name,nick_name,passwd,reg_date)
 values(3,'admin','최원오','choiwono2','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
 
 insert into account (id,email,name,nick_name,passwd,reg_date)
-values(4,'jaehee@gmail.com','박재희','jaehee','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
+values(4,'jaehee1@gmail.com','박재희','jaehee','{bcrypt}$2a$10$o3eFgx5gkg0UPctYnvje7OMSTKhfZJ9H2.X/60UKxH382LeCIcHJ.',NOW());
 
 insert into account_theme (id,color_name,link_option,list_option,background_id,reg_date,account_id)
 values(1,'black',0,0,1,NOW(),1);

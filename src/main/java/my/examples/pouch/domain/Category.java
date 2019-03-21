@@ -24,7 +24,7 @@ public class Category {
 
     @OneToMany(mappedBy = "accountCategory",
             fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Link> boards;
+    private List<Link> links;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
