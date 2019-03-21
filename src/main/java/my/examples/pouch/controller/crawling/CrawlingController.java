@@ -5,7 +5,7 @@ import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.repository.BoardRepository;
-import my.examples.pouch.service.AccountCategoryService;
+import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +23,7 @@ import java.security.Principal;
 public class CrawlingController {
     private final BoardRepository boardRepository;
     private final AccountService accountService;
-    private final AccountCategoryService accountCategoryService;
+    private final CategoryService categoryService;
 
     @PostMapping("/save")
     public String crawling(@RequestParam String url,
@@ -35,7 +35,7 @@ public class CrawlingController {
         if(content == null){
             content = sub.attr("content");
         }
-        Category accountCategory = accountCategoryService.getAccountCategory(1L);
+        Category accountCategory = categoryService.getAccountCategory(1L);
         Account account = accountService.findAccountByEmail(principal.getName());
         Link board = new Link();
         board.setTitle(content);

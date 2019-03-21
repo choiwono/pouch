@@ -40,7 +40,7 @@ public class Account {
 
     @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
-    private Set<Category> accountCategories;
+    private Set<Category> categories;
 
     public Account() {
         regDate = new Date();

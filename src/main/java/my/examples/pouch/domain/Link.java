@@ -33,8 +33,8 @@ public class Link {
     private Set<Tag> tags;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="account_category_id")
-    private Category accountCategory;
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")

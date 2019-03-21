@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AccountCategoryService {
+public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
