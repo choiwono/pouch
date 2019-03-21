@@ -22,7 +22,7 @@ public class Category {
     @Column(name="ordering")
     private int ordering;
 
-    @OneToMany(mappedBy = "accountCategory",
+    @OneToMany(mappedBy = "category",
             fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Link> links;
 
