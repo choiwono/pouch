@@ -74,7 +74,12 @@ function showModal(option){
         method : 'post',
         dataType: "text",
         success : function (data) {
-
+            var jsonData = JSON.parse(data);
+            for(var i=0; i<jsonData.length; i++) {
+                $("#categorySelect").append('<option value=' + jsonData[i].id + '>' + jsonData[i].name + '</option>');
+                //console.log(jsonData[0]);
+            }
+            $('#urlModal').modal('show')
         },
         error : function (data) {
             alert("통신실패. 다시 시도해주시길 바랍니다.");
