@@ -2,14 +2,20 @@ package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
+import my.examples.pouch.domain.Category;
+import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
 @RequiredArgsConstructor
 public class AccountApiController {
     private final AccountService accountService;
+    private final CategoryService categoryService;
 
     @PostMapping(value="/checkEmail/{id}")
     public String checkEmail(@PathVariable(value="id") String email){
@@ -19,6 +25,17 @@ public class AccountApiController {
             result = "success";
         } else {
             result = "duplicate";
+        }
+        return result;
+    }
+
+    @PostMapping(value="/category/{id}")
+    public String myCategory(@PathVariable(value="id") Long id,
+                             Principal principal){
+        String result = "fail";
+        List<Category> categories = categoryService.findMyCategoryList(principal.getName());
+        for(Category c : categories){
+            System.out.println(c.getId());
         }
         return result;
     }

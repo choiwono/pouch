@@ -38,7 +38,10 @@ insert into account_roles (account_id,role_id)
 values(3,1);
 
 INSERT INTO category (id,category_name,reg_date,ordering,account_id)
-Values(1,'프로그래밍',NOW(),1,1);
+Values(1,'백엔드',NOW(),1,1);
+
+INSERT INTO category (id,category_name,reg_date,ordering,account_id)
+Values(2,'프론트',NOW(),2,2);
 
 INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,account_category_id)
 VALUES(1,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,1);

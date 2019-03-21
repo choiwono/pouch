@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <header th:fragment="headerFragment">
-    <nav class="navbar pb-3 pt-3 navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar pb-3 pt-3 border-bottom navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/main">POUCH</a>
             <button class="navbar-toggler" type="button" data-toggle="slide-collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,7 @@
                         <div class="btn-group dropdown-menu-sm-left">
                             <form method="get" class="d-flex" action="/product/list">
                                 <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
-                                <a id="search-btn" class="nav-link bg-white cursor-pointer" th:onclick="'javascript:showSearch()'">
+                                <a id="search-btn" class="nav-link cursor-pointer" th:onclick="'javascript:showSearch()'">
                                     <i class="fas fa-search"></i>
                                 </a>
                             </form>
@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link cursor-pointer" data-toggle="modal" data-target="#exampleModal">
+                        <a href="#" th:onclick="'javascript:showModal('+'1'+')'" class="nav-link cursor-pointer" data-toggle="modal">
                             <i class="fas fa-plus"></i>
                         </a>
                     </li>
@@ -48,11 +48,21 @@
             </div>
         </div>
     </nav>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form class="form-horizontal" method="post" action="/crawling/save">
                     <div class="modal-body">
+                        <div class="form-group input-group m-0">
+                            <label for="exampleFormControlSelect1">Pouch에 항목을 저장해주세요</label>
+                        </div>
+                        <div class="form-group input-group m-0">
+                            <select name="categoryId" class="form-control mb-2" id="exampleFormControlSelect1">
+                                <option value="0">카테고리를 선택해주세요</option>
+                                <option value="1">백엔드</option>
+                                <option value="2">프론트엔드</option>
+                            </select>
+                        </div>
                         <div class="form-group input-group m-0">
                             <input type="text" name="url" maxlength="255" value="" class="form-control m-0" style="max-width:500px;" placeholder="http://...">
                             <div class="input-group-append">
