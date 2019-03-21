@@ -44,7 +44,7 @@ public class CrawlingController {
         board.setEmail(principal.getName());
         board.setBoardOption(0L);
         board.setRepository(account.getId());
-        board.setAccountCategory(category);
+        board.setCategory(category);
         board.setAccount(account);
         boardRepository.save(board);
         return "index";
