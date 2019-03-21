@@ -31,16 +31,15 @@ public class Account {
     )
     private Set<Role> roles;
 
-    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name="account_id")
     private List<Message> messages;
 
     @OneToOne(mappedBy = "account")
     private AccountTheme accountTheme;
 
-    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name="account_id")
-    private Set<Category> categories;
+    @OneToMany(mappedBy = "account",fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private Set<Category> accountCategories;
 
     public Account() {
         regDate = new Date();

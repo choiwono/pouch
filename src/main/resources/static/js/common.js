@@ -67,17 +67,21 @@ function moveUrl(url){
     }
 }
 
-/*
 function showModal(option){
-    if(option == 1) {
-        $('#exampleModal').modal('show')
-    } else if(option == 2) {
-        $('#joinModal').modal('show');
-    } else if(option == 3){
-        $('#recordModal').modal('show');
-    }
+    var id = option;
+    $.ajax({
+        url : '/api/account/category/'+id,
+        method : 'post',
+        dataType: "text",
+        success : function (data) {
+
+        },
+        error : function (data) {
+            alert("통신실패. 다시 시도해주시길 바랍니다.");
+        },
+        timeout: 3000
+    });
 }
-*/
 
 function amountModify(id, option){
     var amount = $('#'+id).val();

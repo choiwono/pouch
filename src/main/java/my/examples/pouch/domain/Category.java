@@ -26,6 +26,10 @@ public class Category {
             fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Link> links;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="account_id")
+    private Account account;
+
     public Category(){
         regDate = new Date();
     }

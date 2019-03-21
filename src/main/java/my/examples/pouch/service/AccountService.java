@@ -2,6 +2,7 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
+import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Role;
 import my.examples.pouch.repository.AccountRepository;
 import my.examples.pouch.repository.RoleRepository;
