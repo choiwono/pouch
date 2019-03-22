@@ -43,7 +43,7 @@ public class CategoryController {
 
             categoryRepository.save(category);
 
-            return "index";
+            return "redirect:/main";
 
     }
 }
