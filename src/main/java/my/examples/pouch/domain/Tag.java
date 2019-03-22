@@ -17,7 +17,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "account_id")
+    @Column(name = "email")
     private String email;
     @Column(name="tag_name")
     private String tagName;
