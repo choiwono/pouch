@@ -16,8 +16,7 @@ import java.util.List;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BoardRepositoryTest {
     @Autowired
-    BoardRepository boardRepository;
-    TagRepository tagRepository;
+    LinkRepository boardRepository;
 
     @Test
     public void init() {

@@ -18,7 +18,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "account_id")
-    private String accountId;
+    private String email;
     @Column(name="tag_name")
     private String tagName;
     private int options;
@@ -30,10 +30,10 @@ public class Tag {
             joinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "board_id", referencedColumnName = "id")}
     )
-    private Set<Link> boards;
+    private Set<Link> links;
 
     public Tag() {
-        boards = new HashSet<>();
+        links = new HashSet<>();
     }
 }
 

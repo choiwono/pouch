@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
-import my.examples.pouch.repository.BoardRepository;
+import my.examples.pouch.repository.LinkRepository;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
 import org.jsoup.Jsoup;
@@ -21,7 +21,7 @@ import java.security.Principal;
 @RequestMapping("/crawling")
 @RequiredArgsConstructor
 public class CrawlingController {
-    private final BoardRepository boardRepository;
+    private final LinkRepository linkRepository;
     private final AccountService accountService;
     private final CategoryService categoryService;
 
@@ -38,15 +38,15 @@ public class CrawlingController {
         }
         Category category = categoryService.getAccountCategory(categoryId);
         Account account = accountService.findAccountByEmail(principal.getName());
-        Link board = new Link();
-        board.setTitle(content);
-        board.setUrl(url);
-        board.setEmail(principal.getName());
-        board.setBoardOption(0L);
-        board.setRepository(account.getId());
-        board.setCategory(category);
-        board.setAccount(account);
-        boardRepository.save(board);
+        Link link = new Link();
+        link.setTitle(content);
+        link.setUrl(url);
+        link.setEmail(principal.getName());
+        link.setBoardOption(0L);
+        link.setRepository(account.getId());
+        link.setCategory(category);
+        link.setAccount(account);
+        linkRepository.save(link);
         return "index";
     }
 }
