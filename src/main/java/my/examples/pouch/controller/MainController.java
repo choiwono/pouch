@@ -1,5 +1,3 @@
-package my.examples.pouch.controller;
-
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.service.AccountService;
