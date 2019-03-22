@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <header th:fragment="headerFragment">
-    <nav class="navbar pb-3 pt-3 border-bottom navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar pb-3 pt-3 border-bottom navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/main">POUCH</a>
             <button class="navbar-toggler" type="button" data-toggle="slide-collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,7 +9,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <div class="btn-group dropdown-menu-sm-left">
                             <form method="get" class="d-flex" action="/product/list">
                                 <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
@@ -19,12 +19,12 @@
                             </form>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a href="#" class="nav-link">
                             <i class="fas fa-envelope"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a href="#" th:onclick="'javascript:showModal('+'1'+')'" class="nav-link cursor-pointer" data-toggle="modal">
                             <i class="fas fa-plus"></i>
                         </a>
@@ -36,12 +36,9 @@
                         <div class="dropdown-menu" style="left:85%;">
                             <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/login}" th:text="로그인"></a>
                             <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/join}" th:text="회원가입"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/friends}" th:text="친구관리"></a>
+                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/category}" th:text="카테고리"></a>
+                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/setting}" th:text="설정"></a>
                             <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/logout}" th:text="로그아웃"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/mylist}" th:text="내목록"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/repository}" th:text="보관소"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/favorites}" th:text="즐겨찾기"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/tag}" th:text="태그"></a>
                         </div>
                     </li>
                 </ul>

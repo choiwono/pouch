@@ -52,13 +52,22 @@ Values(4,'프론트',NOW(),2,1);
 
 
 INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(1,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,1);
+VALUES(1,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
 INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(2,2,'jaehee@gmail.com',NOW(),0,'[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,1);
+VALUES(2,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
 INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(3,3,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,1);
+VALUES(3,1,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,4);
 INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(4,4,'treasureb1330@gmail.com',NOW(),1,'[기술면접] HTTP란?', 'https://choiwono.github.io/http/',1,1);
+VALUES(4,1,'treasureb1330@gmail.com',NOW(),1,'[기술면접] HTTP란?', 'https://choiwono.github.io/http/',1,4);
+INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
+VALUES(5,1,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,4);
+INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
+VALUES(6,1,'treasureb1330@gmail.com',NOW(),1,'[기술면접] HTTP란?', 'https://choiwono.github.io/http/',1,4);
+INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
+VALUES(7,1,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,4);
+INSERT INTO link(id,board_option,email, reg_date, repository,title,url,account_id,category_id)
+VALUES(8,1,'treasureb1330@gmail.com',NOW(),1,'[기술면접] HTTP란?', 'https://choiwono.github.io/http/',1,4);
+
 
 INSERT INTO message_option(id,opt_type,reg_date,type_id)
 VALUES(1,1,NOW(),1);
@@ -66,12 +75,12 @@ VALUES(1,1,NOW(),1);
 INSERT INTO message(id,receive_id,use_yn,reg_date,account_id,options_id)
 VALUES(1,'treasureb1330@gmail.com','YES',NOW(),1,1);
 
-INSERT INTO tag(id, account_id, tag_name,options,reg_date)
-VALUES (1,1,'JAVA',0,NOW());
-INSERT INTO tag(id, account_id, tag_name,options,reg_date)
-VALUES (2,1,'variables',0,NOW());
-INSERT INTO tag(id, account_id, tag_name,options,reg_date)
-VALUES (3,2,'network',0,NOW());
+INSERT INTO tag(id, email, tag_name,options,reg_date)
+VALUES (1,'jaehee@gmail.com','JAVA',0,NOW());
+INSERT INTO tag(id, email, tag_name,options,reg_date)
+VALUES (2,'jaehee@gmail.com','variables',0,NOW());
+INSERT INTO tag(id, email, tag_name,options,reg_date)
+VALUES (3,'jaehee@gmail.com','network',0,NOW());
 
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (1, 1);

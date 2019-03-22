@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<th:block layout:fragment="css">
+</th:block>
+<th:block layout:fragment="script">
+</th:block>
+<div layout:fragment="content">
+    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
+        <div class="container text-center">
+            <div class="form-group d-flex justify-content-center">
+                <select onchange="selectChange()" id="selectCategory" class="form-control" style="max-width:300px;">
+                    <option th:each="category:${categories}" th:value="${category.id}"
+                            th:selected="${category.id==selectCategory}" th:text="${category.categoryName}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container">
+        <div class="row">
+            <ul class="list-group col-3">
+                <li class="list-group-item">태그1</li>
+                <li class="list-group-item">태그2</li>
+                <li class="list-group-item">태그3</li>
+                <li class="list-group-item">태그4</li>
+                <li class="list-group-item">태그5</li>
+            </ul>
+            <div class="col-9">
+                <div class="row">
+                    <div th:each="link: ${links}" th:if="${not #lists.isEmpty(links)}" class="col-4 mb-4">
+                        <div class="card mb-4 shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                                <title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="36.5%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                            </svg>
+                            <div class="card-body p-2">
+                                <p class="card-title m-2 d-flex">
+                                    <a th:href="${link.url}" class="link-title" th:text="${link.title}"></a>
+                                    <p class="m-2" th:text="${link.regDate}"></p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

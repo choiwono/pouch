@@ -27,37 +27,6 @@ function addCategory(id) {
         timeout: 3000
     });
 }
-function addCart(id) {
-    var amount = $('#'+id).val();
-    if(amount == null || 0){
-        amount = 1;
-    }
-    var JSONObject= {
-        "productId" : id,
-        "quantity" : amount
-    };
-    var jsonData = JSON.stringify( JSONObject );
-    $.ajax({
-        url : '/api/cart',
-        method : 'post',
-        data : jsonData,
-        dataType: "text",
-        contentType: "application/json",
-        success : function (data) {
-            if(data == "success"){
-                alert("장바구니에 추가되었습니다.");
-            } else if(data == "duplicate"){
-                alert("이미 중복된 상품이 있습니다.");
-            } else if(data == "fail"){
-                alert("오류가 발생했습니다.");
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
-}
 
 function moveUrl(url){
     if(url == 1) {
@@ -69,6 +38,7 @@ function moveUrl(url){
 
 function showModal(option){
     var id = option;
+    $('.category').remove();
     $.ajax({
         url : '/api/account/category/'+id,
         method : 'post',
@@ -76,7 +46,7 @@ function showModal(option){
         success : function (data) {
             var jsonData = JSON.parse(data);
             for(var i=0; i<jsonData.length; i++) {
-                $("#categorySelect").append('<option value=' + jsonData[i].id + '>' + jsonData[i].name + '</option>');
+                $("#categorySelect").append('<option class="category" value=' + jsonData[i].id + '>' + jsonData[i].name + '</option>');
                 //console.log(jsonData[0]);
             }
             $('#urlModal').modal('show')
@@ -118,64 +88,9 @@ function changeProduct(id){
     $("#totalPrice").html(totalPrice);
 }
 
-function changeProductCart(id){
-    var amount = $('#'+id).val();
-    var JSONObject= {
-        "productId" : id,
-        "quantity" : amount
-    };
-    var jsonData = JSON.stringify( JSONObject );
-    $.ajax({
-        url : '/api/cart/change',
-        method : 'POST',
-        data : jsonData,
-        dataType: "text",
-        contentType: "application/json",
-        success : function (data) {
-            if(data == "success"){
-                alert("수량값이 변경되었습니다.");
-                changeProduct(id);
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
-}
-
-function deleteCartItem(id){
-    $.ajax({
-        url : '/api/cart/'+id,
-        method : 'delete',
-        success : function (data) {
-            if(data == "success"){
-                alert("삭제성공");
-                location.reload();
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
-}
-
-function deleteWishItem(id){
-    $.ajax({
-        url : '/api/account/wishItem/'+id,
-        method : 'delete',
-        success : function (data) {
-            if(data == "success"){
-                alert("삭제성공");
-                location.reload();
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
+function selectChange(){
+    var id = $('#selectCategory option:selected').val();
+    document.location.href="/link/view/"+id;
 }
 
 function showSearch(){
@@ -192,28 +107,6 @@ function showSearch(){
     } else {
         $("#search-btn").attr("type","submit");
     }
-}
-
-function addWishItem(id){
-    //var jsonData = JSON.stringify( JSONObject );
-    $.ajax({
-        url : '/api/account/wishItem/'+id,
-        method : 'post',
-        dataType: "text",
-        success : function (data) {
-            if(data == "success"){
-                alert("찜목록에 추가되셨습니다");
-            } else if(data == "duplicate"){
-                alert("해당 상품이 이미 찜목록에 있습니다");
-            } else {
-                alert("로그인을 하셔야 찜목록을 추가하실수 있습니다");
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
 }
 
 function openZipCode() {
