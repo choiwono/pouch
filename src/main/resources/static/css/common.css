@@ -22,6 +22,14 @@ a {
     margin:15px 0px 15px 0px;
 }
 
+.link-title {
+    display:block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 170px;
+}
+
 #search {
     height:32px;
     width:180px;

@@ -29,7 +29,7 @@ public class Link {
     @Column(name="board_option")
     private Long boardOption;
 
-    @ManyToMany(mappedBy = "boards")
+    @ManyToMany(mappedBy = "links")
     private Set<Tag> tags;
 
     @ManyToOne(fetch=FetchType.LAZY)
