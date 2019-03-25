@@ -32,15 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/main")
             .permitAll().and()
             .authorizeRequests() // 인가에 대한 설정
-            .antMatchers("/").hasAnyRole()
-            .antMatchers("/main").hasAnyRole()
-            .antMatchers("/link/view").hasAnyRole()
+            .antMatchers("/").hasAnyRole("USER","ADMIN")
+            .antMatchers("/main").hasAnyRole("USER","ADMIN")
+            .antMatchers("/link/**").hasAnyRole("USER","ADMIN")
             .antMatchers("/account/join").permitAll()
             .antMatchers("/account/welcome").permitAll()
             .antMatchers("/account/login").permitAll()
             .antMatchers("/api/**").permitAll()
             .antMatchers("/crawling/**").permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN")
+            .antMatchers("/admin/**").hasAnyRole("USER","ADMIN")
             .anyRequest().fullyAuthenticated()
             .and()
             .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .usernameParameter("loginId")
             .passwordParameter("loginPassword")
             .defaultSuccessUrl("/main")
-            .failureUrl("/account/login?fail=true").and().csrf().ignoringAntMatchers("/**");
+            .failureUrl("/account/login?fail=true")
+            .and().csrf().ignoringAntMatchers("/**");
     }
 }
