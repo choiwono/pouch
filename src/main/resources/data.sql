@@ -90,4 +90,8 @@ INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (2, 1);
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (3, 4);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (3, 7);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (1, 6);
 
