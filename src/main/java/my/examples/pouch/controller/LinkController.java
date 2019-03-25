@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,13 +34,12 @@ public class LinkController {
                                  Model model){
         List<Link> links = linkService.getMyPouchByCategory(categoryId,principal.getName());
         List<Category> categories = categoryService.findMyCategoryList(principal.getName());
-        //Account account = accountService.findAccountByEmail(principal.getName());
-        List<Tag> tags = tagService.findMyTagListByAccountId(principal.getName());
-        //System.out.println(account.getId());
+        List<Tag> tags = tagService.findMyTagListByAccountId(principal.getName(), categoryId);
 
         model.addAttribute("links",links);
         model.addAttribute("categories",categories);
         model.addAttribute("selectCategory",categoryId);
+        model.addAttribute("tags",tags);
         return "/pouch/list";
     }
 }
