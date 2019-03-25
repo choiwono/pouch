@@ -49,12 +49,12 @@ public class BoardRepositoryTest {
     }
 
     // board id에 해당하는 태그 목록을 가져온다
-    @Test
+    /*@Test
     public void getTagByBoardId() throws Exception {
-        List<Tag> all = boardRepository.getTagByBoardId(4L);
+        List<Tag> all = boardRepository.getTagsByLinkId(4L);
         for (Tag list : all) {
             System.out.println(list.getTagName());
         }
-    }
+    }*/
 
 }
