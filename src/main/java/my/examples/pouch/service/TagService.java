@@ -13,7 +13,7 @@ import java.util.List;
 public class TagService {
     private final TagRepository tagRepository;
 
-    public List<Tag> findMyTagListByAccountId(String email) {
-        return tagRepository.findMyTagListByAccountId(email);
+    public List<Tag> findMyTagListByAccountId(String email, Long id) {
+        return tagRepository.findMyTagListByAccountId(email,id);
     }
 }
