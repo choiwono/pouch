@@ -19,8 +19,8 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
     /*@Query("SELECT B.tags FROM Link B inner join fetch B.tags where B.id=:id")
     List<Tag> getTagsByLinkId(@Param("id") Long id);*/
 
-    @Query("SELECT L FROM Link L inner join fetch L.category" +
-//           " inner join fetch L.tags"+
+    @Query("SELECT DISTINCT L FROM Link L inner join fetch L.category" +
+           " left join fetch L.tags"+
            " WHERE L.category.id=:categoryId and L.email=:email")
     List<Link> getMyPouchByCategory(@Param("categoryId") Long categoryId,@Param("email") String email);
 }

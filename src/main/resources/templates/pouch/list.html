@@ -37,42 +37,82 @@
                             <div class="card-body p-2">
                                 <p class="card-title m-2 d-flex">
                                     <a th:href="${link.url}" class="link-title" th:text="${link.title}"></a>
-                                <p class="m-2" th:text="${link.regDate}"></p>
+                                <p class="m-2" style="font-size:80%;" th:text="${link.regDate}"></p>
                                 </p>
                             </div>
-                            <div>
-                                <!--<th:block th:each="i:${#numbers.sequence(0,#arrays.length(link.tags)-1)}">-->
-                                    <!--<span th:text="${link.tags[i].tagName}"></span>-->
-                                <!--</th:block>-->
+                            <div class="card-body p-3">
+                                <th:block th:if="${not #lists.isEmpty(link.tags)}"
+                                          th:each="i:${#numbers.sequence(0,#arrays.length(link.tags)-1)}">
+                                    <input type="button" class="btn btn-outline-dark btn-sm"
+                                           th:value="${link.tags[i].tagName}">
+                                </th:block>
                             </div>
-                            <div class>
-                                <a class="nav-link cursor-pointer" data-toggle="modal" th:data-target="'#modal'+${link.id}">
-                                    수정
-                                </a>
-                                <!-- Modal -->
-                                <div class="modal fade" th:id="'modal'+${link.id}" role="dialog">
-                                    <div class="modal-dialog">
+                            <div class="card-body p-4">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li class="nav-item cursor-pointer" >
+                                        <i class="fas fa-tag"></i>
+                                    </li>
+                                    <li class="nav-item cursor-pointer" data-toggle="modal"
+                                       th:data-target="'#modal'+${link.id}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </li>
+                                    <li class="nav-item cursor-pointer" data-toggle="modal"
+                                       data-target="#deleteModal">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </li>
+                                    <!--제목 수정 모달-->
+                                    <div class="modal fade" th:id="'modal'+${link.id}" role="dialog">
+                                        <div class="modal-dialog">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="title">제목 수정</h5>
-                                                <button type="button" class="close" data-dismiss="modal">&times;
-                                                </button>
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="title">제목 수정</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/link/changeTitle">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="title"
+                                                                   th:value="${link.title}">
+                                                            <input type="hidden" th:value="${link.id}" name="id">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-outline-primary">수정
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                                <form method="post" action="/link/changeTitle">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="title"
-                                                               th:value="${link.title}">
+                                        </div>
+                                    </div>
+                                    <!--링크 삭제 모달-->
+                                    <div class="modal fade" id="deleteModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="title">링크 삭제</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/link/deleteLink">
                                                         <input type="hidden" th:value="${link.id}" name="id">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">수정</button>
-                                                </form>
+                                                        <div class="form-group">
+                                                            삭제하시겠습니까?
+                                                        </div>
+                                                        <button type="submit" class="btn btn-outline-primary">삭제
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-dark"
+                                                                data-dismiss="modal">취소
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

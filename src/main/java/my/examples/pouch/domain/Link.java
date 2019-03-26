@@ -26,10 +26,10 @@ public class Link {
     private Date regDate;
     private Long repository;
 
-    @Column(name="board_option")
-    private Long boardOption;
+    @Column(name="link_option")
+    private Long linkOption;
 
-    @ManyToMany(mappedBy = "links")
+    @ManyToMany(mappedBy = "links", cascade = CascadeType.REMOVE)
     private Set<Tag> tags;
 
     @ManyToOne(fetch=FetchType.LAZY)
