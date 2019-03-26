@@ -23,4 +23,11 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
 //           " inner join fetch L.tags"+
            " WHERE L.category.id=:categoryId and L.email=:email")
     List<Link> getMyPouchByCategory(@Param("categoryId") Long categoryId,@Param("email") String email);
+
+    @Query(value = "SELECT l.* FROM Link l " +
+            "inner join tag_mapping tp ON L.id=tp.board_id " +
+            "inner join tag t ON tp.tag_id=t.id " +
+            "WHERE l.category_id=:categoryId and t.tag_name like CONCAT('%',:tagName,'%')",
+            nativeQuery = true)
+    List<Link> getLinkByTagName(@Param("categoryId") Long categoryId,@Param("tagName") String tagName);
 }
