@@ -3,9 +3,7 @@ package my.examples.pouch.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -26,8 +24,8 @@ public class Link {
     private Date regDate;
     private Long repository;
 
-    @Column(name="board_option")
-    private Long boardOption;
+    @Column(name="link_option")
+    private Long linkOption;
 
     @ManyToMany(mappedBy = "links")
     private Set<Tag> tags;

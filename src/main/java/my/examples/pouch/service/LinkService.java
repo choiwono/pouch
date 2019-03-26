@@ -21,6 +21,10 @@ public class LinkService {
         return linkRepository.getOne(id);
     }
 
+    public List<Link> getLinkByTagName(Long categoryId, String tagName) {
+        return linkRepository.getLinkByTagName(categoryId,tagName);
+    }
+
     /*public List<Tag> getTags(Long id) {
         return linkRepository.getTagsByLinkId(id);
     }*/

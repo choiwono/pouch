@@ -28,6 +28,38 @@ function addCategory(id) {
     });
 }
 
+function findLinksByTag(id) {
+    $('.card').remove();
+    var tagName = $('#tag'+id).html();
+    var categoryId = $('#selectCategory option:selected').val();
+    //console.log(tagName);
+    var JSONObject= {
+        "tagName" : tagName,
+        "categoryId" : categoryId
+    };
+    var jsonData = JSON.stringify( JSONObject );
+    //console.log(jsonData);
+    $.ajax({
+        url : '/api/tag/search',
+        method : 'post',
+        data : jsonData,
+        dataType: "text",
+        contentType: "application/json",
+        success : function (data) {
+            var jsonData = JSON.parse(data);
+            console.log(jsonData);
+            for(var i=0; i<jsonData.length; i++) {
+                console.log(jsonData[i].id)
+                $("#categorySelect").append('<option class="category" value=' + jsonData[i].id + '>' + jsonData[i].name + '</option>');
+            }
+        },
+        error : function (data) {
+            alert("통신실패. 다시 시도해주시길 바랍니다.");
+        },
+        timeout: 3000
+    });
+}
+
 function moveUrl(url){
     if(url == 1) {
         document.location.href = "/cart/list";
