@@ -57,4 +57,13 @@ public class BoardRepositoryTest {
         }
     }*/
 
+    @Test
+    public void getPouchByCategory() throws Exception {
+        List<Link> all = boardRepository.getMyPouchByCategory(3L, "jaehee@gmail.com");
+        for(Link link : all){
+            System.out.println(link.getTitle());
+        }
+
+    }
+
 }
