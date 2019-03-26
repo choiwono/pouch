@@ -56,9 +56,6 @@ public class LinkController {
     public String changeTitle(Long id, String title) {
 
         Link link = linkService.getLinkById(id);
-        System.out.println("test");
-        System.out.println(link.getTitle());
-
         link.setId(id);
         link.setTitle(title);
         linkRepository.save(link);
@@ -67,4 +64,13 @@ public class LinkController {
 
         return "redirect:/link/view/"+categoryId;
     }
-}
+
+    @PostMapping(value = "/deleteLink")
+    public String deleteLink(Long id){
+        Link link = linkService.getLinkById(id);
+        linkRepository.delete(link);
+        Long categoryId = link.getCategory().getId();
+
+        return "redirect:/link/view/"+categoryId;
+
+    }

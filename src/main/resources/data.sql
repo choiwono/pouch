@@ -216,8 +216,21 @@ INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (5, 7);
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (5, 8);
+
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (8, 8);
+
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (6, 10);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (6, 11);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (6, 13);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (7, 12);
+INSERT INTO tag_mapping(tag_id, board_id)
+VALUES (7, 10);
+
 
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (6, 10);
