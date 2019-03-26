@@ -42,11 +42,11 @@ public class CrawlingController {
         link.setTitle(content);
         link.setUrl(url);
         link.setEmail(principal.getName());
-        link.setBoardOption(0L);
+        link.setLinkOption(0L);
         link.setRepository(account.getId());
         link.setCategory(category);
         link.setAccount(account);
         linkRepository.save(link);
-        return "index";
+        return "redirect:/link/view/"+categoryId;
     }
 }

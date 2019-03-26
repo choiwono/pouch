@@ -1,5 +1,6 @@
 package my.examples.pouch;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
@@ -15,6 +16,11 @@ public class PouchApplication implements WebMvcConfigurer {
 				new SpringApplication(PouchApplication.class);
 		springApplication.addListeners(new ApplicationPidFileWriter());
 		springApplication.run(args);
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 }
 
