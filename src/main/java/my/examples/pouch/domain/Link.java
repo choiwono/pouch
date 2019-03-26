@@ -3,9 +3,7 @@ package my.examples.pouch.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 

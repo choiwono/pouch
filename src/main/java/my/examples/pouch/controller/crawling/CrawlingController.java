@@ -47,6 +47,6 @@ public class CrawlingController {
         link.setCategory(category);
         link.setAccount(account);
         linkRepository.save(link);
-        return "index";
+        return "redirect:/link/view/"+categoryId;
     }
 }
