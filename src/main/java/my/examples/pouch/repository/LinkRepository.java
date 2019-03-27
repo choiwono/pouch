@@ -26,15 +26,18 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
            " WHERE L.category.id=:categoryId and L.email=:email")
     List<Link> getMyPouchByCategory(@Param("categoryId") Long categoryId,@Param("email") String email);
 
+    /*@Query(value = "SELECT L FROM Link L " +
+                   "INNER join fetch L.tags tags " +
+                   "WHERE L.category.id=:categoryId and tags.tagName like CONCAT('%',:tagName,'%')")*/
     @Query(value = "SELECT l.* FROM Link l " +
-            "inner join tag_mapping tp ON L.id=tp.board_id " +
-            "inner join tag t ON tp.tag_id=t.id " +
-            "WHERE l.category_id=:categoryId and t.tag_name like CONCAT('%',:tagName,'%')",
-            nativeQuery = true)
+                   "INNER JOIN tag_mapping tp ON L.id=tp.board_id " +
+                   "INNER JOIN tag t ON tp.tag_id=t.id " +
+                   "WHERE l.category_id=:categoryId AND t.tag_name LIKE CONCAT('%',:tagName,'%')",
+                   nativeQuery = true)
     List<Link> getLinkByTagName(@Param("categoryId") Long categoryId,@Param("tagName") String tagName);
 
     @Modifying
     @Transactional
     @Query(value = "DELETE tp FROM tag_mapping AS tp WHERE tp.board_id=:linkId", nativeQuery = true)
-    void deleteTagMappingByLinkId(@Param("linkId")Long linkId);
+    void deleteTagMappingByLinkId(@Param("linkId") Long linkId);
 }

@@ -27,7 +27,7 @@ function addCategory(id) {
         timeout: 3000
     });
 }
-
+/*
 function findLinksByTag(id) {
     $('.card').remove();
     var tagName = $('#tag'+id).html();
@@ -50,6 +50,78 @@ function findLinksByTag(id) {
             console.log(jsonData);
             for(var i=0; i<jsonData.length; i++) {
                 console.log(jsonData[i].id);
+            }
+        },
+        error : function (data) {
+            alert("통신실패. 다시 시도해주시길 바랍니다.");
+        },
+        timeout: 3000
+    });
+}*/
+
+function findLinksByTag(id){
+    $('ul > li').removeClass('active');
+    $('#tag'+id).addClass('active');
+
+    $('.card-list').remove();
+
+    var tagName = $('#tag'+id).data('name');
+    var categoryId = $('#selectCategory option:selected').val();
+
+    var JSONObject= {
+        "tagName" : tagName,
+        "categoryId" : categoryId
+    };
+    var jsonData = JSON.stringify( JSONObject );
+
+    $.ajax({
+        url : '/api/tag/search',
+        method : 'post',
+        data : jsonData,
+        dataType: "text",
+        contentType: "application/json",
+        success : function (data) {
+            var jsonData = JSON.parse(data);
+            console.log(jsonData);
+            for(var i=0; i<jsonData.length; i++) {
+                $("#card-row").append(
+                    '<div class="col-md-4 mb-4 card-list">' +
+                        '<div class="card mb-4 shadow-sm links">'+
+                           '<svg class="bd-placeholder-img card-img-top" width="100%" height="225">' +
+                                '<title>Placeholder</title>'+
+                                '<rect width="100%" height="100%" fill="#55595c"></rect>'+
+                                '<text x="36.5%" y="50%" fill="#eceeef" dy=".3em">Thumnail</text>'+
+                           '</svg>'+
+                           '<div class="card-body p-2">'+
+                              '<p class="card-title m-2 d-flex">'+
+                              '<a th:href="${link.url}" class="link-title">'+jsonData[i].title+'</a>'+
+                              '<p class="m-2" style="font-size:80%;">'+jsonData[i].regDate.substring(0,10)+'</p>'+
+                              '</p>'+
+                           '</div>'+
+                           '<div class="card-body p-3" id="card-tag'+jsonData[i].id+'">'+
+                           '</div>'+
+                           '<div class="card-body p-2">'+
+                               '<ul class="nav nav-pills nav-justified">'+
+                                  '<li class="nav-item cursor-pointer">'+
+                                    '<i class="fas fa-tag"></i>'+
+                                  '</li>'+
+                                  '<li class="nav-item cursor-pointer" data-toggle="modal"'+
+                                  'data-target="#modal'+jsonData[i].id+'">'+
+                                    '<i class="fas fa-pencil-alt"></i>'+
+                                  '</li>'+
+                                  '<li class="nav-item cursor-pointer" data-toggle="modal"'+
+                                  'data-target="#deleteModal'+jsonData[i].id+'">'+
+                                  '<i class="fas fa-trash-alt"></i>'+
+                                  '</li>'+
+                               '</ul>'+
+                           '</div>'+
+                        '</div>'+
+                    '</div>')
+                    for(var j=0; j<jsonData[i].tags.length; j++){
+                        $("#card-tag"+jsonData[i].id).append(
+                            '<input type="button" class="btn btn-outline-dark btn-sm" value="' + jsonData[i].tags[j].tagName + '">'
+                        )
+                    }
             }
         },
         error : function (data) {
@@ -87,36 +159,6 @@ function showModal(option){
         },
         timeout: 3000
     });
-}
-
-function amountModify(id, option){
-    var amount = $('#'+id).val();
-    var int = parseInt($('#'+id).val());
-
-    if(option == "plus"){
-        if(amount == 10){
-            alert("최대개수입니다");
-            return;
-        }
-        $('#'+id).val(int+1);
-    } else {
-        if(amount == 1){
-            alert("1개이상 담아주세요.");
-            return;
-        }
-        $('#'+id).val(int-1);
-    }
-}
-
-function changeProduct(id){
-    var amount = $('#'+id).val();
-    var totalPrice = 0;
-    var size = $("input[name='price']").length;
-    for(i=0; i<size; i++){
-        totalPrice += $("input[name='amount']").eq(i).prop("value") * $("input[name='price']").eq(i).prop("value");
-    }
-    $('#span-'+id).html("수량 : "+amount+"개");
-    $("#totalPrice").html(totalPrice);
 }
 
 function selectChange(){
