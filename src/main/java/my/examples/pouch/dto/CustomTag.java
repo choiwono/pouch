@@ -1,13 +1,13 @@
 package my.examples.pouch.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.util.*;
 
 @Data
+@AllArgsConstructor
 public class CustomTag {
     private Long id;
-    private String email;
     private String tagName;
-    private int options;
-    private Date regDate;
+    private int cnt;
 }

@@ -12,13 +12,12 @@ import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
+import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -38,16 +37,18 @@ public class LinkController {
 
     @GetMapping(value = "/view/{id}")
     public String selectCategory(@PathVariable(value = "id") Long categoryId,
+                                 @RequestParam(name="t", required = false) String tagName,
                                  Principal principal,
                                  Model model) {
+        System.out.println(tagName);
         List<Link> links = linkService.getMyPouchByCategory(categoryId, principal.getName());
         List<Category> categories = categoryService.findMyCategoryList(principal.getName());
-        List<CustomTag> tags = tagService.findMyTagListByAccountId(principal.getName(), categoryId);
+        List<CustomTagDto> tags = tagService.findMyTagListByAccountId(principal.getName(), categoryId);
 
-        model.addAttribute("links",links);
-        model.addAttribute("categories",categories);
-        model.addAttribute("selectCategory",categoryId);
-        model.addAttribute("tags",tags);
+        model.addAttribute("links", links);
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectCategory", categoryId);
+        model.addAttribute("tags", tags);
 
         return "/pouch/list";
     }
@@ -62,15 +63,16 @@ public class LinkController {
 
         Long categoryId = link.getCategory().getId();
 
-        return "redirect:/link/view/"+categoryId;
+        return "redirect:/link/view/" + categoryId;
     }
 
     @PostMapping(value = "/deleteLink")
-    public String deleteLink(Long id){
+    public String deleteLink(Long id) {
         Link link = linkService.getLinkById(id);
         linkRepository.deleteTagMappingByLinkId(id);
         linkRepository.delete(link);
         Long categoryId = link.getCategory().getId();
+
 
         return "redirect:/link/view/"+categoryId;
 

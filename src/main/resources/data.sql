@@ -220,7 +220,6 @@ VALUES (5, 8);
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (8, 8);
 
-
 INSERT INTO tag_mapping(tag_id, board_id)
 VALUES (6, 10);
 INSERT INTO tag_mapping(tag_id, board_id)
