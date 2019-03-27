@@ -71,36 +71,37 @@
                                         <i class="fas fa-pencil-alt"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
-                                       data-target="#deleteModal" data-whatever="@mdo">
+                                       th:data-target="'#deleteModal'+${link.id}">
+
                                         <i class="fas fa-trash-alt"></i>
                                     </li>
                                 </ul>
                             </div>
                             </div>
-                            <!--링크 삭제 모달-->
-                            <div class="modal fade" id="deleteModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="title">링크 삭제</h5>
-                                            <button type="button" class="close" data-dismiss="modal">&times;
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post" action="/link/deleteLink">
-                                                <input type="hidden" th:value="${link.id}" name="id">
-                                                <div class="form-group">
-                                                    삭제하시겠습니까?
+ 
+                                    <!--링크 삭제 모달-->
+                                    <div class="modal fade" th:id="deleteModal+${link.id}" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="title">링크 삭제</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                                    </button>
                                                 </div>
-                                                <button type="submit" class="btn btn-outline-primary">삭제
-                                                </button>
-                                                <button type="button" class="btn btn-outline-dark"
-                                                        data-dismiss="modal">취소
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/link/deleteLink">
+                                                        <input type="hidden" th:value="${link.id}" name="id">
+                                                        <div class="form-group">
+                                                            삭제하시겠습니까?
+                                                        </div>
+                                                        <button type="submit" class="btn btn-outline-primary">삭제
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-dark"
+                                                                data-dismiss="modal">취소
+                                                        </button>
+                                                    </form>
+
                                 </div>
                             </div>
                             <!--제목 수정 모달-->
