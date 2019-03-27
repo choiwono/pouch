@@ -45,6 +45,7 @@
             </div>
         </div>
     </nav>
+    <!-- 공통 모달 박스 -->
     <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -71,9 +72,10 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
         $(function() {
-            $('[data-toggle="slide-collapse"]').on('click', function() {
+            /*$('[data-toggle="slide-collapse"]').on('click', function() {
                 $navMenuCont = $($(this).data('target'));
                 $navMenuCont.animate({
                     'width': 'toggle'
@@ -85,7 +87,7 @@
             $(".menu-overlay").click(function(event) {
                 $(".navbar-toggle").trigger("click");
                 $(".menu-overlay").fadeOut(500);
-            });
+            });*/
             $("form").each(function () {
                 $(this).validate({
                     rules: {

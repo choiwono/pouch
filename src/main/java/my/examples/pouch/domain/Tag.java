@@ -2,6 +2,7 @@ package my.examples.pouch.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "tag")
 @Getter
 @Setter
+@ToString
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
