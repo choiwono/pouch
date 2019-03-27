@@ -3,6 +3,7 @@ package my.examples.pouch.controller;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.*;
 import my.examples.pouch.dto.Joinform;
+import my.examples.pouch.repository.CategoryRepository;
 import my.examples.pouch.service.*;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,12 +13,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final CategoryRepository categoryRepository;
 
     @GetMapping("/login")
     public String login(
@@ -60,4 +63,12 @@ public class AccountController {
         Account result = accountService.join(account);
         return "/account/welcome";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(name="searchType")int searchType,
+                         @RequestParam(name="searchStr")String searchStr, Model model){
+
+    List<Category> categoryList = categoryRepository.searchCategory(searchStr);
+    model.addAttribute("categoryList", categoryList);
+    return "account/search";}
 }

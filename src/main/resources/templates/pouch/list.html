@@ -6,7 +6,7 @@
 </th:block>
 <th:block layout:fragment="script">
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $('#exampleModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) // Button that triggered the modal
                 var recipient = button.data('whatever') // Extract info from data-* attributes
@@ -62,11 +62,11 @@
                             </div>
                             <div class="card-body p-2">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li class="nav-item cursor-pointer" >
+                                    <li class="nav-item cursor-pointer">
                                         <i class="fas fa-tag"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
-                                       th:data-target="'#modal'+${link.id}">
+                                        th:data-target="'#modal'+${link.id}">
                                         <i class="fas fa-pencil-alt"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
@@ -133,4 +133,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
