@@ -41,7 +41,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 mb-4">
-                <div class="card mb-4 shadow-sm">
+                <div class="card mb-4 shadow-sm" sec:authorize="isAuthenticated()">
                     <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                          xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
                          role="img" aria-label="Placeholder: Thumbnail" >
@@ -50,14 +50,10 @@
                         <text x="36.5%" y="50%" fill="#eceeef" dy=".3em" >카테고리 추가</text>
                     </svg>-->
                     <div class="card-img-top d-flex align-items-center cursor-pointer" data-toggle="modal"
-                         data-target="#myModal" style="width:100%; height:225px; opacity:0.5;">
-                        <img class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png">
+                         data-target="#myModal" style="width:100%; height:225px; opacity:0.5;" >
+                        <img class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
                     </div>
-                    <!--<div class="card-body p-2">-->
-                        <!--<p class="card-title m-2 d-flex">
-                            <a class="link-title" data-toggle="modal"
-                               data-target="#myModal">카테고리 추가</a>
-                        </p>-->
+
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">

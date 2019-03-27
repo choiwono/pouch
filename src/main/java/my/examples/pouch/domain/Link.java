@@ -27,7 +27,7 @@ public class Link {
     @Column(name="link_option")
     private Long linkOption;
 
-    @ManyToMany(mappedBy = "links", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "links")
     private Set<Tag> tags;
 
     @ManyToOne(fetch=FetchType.LAZY)
