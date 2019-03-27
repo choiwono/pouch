@@ -11,7 +11,11 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <div class="btn-group dropdown-menu-sm-left">
-                            <form method="get" class="d-flex" action="/product/list">
+                            <form method="get" class="d-flex" action="/account/search">
+                                <select name="searchType" class="d-none">
+                                    <option value="1">카테고리</option>
+                                    <option value="2">태그</option>
+                                </select>
                                 <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
                                 <a id="search-btn" class="nav-link cursor-pointer" th:onclick="'javascript:showSearch()'">
                                     <i class="fas fa-search"></i>
