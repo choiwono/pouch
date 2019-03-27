@@ -1,6 +1,5 @@
 package my.examples.pouch.service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.CustomTag;
@@ -9,8 +8,6 @@ import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
