@@ -49,8 +49,7 @@ function findLinksByTag(id) {
             var jsonData = JSON.parse(data);
             console.log(jsonData);
             for(var i=0; i<jsonData.length; i++) {
-                console.log(jsonData[i].id)
-                $("#categorySelect").append('<option class="category" value=' + jsonData[i].id + '>' + jsonData[i].name + '</option>');
+                console.log(jsonData[i].id);
             }
         },
         error : function (data) {
@@ -128,8 +127,7 @@ function selectChange(){
 function showSearch(){
     var search = $("#search").hasClass('d-none');
     var value = $("#search").val();
-    console.log(search);
-    console.log(value);
+
     if(search){
         $("#search").addClass("d-block");
         $("#search").removeClass("d-none");
