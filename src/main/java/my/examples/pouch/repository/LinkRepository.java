@@ -3,8 +3,10 @@ package my.examples.pouch.repository;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +32,9 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
             "WHERE l.category_id=:categoryId and t.tag_name like CONCAT('%',:tagName,'%')",
             nativeQuery = true)
     List<Link> getLinkByTagName(@Param("categoryId") Long categoryId,@Param("tagName") String tagName);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE tp FROM tag_mapping AS tp WHERE tp.board_id=:linkId", nativeQuery = true)
+    void deleteTagMappingByLinkId(@Param("linkId")Long linkId);
 }

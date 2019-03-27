@@ -68,9 +68,10 @@ public class LinkController {
     @PostMapping(value = "/deleteLink")
     public String deleteLink(Long id){
         Link link = linkService.getLinkById(id);
+        linkRepository.deleteTagMappingByLinkId(id);
         linkRepository.delete(link);
         Long categoryId = link.getCategory().getId();
 
         return "redirect:/link/view/"+categoryId;
 
-    }
+    }}
