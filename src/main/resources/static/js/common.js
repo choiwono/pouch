@@ -1,32 +1,33 @@
 function addCategory(id) {
-    var amount = $('#'+id).val();
-    if(amount == null || 0){
+    var amount = $('#' + id).val();
+    if (amount == null || 0) {
         amount = 1;
     }
-    var JSONObject= {
-        "categoryId" : id,
-        "quantity" : amount
+    var JSONObject = {
+        "categoryId": id,
+        "quantity": amount
     };
-    var jsonData = JSON.stringify( JSONObject );
+    var jsonData = JSON.stringify(JSONObject);
     $.ajax({
-        url : '/category',
-        method : 'post',
-        data : jsonData,
+        url: '/category',
+        method: 'post',
+        data: jsonData,
         dataType: "text",
         contentType: "application/json",
-        success : function (data) {
-            if(data == "success"){
+        success: function (data) {
+            if (data == "success") {
                 alert("카테고리가 추가되었습니다");
-            } else if(data == "fail"){
+            } else if (data == "fail") {
                 alert("오류가 발생했습니다.");
             }
         },
-        error : function (data) {
+        error: function (data) {
             alert("통신실패. 다시 시도해주시길 바랍니다.");
         },
         timeout: 3000
     });
 }
+function
 /*
 function findLinksByTag(id) {
     $('.card').remove();
@@ -102,7 +103,8 @@ function findLinksByTag(id){
                            '</div>'+
                            '<div class="card-body p-2">'+
                                '<ul class="nav nav-pills nav-justified">'+
-                                  '<li class="nav-item cursor-pointer">'+
+                                  '<li class="nav-item cursor-pointer" data-toggle="modal"'+
+                                  'data-target="#tagModal'+jsonData[i].id+'">'+
                                     '<i class="fas fa-tag"></i>'+
                                   '</li>'+
                                   '<li class="nav-item cursor-pointer" data-toggle="modal"'+
@@ -128,6 +130,12 @@ function findLinksByTag(id){
             alert("통신실패. 다시 시도해주시길 바랍니다.");
         },
         timeout: 3000
+    });
+}
+
+function addTagItem(id){
+    $(".token-input-input-token").each(function(){
+        console.log("2. $(this).text() : "+$('p').text());
     });
 }
 
