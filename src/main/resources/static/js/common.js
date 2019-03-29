@@ -27,38 +27,59 @@ function addCategory(id) {
         timeout: 3000
     });
 }
-function
-/*
-function findLinksByTag(id) {
-    $('.card').remove();
-    var tagName = $('#tag'+id).html();
-    var categoryId = $('#selectCategory option:selected').val();
-    //console.log(tagName);
-    var JSONObject= {
-        "tagName" : tagName,
-        "categoryId" : categoryId
-    };
-    var jsonData = JSON.stringify( JSONObject );
-    //console.log(jsonData);
-    $.ajax({
-        url : '/api/tag/search',
-        method : 'post',
-        data : jsonData,
-        dataType: "text",
-        contentType: "application/json",
-        success : function (data) {
-            var jsonData = JSON.parse(data);
-            console.log(jsonData);
-            for(var i=0; i<jsonData.length; i++) {
-                console.log(jsonData[i].id);
-            }
-        },
-        error : function (data) {
-            alert("통신실패. 다시 시도해주시길 바랍니다.");
-        },
-        timeout: 3000
-    });
-}*/
+
+function tagKeyUp(key,value){
+    var keyword = $("#"+value.id).val().replace(",","");
+    var tagId = $("#"+value.id);
+
+    if(key.keyCode == 188 || key.keyCode == 32 || key.keyCode == 13){
+        if(keyword.length > 2) {
+            tagId.before("<p class='d-inline-block p-2 border'>"+keyword+'<span type="button" class="close tag-close" onclick="javascript:removeTagItem(this)">x</span></p>');
+            tagId.val('');
+        }
+    }
+}
+
+function removeTagItem(value){
+    $(value).closest('p').remove();
+    $(value).remove();
+}
+
+function tagKeyDown(key,value){
+    var keyword = $("#"+value.id).val().replace(",","");
+    var tagId = $("#"+value.id);
+    if(key.keyCode == 8 && (keyword == '' || keyword == null || keyword == undefined)){
+        tagId.prev().remove();
+    }
+}
+
+function showTagModal(id){
+    var cnt = $("#tagModal"+id).length;
+    //console.log(cnt);
+    if(cnt == 0) {
+        $(".container").append(
+            '<div class="modal fade" id="tagModal' + id + '" role="dialog">' +
+                '<div class="modal-dialog" id="tagModal-dialog' + id + '">' +
+                    '<div class="modal-content">' +
+                        '<div class="modal-body">' +
+                            '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                                '<h5 class="title">태그편집</h5>' +
+                                '<div class="form-group">' +
+                                    '<ul class="edit-tag-list w-75">' +
+                                        '<li class="token-input-input-token w-100" id="addTagItem'+id+'">' +
+                                            '<input type="text" onkeydown="tagKeyDown(event,this)" onkeyup="tagKeyUp(event,this)" class="border-0" style="outline:none;" id="tagText' + id + '" name="tagName">' +
+                                        '</li>' +
+                                    '</ul>' +
+                                    '<button type="button" onclick="javascript:addTagItem(' + id + ')" class="btn btn-primary">저장</button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>'
+        );
+    }
+    $('#tagModal'+id).modal('show');
+}
 
 function findLinksByTag(id){
     $('ul > li').removeClass('active');
@@ -95,7 +116,7 @@ function findLinksByTag(id){
                            '</svg>'+
                            '<div class="card-body p-2">'+
                               '<p class="card-title m-2 d-flex">'+
-                              '<a th:href="${link.url}" class="link-title">'+jsonData[i].title+'</a>'+
+                              '<a href="'+jsonData[i].url+'" class="link-title">'+jsonData[i].title+'</a>'+
                               '<p class="m-2" style="font-size:80%;">'+jsonData[i].regDate.substring(0,10)+'</p>'+
                               '</p>'+
                            '</div>'+
@@ -103,8 +124,7 @@ function findLinksByTag(id){
                            '</div>'+
                            '<div class="card-body p-2">'+
                                '<ul class="nav nav-pills nav-justified">'+
-                                  '<li class="nav-item cursor-pointer" data-toggle="modal"'+
-                                  'data-target="#tagModal'+jsonData[i].id+'">'+
+                                  '<li class="nav-item cursor-pointer" onclick="showTagModal('+jsonData[i].id+')">'+
                                     '<i class="fas fa-tag"></i>'+
                                   '</li>'+
                                   '<li class="nav-item cursor-pointer" data-toggle="modal"'+
@@ -134,8 +154,32 @@ function findLinksByTag(id){
 }
 
 function addTagItem(id){
-    $(".token-input-input-token").each(function(){
-        console.log("2. $(this).text() : "+$('p').text());
+    var tags = new Array();
+    $("#addTagItem"+id+" p").each(function(){
+        tags.push($(this).text().replace("x",""));
+    });
+    var JSONObject = {
+        "id": id,
+        "tags": tags
+    };
+    var jsonData = JSON.stringify(JSONObject);
+    $.ajax({
+        url: '/api/tag/add',
+        method: 'post',
+        data: jsonData,
+        dataType: "text",
+        contentType: "application/json",
+        success: function (data) {
+            if (data == "success") {
+                alert("태그추가 성공!!");
+            } else if(data == "false"){
+                alert("태그추가 실패!!");
+            }
+        },
+        error: function (data) {
+            alert("통신실패. 다시 시도해주시길 바랍니다.");
+        },
+        timeout: 3000
     });
 }
 
