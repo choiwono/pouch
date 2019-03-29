@@ -5,38 +5,6 @@
 <th:block layout:fragment="css">
 </th:block>
 <th:block layout:fragment="script">
-    <script type="text/javascript">
-        $(function () {
-            $(document).ready(function(){
-                $("input[name=tagName]").keyup(function(key){
-                    var keyword = $("#tagInput").val().replace(",","");
-                    if(key.keyCode == 13){
-                        if(keyword.length > 2) {
-                            $("input[name=tagName]").before("<p class='d-inline-block p-2 border'>" + keyword + "</p>");
-                            $("input[name=tagName]").val('');
-                        }
-                    } else if(key.keyCode == 188){
-                        if(keyword.length > 2) {
-                            $("input[name=tagName]").before("<p class='d-inline-block p-2 border'>" + keyword + "</p>");
-                            $("input[name=tagName]").val('');
-                        }
-                    } else if(key.keyCode == 32){
-                        if(keyword.length > 2) {
-                            $("input[name=tagName]").before("<p class='d-inline-block p-2 border'>" + keyword + "</p>");
-                            $("input[name=tagName]").val('');
-                        }
-                    }
-                    $("input[name=tagName]").val().replace(",","");
-                })
-                $("input[name=tagName]").keydown(function(key) {
-                    var keyword = $("input[name=tagName]").val().replace(",","");
-                    if(key.keyCode == 8 && (keyword == '' || keyword == null || keyword == undefined)){
-                        $("input[name=tagName]").prev().remove();
-                    }
-                });
-            });
-        });
-    </script>
 </th:block>
 <div layout:fragment="content">
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
@@ -82,8 +50,7 @@
                             </div>
                             <div class="card-body p-2">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li class="nav-item cursor-pointer" data-toggle="modal"
-                                        th:data-target="'#tagModal'+${link.id}">
+                                    <li class="nav-item cursor-pointer" th:onclick="'javascript:showTagModal('+${link.id}+')'">
                                         <i class="fas fa-tag"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
@@ -151,26 +118,6 @@
                     </div>
                 </div>
                 <!--태그 수정 모달-->
-                <div class="modal fade" th:id="'tagModal'+${link.id}" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal">&times;
-                                </button>
-                                <h5 class="title">태그편집</h5>
-                                <div class="form-group">
-                                    <ul class="edit-tag-list">
-                                       <li class="token-input-input-token w-100">
-                                          <input type="text" th:id="'tagText'+${link.id}" name="tagName" autocomplete="off" style="outline: none; border:none;">
-                                          <button type="button" th:onclick="'javascript:addTag(' + ${link.id} + ')'" class="btn btn-primary">저장</button>
-                                       </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 </div>
             </div>
         </div>
