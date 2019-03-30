@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category,Long>, CategoryRepositoryCustom {
@@ -18,4 +16,14 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
     @Query("SELECT c FROM Category c inner join fetch c.account" +
            " WHERE c.account.email=:email")
     List<Category> findMyCategoryByEmail(String email);
+
+    @Query("SELECT DISTINCT c FROM Category c INNER JOIN FETCH c.links l"+
+            " INNER JOIN FETCH l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
+    List<Category> searchTag(String searchStr);
+
+    @Query("SELECT COUNT(DISTINCT c) FROM Category c INNER JOIN c.links l"+
+            " INNER JOIN l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
+    Long countSearchTag(String searchStr);
+
+
 }

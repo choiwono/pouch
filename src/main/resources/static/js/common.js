@@ -219,7 +219,7 @@ function selectChange(){
 }
 
 function showSearch(){
-    var search = $("#search").hasClass('d-none');
+    var search = $("#search").hasClass("d-none");
     var value = $("#search").val();
 
     if(search){

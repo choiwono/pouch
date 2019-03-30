@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,36 +22,37 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
     private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @GetMapping("/login")
     public String login(
-            @RequestParam(name="fail",
-                    required=false,defaultValue="false") String errorFlag,
-            Model model){
-        model.addAttribute("errorFlag",errorFlag);
+            @RequestParam(name = "fail",
+                    required = false, defaultValue = "false") String errorFlag,
+            Model model) {
+        model.addAttribute("errorFlag", errorFlag);
         return "account/login";
     }
 
     @GetMapping("/join")
-    public String joinform(){
+    public String joinform() {
         return "account/join";
     }
 
     @PostMapping("/join")
     public String joinform(@Valid Joinform joinform,
-                           BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+                           BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "account/joinfalse";
         }
 
-        if(!joinform.getPasswd().equals(joinform.getPasswd2())){
-            model.addAttribute("notEqualPassword","비밀번호가 서로 일치하지않습니다.");
+        if (!joinform.getPasswd().equals(joinform.getPasswd2())) {
+            model.addAttribute("notEqualPassword", "비밀번호가 서로 일치하지않습니다.");
             return "account/joinfalse";
         }
 
         Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
-        if(emailCheck != null){
-            model.addAttribute("duplicateEmail","중복된 이메일이 존재합니다.");
+        if (emailCheck != null) {
+            model.addAttribute("duplicateEmail", "중복된 이메일이 존재합니다.");
             return "account/joinfalse";
         }
 
@@ -65,10 +67,20 @@ public class AccountController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(name="searchType")int searchType,
-                         @RequestParam(name="searchStr")String searchStr, Model model){
+    public String search(@RequestParam(name = "searchType") int searchType,
+                         @RequestParam(name = "searchStr") String searchStr, Model model) {
+        List<Category> categoryList = new ArrayList<>();
+        long count = 0;
+        if (searchType == 1) {
+            categoryList = categoryRepository.searchCategory(searchStr);
+            count = categoryRepository.countSearchCategory(searchStr);
+        } if (searchType == 2) {
+            categoryList = categoryRepository.searchTag(searchStr);
+            count = categoryRepository.countSearchTag(searchStr);
+        }
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("count", count);
 
-    List<Category> categoryList = categoryRepository.searchCategory(searchStr);
-    model.addAttribute("categoryList", categoryList);
-    return "account/search";}
+        return "account/search";
+    }
 }
