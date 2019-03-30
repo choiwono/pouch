@@ -25,4 +25,6 @@ public class CategoryService {
     public List<Category> findMyCategoryList(String email) {
         return categoryRepository.findMyCategoryByEmail(email);
     }
+
+
 }

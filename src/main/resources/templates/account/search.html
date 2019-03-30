@@ -9,24 +9,32 @@
 <th:block layout:fragment="script">
 </th:block>
 <div layout:fragment="content">
+    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
+        <div class="container text-center">
+            <div th:if="${count > 0}" class="form-group d-flex justify-content-center">
+                    <h5 th:text="'총'+' '+${count}+'건의'+' '+'검색결과가'+' '+'있습니다'"></h5>
+            </div>
+            <div th:if="${count <= 0}" class="form-group d-flex justify-content-center">
+                <h5 th:text="'검색결과가'+' '+'없습니다'"></h5>
+            </div>
 
-    <div class="container">
-        <div class="row">
-            <div th:each="category: ${categoryList}" th:if="${not #lists.isEmpty(categoryList)}" class="col-lg-3 col-md-6 mb-4">
-                <div class="card h-100 border-0">
-                    <div class="card-body p-2">
-                        <p class="card-title m-2 d-flex justify-content-center">
-                            <a th:href="@{/main}" th:text="${category.categoryName}"></a>
-                        </p>
-                        <p class="m-2" style="font-size:80%;" th:text="${category.account.nickName}"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12" th:if="${#lists.isEmpty(categoryList)}">
-                <h3>총 0건 >.<</h3>
-            </div>
         </div>
     </div>
+    <div class="container mb-5">
+        <div class="row p-2 mb-3 rounded"  style="background-color: lightgray; min-height:100px;" th:each="category: ${categoryList}" th:if="${not #lists.isEmpty(categoryList)}">
+
+                <div class="col-md-4 sm-4 p-4 text-center">
+                    <p th:text="${category.account.nickName}" ></p>
+                </div>
+                <div class="col-md-4 sm-4 p-4 text-center font-weight-bold">
+                    <a th:href="'/category/view/'+${category.id}" class="link-title" th:text="${category.categoryName}"></a>
+                </div>
+                <div class="col-md-4 sm-4 p-4 text-center">
+                    <p style="font-size:80%;" th:text="${category.regDate}"></p>
+                </div>
+        </div>
+    </div>
+</div>
 
 </div>
 </html>
