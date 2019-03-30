@@ -2,8 +2,7 @@ package my.examples.pouch.repository.Custom;
 
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
-import my.examples.pouch.domain.Category;
-import my.examples.pouch.domain.QCategory;
+import my.examples.pouch.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import javax.persistence.EntityManager;
@@ -18,16 +17,17 @@ public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements
 
     @Override
     public List<Category> searchCategory(String searchStr) {
-
         QCategory qCategory = QCategory.category;
         JPQLQuery<Category> jpqlQuery = from(qCategory);
         jpqlQuery.where(qCategory.categoryName.contains(searchStr));
         return jpqlQuery.fetch();
     }
 
-
     @Override
-    public long getProductsCount(String searchStr) {
-        return 0;
+    public long countSearchCategory(String searchStr) {
+        QCategory qCategory = QCategory.category;
+        JPQLQuery<Category> jpqlQuery = from(qCategory);
+        jpqlQuery.where(qCategory.categoryName.contains(searchStr));
+        return jpqlQuery.fetchCount();
     }
 }

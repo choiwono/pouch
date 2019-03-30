@@ -4,20 +4,30 @@
     <nav class="navbar pb-3 pt-3 border-bottom navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/main">POUCH</a>
-            <button class="navbar-toggler" type="button" data-toggle="slide-collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="slide-collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <div class="btn-group dropdown-menu-sm-left">
+                        <div class="dropdown-menu-sm-left">
                             <form method="get" class="d-flex" action="/account/search">
-                                <select name="searchType" class="d-none">
-                                    <option value="1">카테고리</option>
-                                    <option value="2">태그</option>
-                                </select>
-                                <input type="text" id="search" name="searchStr" class="d-none rounded form-control mt-1 m-0" value=""/>
-                                <a id="search-btn" class="nav-link cursor-pointer" th:onclick="'javascript:showSearch()'">
+
+
+                                <div class="d-none" id="search">
+                                    <div class="d-flex" >
+                                        <select class="rounded" name="searchType" style="height:38px;" id="searchType">
+                                            <option value="1" >카테고리</option>
+                                            <option value="2">   태그   </option>
+                                        </select>
+                                        <input type="text" name="searchStr"
+                                               class="rounded form-control m-0 mr-2" style="height:38px;" placeholder="검색어를 입력하세요"/>
+                                    </div>
+                                </div>
+
+                                <a id="search-btn" class="nav-link cursor-pointer"
+                                   th:onclick="'javascript:showSearch()'">
                                     <i class="fas fa-search"></i>
                                 </a>
                             </form>
@@ -29,7 +39,8 @@
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a href="#" th:onclick="'javascript:showModal('+'1'+')'" class="nav-link cursor-pointer" data-toggle="modal">
+                        <a href="#" th:onclick="'javascript:showModal('+'1'+')'" class="nav-link cursor-pointer"
+                           data-toggle="modal">
                             <i class="fas fa-plus"></i>
                         </a>
                     </li>
@@ -38,11 +49,16 @@
                             <i class="fas fa-user"></i>
                         </a>
                         <div class="dropdown-menu" style="left:85%;">
-                            <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/login}" th:text="로그인"></a>
-                            <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/join}" th:text="회원가입"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/category}" th:text="카테고리"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/setting}" th:text="설정"></a>
-                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/logout}" th:text="로그아웃"></a>
+                            <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/login}"
+                               th:text="로그인"></a>
+                            <a class="dropdown-item" sec:authorize="!isAuthenticated()" th:href="@{/account/join}"
+                               th:text="회원가입"></a>
+                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/category}"
+                               th:text="카테고리"></a>
+                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/setting}"
+                               th:text="설정"></a>
+                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:href="@{/account/logout}"
+                               th:text="로그아웃"></a>
                         </div>
                     </li>
                 </ul>
@@ -50,7 +66,8 @@
         </div>
     </nav>
     <!-- 공통 모달 박스 -->
-    <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form class="form-horizontal" method="post" action="/crawling/save">
@@ -64,7 +81,8 @@
                             </select>
                         </div>
                         <div class="form-group input-group m-0">
-                            <input type="text" name="url" maxlength="255" value="" class="form-control m-0" style="max-width:500px;" placeholder="http://...">
+                            <input type="text" name="url" maxlength="255" value="" class="form-control m-0"
+                                   style="max-width:500px;" placeholder="http://...">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="submit">
                                     <i class="fas fa-plus"></i>
@@ -78,7 +96,7 @@
     </div>
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             /*$('[data-toggle="slide-collapse"]').on('click', function() {
                 $navMenuCont = $($(this).data('target'));
                 $navMenuCont.animate({
@@ -105,15 +123,13 @@
                             required: true,
                             equalTo: '#passwd'
                         },
-                    }, messages: {
-
-                    },
+                    }, messages: {},
                     highlight: function (element, errorClass, validClass) {
                         $(element.form).find("input[id=" + element.id + "]")
                             .addClass("error");
                         $(element.form).find("input[id=" + element.id + "]")
                             .removeClass("success");
-                        $(element.form).find("label[id=" + element.id + "-error"+"]")
+                        $(element.form).find("label[id=" + element.id + "-error" + "]")
                             .remove();
                     },
                     unhighlight: function (element, errorClass, validClass) {
@@ -138,13 +154,13 @@
                     }
                 });
             });
-            $('input[type="password"]').each(function (){
-               $(this).rules('add',{
-                   required: true,
-                   messages: {
-                       required: false
-                   }
-               }) ;
+            $('input[type="password"]').each(function () {
+                $(this).rules('add', {
+                    required: true,
+                    messages: {
+                        required: false
+                    }
+                });
             });
         })
     </script>

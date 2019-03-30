@@ -40,4 +40,7 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
     @Transactional
     @Query(value = "DELETE tp FROM tag_mapping AS tp WHERE tp.board_id=:linkId", nativeQuery = true)
     void deleteTagMappingByLinkId(@Param("linkId") Long linkId);
+
+    @Query("SELECT DISTINCT L FROM Link L WHERE L.category.id=:categoryId")
+    List<Link> getSearchPouchByCategory(@Param("categoryId") Long categoryId);
 }

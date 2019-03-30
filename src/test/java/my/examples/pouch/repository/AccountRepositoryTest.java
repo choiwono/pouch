@@ -29,6 +29,7 @@ public class AccountRepositoryTest {
         for(Account list : all) {
             System.out.println(list.getName());
         }
+
     }
 
     @Test

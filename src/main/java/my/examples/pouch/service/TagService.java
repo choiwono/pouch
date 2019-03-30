@@ -28,4 +28,8 @@ public class TagService {
         return tags.stream().map(tag -> modelMapper.map(tag, CustomTag.class))
                .collect(Collectors.toSet());
     }
+
+    public List<CustomTagDto> findTagListByCategoryId(Long categoryId) {
+        return tagRepository.findTagListByCategoryId(categoryId);
+    }
 }
