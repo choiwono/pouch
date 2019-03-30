@@ -3,10 +3,9 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
-import my.examples.pouch.dto.CustomCategory;
-import my.examples.pouch.dto.CustomLink;
-import my.examples.pouch.dto.CustomTag;
-import my.examples.pouch.dto.TagItem;
+import my.examples.pouch.domain.Tag;
+import my.examples.pouch.dto.*;
+import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import java.util.Set;
 public class TagApiController {
     private final LinkService linkService;
     private final TagService tagService;
+    private final TagRepository tagRepository;
 
     @PostMapping("/search")
     public List<CustomLink> myCategory(@RequestBody TagItem tagItem,
@@ -40,5 +40,22 @@ public class TagApiController {
             list.add(customLink);
         }
         return list;
+    }
+
+    @PostMapping("/add")
+    public String addTagItem(@RequestBody CustomTagItem customTagItem,
+                             Principal principal){
+        String result = "success";
+        Link link = linkService.getLinkById(customTagItem.getId());
+        Set<Link> linkset = new HashSet<>();
+        linkset.add(link);
+        for(String s : customTagItem.getTags()){
+            Tag tag = new Tag();
+            tag.setLinks(linkset);
+            tag.setTagName(s);
+            tag.setEmail(principal.getName());
+            tagRepository.save(tag);
+        }
+        return result;
     }
 }

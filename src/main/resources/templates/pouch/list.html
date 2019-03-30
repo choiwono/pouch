@@ -5,18 +5,6 @@
 <th:block layout:fragment="css">
 </th:block>
 <th:block layout:fragment="script">
-    <script type="text/javascript">
-        $(function () {
-            $('#exampleModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget) // Button that triggered the modal
-                var recipient = button.data('whatever') // Extract info from data-* attributes
-                var modal = $(this)
-                console.log(recipient);
-                modal.find('.modal-title').text('New message to ' + recipient)
-                //modal.find('.modal-body input').val(recipient)
-            })
-        });
-    </script>
 </th:block>
 <div layout:fragment="content">
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
@@ -62,7 +50,7 @@
                             </div>
                             <div class="card-body p-2">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li class="nav-item cursor-pointer">
+                                    <li class="nav-item cursor-pointer" th:onclick="'javascript:showTagModal('+${link.id}+')'">
                                         <i class="fas fa-tag"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
@@ -129,6 +117,7 @@
                         </div>
                     </div>
                 </div>
+                <!--태그 수정 모달-->
                 </div>
             </div>
         </div>
