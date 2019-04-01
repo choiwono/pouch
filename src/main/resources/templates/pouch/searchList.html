@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorator="layout/default">
 <th:block layout:fragment="css">
 </th:block>
@@ -21,7 +21,7 @@
 <div layout:fragment="content">
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
         <div class="container text-center">
-            <div class="form-group d-flex justify-content-center" >
+            <div class="form-group d-flex justify-content-center">
             </div>
         </div>
     </div>
@@ -30,7 +30,8 @@
     <div class="container">
         <div class="row">
             <ul class="list-group col-md-2">
-                <li th:each="tag : ${tags}" th:id="'tag'+${tag.id}" class="list-group-item cursor-pointer" th:text="${tag.tagName+' ('+tag.cnt+')'}"
+                <li th:each="tag : ${tags}" th:id="'tag'+${tag.id}" class="list-group-item cursor-pointer"
+                    th:text="${tag.tagName+' ('+tag.cnt+')'}"
                     th:onclick="'findLinksByTag('+${tag.id}+')'" th:data-name="${tag.tagName}"></li>
             </ul>
             <div class="col-10">
@@ -57,8 +58,10 @@
                                            th:value="${link.tags[i].tagName}">
                                 </th:block>
                             </div>
-                            <div class="card-body p-2">
-                                <ul class="nav nav-pills nav-justified">
+                            <div class="card-body p-2" >
+
+                                <ul class="nav nav-pills nav-justified"
+                                    th:if="${link.category.account.email.equals(#authentication.principal.username)}">
                                     <li class="nav-item cursor-pointer">
                                         <i class="fas fa-tag"></i>
                                     </li>
@@ -67,20 +70,21 @@
                                         <i class="fas fa-pencil-alt"></i>
                                     </li>
                                     <li class="nav-item cursor-pointer" data-toggle="modal"
-                                       th:data-target="'#deleteModal'+${link.id}">
+                                        th:data-target="'#deleteModal'+${link.id}">
                                         <i class="fas fa-trash-alt"></i>
                                     </li>
                                 </ul>
                             </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
-
-
-                </div>
             </div>
+
+
         </div>
     </div>
+</div>
+</div>
 </div>
 </div>
