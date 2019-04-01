@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginPage("/account/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
             .usernameParameter("loginId")
             .passwordParameter("loginPassword")
-            .defaultSuccessUrl("/main")
+            .defaultSuccessUrl("/main", true)
             .failureUrl("/account/login?fail=true")
             .and().csrf().ignoringAntMatchers("/**");
     }
