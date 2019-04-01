@@ -1,15 +1,12 @@
-package my.examples.pouch.repository.Custom;
+package my.examples.pouch.repository.custom;
 
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
 import my.examples.pouch.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements CategoryRepositoryCustom {
-
 
     public CategoryRepositoryImpl() {
         super(Category.class);
