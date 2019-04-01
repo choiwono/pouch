@@ -20,8 +20,6 @@ public class TagService {
 
     public List<CustomTagDto> findMyTagListByAccountId(String email, Long id) {
         return tagRepository.findMyTagListByAccountId(email,id);
-        /*return tags.stream().map(tag -> modelMapper.map(tag, CustomTag.class))
-               .collect(Collectors.toList());*/
     }
 
     public Set<CustomTag> customTagsDto(Set<Tag> tags){
