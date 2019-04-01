@@ -17,7 +17,12 @@ public class MainController {
     private final CategoryService categoryService;
 
     @GetMapping(value="/")
-    public String index(Model model){
+    public String index(Model model,
+                        Principal principal){
+        if(principal != null){
+            List<Category> categories = categoryService.findMyCategoryList(principal.getName());
+            model.addAttribute("categories",categories);
+        }
         return "index";
     }
 
