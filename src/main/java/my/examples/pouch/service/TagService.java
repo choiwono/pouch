@@ -2,7 +2,7 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.CustomTag;
+import my.examples.pouch.dto.custom.CustomTag;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
