@@ -1,14 +1,15 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.*;
+import my.examples.pouch.dto.custom.CustomLink;
+import my.examples.pouch.dto.custom.CustomTag;
+import my.examples.pouch.dto.custom.CustomTagItem;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -27,7 +28,7 @@ public class TagApiController {
 
     @PostMapping("/search")
     public List<CustomLink> myCategory(@RequestBody TagItem tagItem,
-                                            Principal principal){
+                                       Principal principal){
         List<CustomLink> list = new ArrayList<>();
         List<Link> links = linkService.getLinkByTagName(tagItem.getCategoryId(),tagItem.getTagName());
         for(int i=0; i<links.size(); i++){
