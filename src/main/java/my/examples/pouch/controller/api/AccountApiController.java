@@ -3,7 +3,7 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.dto.CustomCategory;
+import my.examples.pouch.dto.custom.CustomCategory;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
 import org.springframework.web.bind.annotation.*;

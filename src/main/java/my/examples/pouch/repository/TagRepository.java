@@ -1,13 +1,11 @@
 package my.examples.pouch.repository;
 
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.CustomTag;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.*;
 import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag,Long> {

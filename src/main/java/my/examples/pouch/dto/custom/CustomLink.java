@@ -1,4 +1,4 @@
-package my.examples.pouch.dto;
+package my.examples.pouch.dto.custom;
 
 import lombok.Data;
 import java.util.*;

@@ -62,7 +62,7 @@ public class AccountController {
         account.setNickName(joinform.getNickname());
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
-        Account result = accountService.join(account);
+        accountService.join(account);
         return "/account/welcome";
     }
 
