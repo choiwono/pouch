@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
-    private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
 
     @GetMapping("/login")
@@ -66,20 +65,13 @@ public class AccountController {
         return "/account/welcome";
     }
 
+
+
     @GetMapping("/search")
     public String search(@RequestParam(name = "searchType") int searchType,
                          @RequestParam(name = "searchStr") String searchStr, Model model) {
-        List<Category> categoryList = new ArrayList<>();
-        long count = 0;
-        if (searchType == 1) {
-            categoryList = categoryRepository.searchCategory(searchStr);
-            count = categoryRepository.countSearchCategory(searchStr);
-        } if (searchType == 2) {
-            categoryList = categoryRepository.searchTag(searchStr);
-            count = categoryRepository.countSearchTag(searchStr);
-        }
+        List<Category> categoryList = categoryService.getCategoriesBySearch(searchType, searchStr);
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("count", count);
 
         return "account/search";
     }

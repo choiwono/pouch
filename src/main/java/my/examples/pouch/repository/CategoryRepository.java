@@ -21,7 +21,4 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
             " INNER JOIN FETCH l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
     List<Category> searchTag(String searchStr);
 
-    @Query("SELECT COUNT(DISTINCT c) FROM Category c INNER JOIN c.links l"+
-            " INNER JOIN l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
-    Long countSearchTag(String searchStr);
 }

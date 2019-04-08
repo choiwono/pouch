@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
-import my.examples.pouch.domain.Tag;
 import my.examples.pouch.repository.CategoryRepository;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
