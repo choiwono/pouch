@@ -26,5 +26,14 @@ public class CategoryService {
         return categoryRepository.findMyCategoryByEmail(email);
     }
 
+    final static int SEARCH_BY_CATEGORY = 1;
+    final static int SEARCH_BY_TAG = 2;
 
+    public List<Category> getCategoriesBySearch(int searchType, String searchStr) {
+        if (searchType == SEARCH_BY_CATEGORY) {
+            return categoryRepository.searchCategory(searchStr);
+        } else {
+            return categoryRepository.searchTag(searchStr);
+        }
+    }
 }

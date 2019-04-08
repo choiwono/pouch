@@ -2,8 +2,6 @@ package my.examples.pouch.config;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.security.CustomUserDetailService;
-import my.examples.pouch.security.jwt.JwtAuthEntryPoint;
-import my.examples.pouch.security.jwt.JwtAuthTokenFilter;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -78,28 +76,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .logout() // logout설정
-                .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout"))
-                .logoutSuccessUrl("/main")
-                .permitAll().and()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout"))
+                    .logoutSuccessUrl("/main")
+                    .permitAll().and()
                 .authorizeRequests() // 인가에 대한 설정
-                .antMatchers("/").hasAnyRole("USER","ADMIN")
-                .antMatchers("/main").hasAnyRole("USER","ADMIN")
-                .antMatchers("/link/**").hasAnyRole("USER","ADMIN")
-                .antMatchers("/account/join").permitAll()
-                .antMatchers("/account/welcome").permitAll()
-                .antMatchers("/account/login").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/crawling/**").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("USER","ADMIN")
-                .anyRequest().fullyAuthenticated()
-                .and()
+                    .antMatchers("/").hasAnyRole("USER","ADMIN")
+                    .antMatchers("/main").hasAnyRole("USER","ADMIN")
+                    .antMatchers("/link/**").hasAnyRole("USER","ADMIN")
+                    .antMatchers("/account/join").permitAll()
+                    .antMatchers("/account/welcome").permitAll()
+                    .antMatchers("/account/login").permitAll()
+                    .antMatchers("/api/**").permitAll()
+                    .antMatchers("/crawling/**").permitAll()
+                    .antMatchers("/admin/**").hasAnyRole("USER","ADMIN")
+                    .anyRequest().fullyAuthenticated().and()
                 .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
-                .loginProcessingUrl("/account/login") // 로그인 화면
-                .loginPage("/account/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
-                .usernameParameter("loginId")
-                .passwordParameter("loginPassword")
-                .defaultSuccessUrl("/main", true)
-                .failureUrl("/account/login?fail=true")
-                .and().csrf().ignoringAntMatchers("/**");
+                    .loginProcessingUrl("/account/login") // 로그인 화면
+                    .loginPage("/account/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
+                    .usernameParameter("loginId")
+                    .passwordParameter("loginPassword")
+                    .defaultSuccessUrl("/main", true)
+                    .failureUrl("/account/login?fail=true").and()
+                .csrf().ignoringAntMatchers("/**");
     }
 }
