@@ -2,8 +2,6 @@ package my.examples.pouch.config;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.security.CustomUserDetailService;
-import my.examples.pouch.security.jwt.JwtAuthEntryPoint;
-import my.examples.pouch.security.jwt.JwtAuthTokenFilter;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
