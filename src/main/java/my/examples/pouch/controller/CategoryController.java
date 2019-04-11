@@ -36,10 +36,9 @@ public class CategoryController {
         Account account = accountService.findAccountByEmail(principal.getName());
         List<Category> categories = categoryService.findMyCategoryList(principal.getName());
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
+        for (int i = categories.size(); i > 0; i--) {
             list.add(categories.get(i).getOrdering());
         }
-        Collections.reverse(list);
         Category category = new Category();
         category.setCategoryName(categoryName);
         category.setOrdering(list.get(0) + 1);

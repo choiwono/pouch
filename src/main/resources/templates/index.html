@@ -19,7 +19,7 @@
 
 
 <div layout:fragment="content">
-    <div class="container d-flex justify-content-center">
+    <div id="contents" class="container d-flex justify-content-center">
         <div class="main m-5">
             <!-- Another variation with a button -->
             <form method="get" action="http://www.google.co.kr/search" target="_blank">
@@ -90,11 +90,6 @@
                         <text x="36.5%" y="50%" fill="#eceeef" dy=".3em" th:text="${category.categoryName}"></text>
                         </a>
                     </svg>
-                    <!--<div class="card-body p-2"  >
-                        <p class="card-title m-2 d-flex" >
-                            <a class="link-title" th:href="@{'/link/view/'+${category.id}}" th:text="${category.categoryName}"></a>
-                        </p>
-                    </div>-->
                 </div>
             </div>
         </div>
