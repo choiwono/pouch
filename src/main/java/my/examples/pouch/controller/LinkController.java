@@ -67,7 +67,5 @@ public class LinkController {
         linkRepository.delete(link);
         Long categoryId = link.getCategory().getId();
 
-
         return "redirect:/link/view/"+categoryId;
-
     }}
