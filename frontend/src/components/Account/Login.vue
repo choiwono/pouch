@@ -32,12 +32,12 @@ export default {
         data.append('loginId',this.loginId);
         data.append('loginPassword',this.loginPassword);
         this.$http.post('/login',data).
-        then(function (response) {
+        then((response) => {
           if(response.status === 200){
-            console.log("data통신 성공");
-            console.log(response);
+            //console.log(this.$cookies.get("JSESSIONID"));
+            this.$router.push('home');
           }
-        }, function (err) {
+        }, (err) => {
           console.log('err', err)
         })
       }
