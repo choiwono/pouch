@@ -13,9 +13,12 @@
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.18",
     "vue": "^2.5.2",
+    "vue-awesome": "^3.5.1",
     "vue-axios": "^2.1.4",
+    "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.1",
-    "vue-sessionstorage": "^1.0.0"
+    "vue-sessionstorage": "^1.0.0",
+    "vuetify": "^1.5.11"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
