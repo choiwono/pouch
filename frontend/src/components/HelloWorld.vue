@@ -1,85 +1,23 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div>
+    <div class="container main m-5">
+      <!-- Another variation with a button -->
+      <form action="https://google.com/search"
+            target="_blank"
+            method="get"
+            ref="form" class="mt-3">
+        <div class="form-group input-group justify-content-center" id="google_search_form">
+          <input type="text" name="q" maxlength="255" v-model="q" class="form-control m-0"
+                 style="max-width:500px;" placeholder="Google Search">
+          <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit" @click="googleSearch">
+              <icon name="search"></icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <hr class="my-4 mt-0">
   </div>
 </template>
 
@@ -88,7 +26,12 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      q : ''
+    }
+  },
+  methods: {
+    googleSearch(e){
+      this.$refs.form.submit()
     }
   }
 }
