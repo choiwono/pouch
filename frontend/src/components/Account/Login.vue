@@ -34,7 +34,7 @@ export default {
         this.$http.post('/login',data).
         then((response) => {
           if(response.status === 200){
-            //console.log(this.$cookies.get("JSESSIONID"));
+            localStorage.setItem("user","testUser");
             this.$router.push('home');
           }
         }, (err) => {
