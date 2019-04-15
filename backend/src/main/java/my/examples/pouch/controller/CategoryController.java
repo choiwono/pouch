@@ -29,7 +29,7 @@ public class CategoryController {
     private final LinkService linkService;
     private final TagService tagService;
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     public String addCategory(@RequestParam String categoryName,
                               Principal principal) throws Exception {
 
@@ -48,7 +48,7 @@ public class CategoryController {
         categoryRepository.save(category);
 
         return "redirect:/main";
-    }
+    }*/
 
     @GetMapping("/view/{id}")
     public String viewCategory(@PathVariable(value = "id") Long categoryId,

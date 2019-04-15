@@ -1,5 +1,5 @@
 {
-  "name": "frontend2",
+  "name": "frontend",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "choiwono <treasure_b@naver.com>",
@@ -15,9 +15,8 @@
     "vue": "^2.5.2",
     "vue-awesome": "^3.5.1",
     "vue-axios": "^2.1.4",
-    "vue-cookies": "^1.5.13",
+    "vue-cookie": "^1.1.4",
     "vue-router": "^3.0.1",
-    "vue-sessionstorage": "^1.0.0",
     "vuetify": "^1.5.11"
   },
   "devDependencies": {
@@ -54,7 +53,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": ">=3.1.11",
+    "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

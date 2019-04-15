@@ -29,7 +29,7 @@ public class LinkController {
     private final LinkRepository linkRepository;
     private final ModelMapper modelMapper;
 
-    @GetMapping(value = "/view/{id}")
+    /*@GetMapping(value = "/view/{id}")
     public String selectCategory(@PathVariable(value = "id") Long categoryId,
                                  @RequestParam(name="t", required = false) String tagName,
                                  Principal principal,
@@ -45,7 +45,7 @@ public class LinkController {
         model.addAttribute("tags", tags);
 
         return "/pouch/list";
-    }
+    }*/
 
     @PostMapping(value = "/changeTitle")
     public String changeTitle(Long id, String title) {

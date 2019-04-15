@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -35,32 +36,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthFailerHandler authFailerHandler;
     private final HttpLogoutSuccessHandler logoutSuccessHandler;
 
-    /*@Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }*/
+    }
 
-    /*@Override
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
-    }*/
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.addAllowedHeader(CorsConfiguration.ALL);
+            configuration.addAllowedMethod(CorsConfiguration.ALL);
+            configuration.addAllowedOrigin(CorsConfiguration.ALL);
+            configuration.setAllowCredentials(true);
+            configuration.setMaxAge(3600L);
+            UrlBasedCorsConfigurationSource source =
+                    new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**",configuration);
+            http.httpBasic()
+            .and().cors().configurationSource(source)
             .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
             //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
             .antMatchers(HttpMethod.POST,"/api/login").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/categories/**").permitAll()
             .antMatchers("/api/user/**").hasRole("USER")
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and()
             .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
             .loginProcessingUrl("/api/login") // 로그인 화면
-            //.loginPage("/account/login") // 사용자가 입력한 id, password가 전달되는 url경로(필터가처리)
             .usernameParameter("loginId")
             .passwordParameter("loginPassword")
             .successHandler(authSuccessHandler)
@@ -69,6 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
             .logoutSuccessHandler(logoutSuccessHandler)
+            .deleteCookies("JSESSIONID")
             .and()
             .csrf().ignoringAntMatchers("/**");
     }
