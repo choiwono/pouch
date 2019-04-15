@@ -6,7 +6,7 @@ import VueAxios from 'vue-axios'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueCookie from 'vue-cookies'
+import VueCookie from 'vue-cookie'
 import 'vue-awesome/icons'
 import icon from 'vue-awesome/components/Icon'
 import 'vuetify/dist/vuetify.min.css'
@@ -17,9 +17,10 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueAxios,axios)
-Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
+Vue.axios.defaults.baseURL = 'http://localhost:8080/api'
 Vue.router = router
 Vue.use(VueCookie)
+VueCookie.set('theme','default');
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
