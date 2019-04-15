@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container main m-5">
+    <div class="container main mt-5 pt-5" style="padding: 24px; width: 100%;">
       <!-- Another variation with a button -->
       <form action="https://google.com/search"
             target="_blank"
@@ -18,6 +18,31 @@
       </form>
     </div>
     <hr class="my-4 mt-0">
+    <div class="container">
+      <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-img-top d-flex align-items-center cursor-pointer"
+               style="width:100%; height:225px; opacity:0.5;" >
+            <img style="flex:0 !important;" class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
+          </div>
+        </div>
+      </div>
+      <div v-for="category in categories" class="col-md-3 mb-4">
+        <div class="card mb-4 shadow-sm">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+               xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+               role="img" aria-label="Placeholder: Thumbnail">
+              <a href="#">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="36.5%" y="50%" fill="#eceeef" dy=".3em">{{ category.name }}</text>
+            </a>
+          </svg>
+        </div>
+      </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,13 +51,20 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      q : ''
+      q : '',
+      categories: []
     }
   },
   methods: {
     googleSearch(e){
       this.$refs.form.submit()
     }
+  },
+  created(){
+    this.$http.get('/categories/1')
+      .then((result) => {
+        this.categories = result.data;
+      })
   }
 }
 </script>

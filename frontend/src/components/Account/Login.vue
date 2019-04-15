@@ -3,7 +3,7 @@
     <div class="row justify-content-center mt-5 mb-5">
       <div class="card" style="min-width:450px;">
         <div class="card-header">
-          로그인
+          <h4>로그인</h4>
         </div>
         <div class="card-body">
           <form @submit.prevent="Login" class="form-group">
@@ -33,8 +33,12 @@ export default {
         data.append('loginPassword',this.loginPassword);
         this.$http.post('/login',data).
         then((response) => {
+          //console.log(response);
           if(response.status === 200){
-            localStorage.setItem("user","testUser");
+            this.$http.get('/user/info')
+              .then((result) => {
+              console.log(result.data);
+            })
             this.$router.push('home');
           }
         }, (err) => {

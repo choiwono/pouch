@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class AccountApiController {
     private final AccountService accountService;
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
-    @PostMapping(value="/checkEmail/{id}")
+    /*@PostMapping(value="/checkEmail/{id}")
     public String checkEmail(@PathVariable(value="id") String email){
         String result = "fail";
         Account account = accountService.findAccountByEmail(email);
@@ -31,14 +31,19 @@ public class AccountApiController {
             result = "duplicate";
         }
         return result;
-    }
+    }*/
 
-    @PostMapping(value="/category/{id}")
-    public List<CustomCategory> myCategory(@PathVariable(value="id") Long id,
-                                           Principal principal){
-
+    @GetMapping(value="/{id}")
+    public List<CustomCategory> myCategory(@PathVariable(value="id") Long id
+                                           /*Principal principal*/){
+        System.out.println(id);
+        //System.out.println(principal.getName());
         List<CustomCategory> list = new ArrayList<>();
-        List<Category> categories = categoryService.findMyCategoryList(principal.getName());
+        //CustomCategory customCategory = new CustomCategory();
+        /*customCategory.setId(1L);
+        customCategory.setName("테스트");
+        list.add(customCategory);*/
+        List<Category> categories = categoryService.findMyCategoryList(id);
         for(int i=0; i<categories.size(); i++){
             CustomCategory customCategory = new CustomCategory();
             customCategory.setId(categories.get(i).getId());

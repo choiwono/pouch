@@ -22,7 +22,7 @@ public class MainController implements ErrorController {
         return "index";
     }
 
-    @GetMapping(value="/main")
+    /*@GetMapping(value="/main")
     public String main(Model model,
                        Principal principal){
         if(principal != null){
@@ -30,7 +30,7 @@ public class MainController implements ErrorController {
             model.addAttribute("categories",categories);
         }
         return "index";
-    }
+    }*/
 
     @Override
     public String getErrorPath() {
