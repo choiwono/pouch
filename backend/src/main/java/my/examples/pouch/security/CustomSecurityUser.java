@@ -18,6 +18,11 @@ public class CustomSecurityUser extends User {
         super(username, password, true, true,true,true, authorities);
     }
 
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        return super.getAuthorities();
+    }
+
     public String getEmail(){
         return super.getUsername();
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container main mt-5 pt-5" style="padding: 24px; width: 100%;">
+    <div class="container main pt-5" style="padding: 24px; width: 100%;">
       <!-- Another variation with a button -->
       <form action="https://google.com/search"
             target="_blank"
@@ -61,7 +61,7 @@ export default {
     }
   },
   created(){
-    this.$http.get('/categories/1')
+    this.$http.get('/categories/'+this.$session.get('account').id)
       .then((result) => {
         this.categories = result.data;
       })

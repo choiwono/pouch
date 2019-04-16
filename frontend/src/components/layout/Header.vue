@@ -2,6 +2,7 @@
   <div>
     <b-navbar class="p-3 border-bottom pl-5 pr-5" fixed="top" toggleable="lg" type="light" variant="white">
       <b-navbar-brand><router-link to="/home">Pouch</router-link></b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
@@ -11,9 +12,9 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><icon name="user"></icon></template>
-              <b-dropdown-item><router-link to="/login">로그인</router-link></b-dropdown-item>
-              <b-dropdown-item><router-link to="/logout">로그아웃</router-link></b-dropdown-item>
-            <b-dropdown-item><router-link to="/join">회원가입</router-link></b-dropdown-item>
+              <router-link to="/login" tag="b-dropdown-item">로그인</router-link>
+              <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
+              <router-link to="/join" tag="b-dropdown-item">회원가입</router-link>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -39,6 +40,7 @@
 </template>
 
 <script>
+
     export default {
         name: "Header",
         data(){
@@ -52,8 +54,12 @@
         },
         methods: {
           logout(){
-            console.log("로그아웃")
-            this.$router.push('/home');
+            console.log("로그아웃");
+            this.$http.get('/logout')
+              .then((result) => {
+                  this.$session.remove('account');
+            })
+            this.$router.push('/login');
           },
           clearName() {
             this.url = '',
@@ -63,7 +69,7 @@
             // Prevent modal from closing
             bvModalEvt.preventDefault()
             if (!this.url && !this.categoryId) {
-              alert('URL주소와 카테고리를 입력해주세요')
+              alert("url와 카테고리를 반드시 선택해주세요.");
             } else {
               this.handleSubmit()
             }
