@@ -35,9 +35,10 @@ export default {
         then((response) => {
           //console.log(response);
           if(response.status === 200){
-            this.$http.get('/user/info')
+            this.$http.post('/account/auth')
               .then((result) => {
-              console.log(result.data);
+                this.$cookies.set('Token',result.data.email,'1h');
+                console.log(this.$cookies.get('Token'));
             })
             this.$router.push('home');
           }
