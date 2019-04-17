@@ -22,6 +22,32 @@ Vue.router = router
 Vue.use(VueCookie)
 Vue.prototype.$EventBus = new Vue();
 
+axios.interceptors.response.use(response => {
+    return response.data;
+  }, error => {
+  if (error.response && error.response.data) {
+    let errCode = error.response.status;
+    if(errCode === 401){
+      alert('권한이 없는 페이지입니다.');
+      router.push({name:'login'})
+    } else if(errCode === 404 || errCode === 405 || errCode === 500){
+      switch (errCode){
+        case 404 : alert("존재하지 않는 페이지입니다."); break;
+        case 405 : alert("존재하지 않는 페이지입니다."); break;
+        case 500 : alert("서버에 장애가 발생했습니다. 다시 처음부터 시도해주세요."); break;
+      }
+      router.beforeEach((to,from,next) => {
+        next({
+          query: {
+            redirect: to.fullPath
+          },
+        })
+      });
+    }
+  }
+  return Promise.reject(error);
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
