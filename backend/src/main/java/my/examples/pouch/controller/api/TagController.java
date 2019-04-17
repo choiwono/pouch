@@ -19,7 +19,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/tag")
 @RequiredArgsConstructor
-public class TagApiController {
+public class TagController {
     private final LinkService linkService;
     private final TagService tagService;
     private final TagRepository tagRepository;
