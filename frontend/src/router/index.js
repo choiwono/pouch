@@ -4,7 +4,6 @@ import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 
-const cookies = Vue.prototype.$cookies;
 Vue.use(Router)
 
 const router = new Router({
@@ -36,10 +35,17 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
+  const authUser = window.$cookies.get('Token');
+
   if(to.meta.requiresAuth){
     console.log(to);
     console.log(from);
-    console.log(window.$cookies.get('Token'));
+
+    if(authUser == null){
+      router.push('/login');
+    } else {
+      next();
+    }
   } else {
     next();
   }

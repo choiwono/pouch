@@ -33,15 +33,11 @@ export default {
         data.append('loginPassword',this.loginPassword);
         this.$http.post('/login',data).
         then((response) => {
-          //console.log(response);
-          if(response.status === 200){
-            this.$http.post('/account/auth')
-              .then((result) => {
-                this.$cookies.set('Token',result.data.email,'1h');
-                console.log(this.$cookies.get('Token'));
-            })
-            this.$router.push('home');
-          }
+          this.$http.post('/account/auth')
+            .then((result) => {
+              this.$cookies.set('Token',result.id,'8h');
+          })
+          this.$router.push('home');
         }, (err) => {
           console.log('err', err)
         })
