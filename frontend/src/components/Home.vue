@@ -60,8 +60,8 @@ export default {
       this.$refs.form.submit()
     }
   },
-  created(){
-    this.$http.get('/categories/'+this.$session.get('account').id)
+  mounted(){
+    this.$http.get('/categories/'+this.$cookies.get('Token'))
       .then((result) => {
         this.categories = result.data;
       })

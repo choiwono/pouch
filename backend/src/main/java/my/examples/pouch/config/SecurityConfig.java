@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,10 +32,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailService customUserDetailService;
-    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    //private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailerHandler authFailerHandler;
     private final HttpLogoutSuccessHandler logoutSuccessHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+        //http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.addAllowedHeader(CorsConfiguration.ALL);
             configuration.addAllowedMethod(CorsConfiguration.ALL);
@@ -65,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
             //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
             .antMatchers(HttpMethod.POST,"/api/login").permitAll()
-            .antMatchers(HttpMethod.GET,"/api/categories/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/categories/**").hasRole("USER")
             .antMatchers("/api/account/**").hasRole("USER")
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()

@@ -57,7 +57,7 @@
             console.log("로그아웃");
             this.$http.get('/logout')
               .then((result) => {
-                  this.$session.remove('account');
+              this.$cookies.remove('Token');
             })
             this.$router.push('/login');
           },
@@ -92,12 +92,14 @@
             })
           }
         },
-        created(){
-          this.$http.get('/categories/1')
-            .then((result) => {
-              console.log(result);
-              this.categories = result.data;
-            })
+        mounted(){
+          if(this.$cookies.get('Token') != null) {
+            this.$http.get('/categories/1')
+              .then((result) => {
+                console.log(result);
+                this.categories = result;
+              })
+          }
         }
     }
 </script>
