@@ -17,13 +17,27 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/tag")
+@RequestMapping("/api/tags")
 @RequiredArgsConstructor
 public class TagController {
     private final LinkService linkService;
     private final TagService tagService;
     private final TagRepository tagRepository;
 
+    //태그 추가
+    @PostMapping
+    public void addTag(){}
+
+    //태그 수정
+    @PutMapping(value = "/{id}")
+    public void editTag(@PathVariable(value="id") Long id){}
+
+    //태그 삭제
+    @DeleteMapping(value = "/{id}")
+    public void deleteTag(@PathVariable(value = "id") Long id){}
+
+
+    /*기존 코드
     @PostMapping("/search")
     public List<CustomLink> myCategory(@RequestBody TagItem tagItem,
                                             Principal principal){
@@ -75,4 +89,5 @@ public class TagController {
         }
         return result;
     }
+    */
 }
