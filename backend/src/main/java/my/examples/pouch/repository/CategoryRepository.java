@@ -1,6 +1,7 @@
 package my.examples.pouch.repository;
 
 import my.examples.pouch.domain.Category;
+import my.examples.pouch.dto.CustomCategory;
 import my.examples.pouch.repository.custom.CategoryRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,9 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
     @Query("SELECT DISTINCT c FROM Category c INNER JOIN FETCH c.links l"+
             " INNER JOIN FETCH l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
     List<Category> searchTag(String searchStr);
+
+    @Query("SELECT DISTINCT c FROM Category c WHERE c.categoryName like concat('%',:searchStr,'%')")
+    List<Category> searchCategory(String searchStr);
 
     @Query("SELECT COUNT(DISTINCT c) FROM Category c INNER JOIN c.links l"+
             " INNER JOIN l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")

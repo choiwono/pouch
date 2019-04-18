@@ -1,10 +1,10 @@
 package my.examples.pouch.repository.custom;
 
-import my.examples.pouch.domain.Category;
+import my.examples.pouch.dto.CustomCategory;
 
 import java.util.List;
 
 public interface CategoryRepositoryCustom {
-    public List<Category> searchCategory(String searchStr);
+//    public List<CustomCategory> searchCategory(String searchStr);
     long countSearchCategory(String searchStr);
 }
