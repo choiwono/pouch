@@ -25,3 +25,4 @@ public class LinkController {
     public void linksByTag(@RequestParam(value = "categoryId") String categoryId,
                            @RequestParam(value = "tagName") String tagName){}
 }
+

@@ -16,6 +16,7 @@
     "vue-awesome": "^3.5.1",
     "vue-axios": "^2.1.4",
     "vue-cookie": "^1.1.4",
+    "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.11"
   },
