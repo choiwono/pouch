@@ -25,7 +25,7 @@ public class CrawlingController {
     private final AccountService accountService;
     private final CategoryService categoryService;
 
-    @PostMapping("/save")
+    /*@PostMapping("/save")
     public String crawling(@RequestParam(required = true) String url,
                            @RequestParam(required = true) Long categoryId,
                            Principal principal) throws Exception{
@@ -48,5 +48,5 @@ public class CrawlingController {
         link.setAccount(account);
         linkRepository.save(link);
         return "redirect:/link/view/"+categoryId;
-    }
+    }*/
 }

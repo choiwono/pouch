@@ -2,9 +2,11 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Link;
+import my.examples.pouch.dto.CustomLink;
 import my.examples.pouch.repository.LinkRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +30,16 @@ public class LinkService {
         return linkRepository.getSearchPouchByCategory(categoryId);
     }
 
-    /*public List<Tag> getTags(Long id) {
-        return linkRepository.getTagsByLinkId(id);
-    }*/
+    public List<CustomLink> getCustomLinks(List<Link> links) {
+        List<CustomLink> customLinks = new ArrayList<>();
+        for(int i=0; i<links.size(); i++){
+            CustomLink customLink = new CustomLink();
+            customLink.setId(links.get(i).getId());
+            customLink.setTitle(links.get(i).getTitle());
+            customLink.setRegDate(links.get(i).getRegDate());
+            customLinks.add(customLink);
+        }
+        return customLinks;
+    }
+
 }

@@ -96,7 +96,6 @@
           if(this.$cookies.isKey('Token')){
             this.$http.get('/categories/?email='+this.$cookies.get('Token'))
               .then((result) => {
-                console.log(result);
                 this.categories = result;
             })
           }
