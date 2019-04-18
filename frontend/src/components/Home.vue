@@ -61,10 +61,12 @@ export default {
     }
   },
   mounted(){
-    this.$http.get('/categories/'+this.$cookies.get('Token'))
-      .then((result) => {
-        this.categories = result.data;
-      })
+    if(this.$cookies.isKey('Token')) {
+      this.$http.get('/categories/?email='+this.$cookies.get('Token'))
+        .then((result) => {
+          this.categories = result;
+        })
+    }
   }
 }
 </script>

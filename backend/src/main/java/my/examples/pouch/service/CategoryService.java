@@ -22,7 +22,7 @@ public class CategoryService {
         return categoryRepository.findMyCategory(id);
     }
 
-    public List<Category> findMyCategoryList(Long id) {
-        return categoryRepository.findMyCategoryByEmail(id);
+    public List<Category> findMyCategoryList(String email) {
+        return categoryRepository.findMyCategoryByEmail(email);
     }
 }

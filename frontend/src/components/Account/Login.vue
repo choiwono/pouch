@@ -33,9 +33,9 @@ export default {
         data.append('loginPassword',this.loginPassword);
         this.$http.post('/login',data).
         then((response) => {
-          this.$http.post('/account/auth')
+          this.$http.post('/accounts/auth')
             .then((result) => {
-              this.$cookies.set('Token',result.id,'8h');
+              this.$cookies.set('Token',result.email,'8h');
           })
           this.$router.push('home');
         }, (err) => {
