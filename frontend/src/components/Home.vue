@@ -33,11 +33,11 @@
           <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
                role="img" aria-label="Placeholder: Thumbnail">
-              <a href="#">
+            <router-link :to="{ name: 'categories',params:{ id:category.id }}">
               <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c"></rect>
-              <text x="36.5%" y="50%" fill="#eceeef" dy=".3em">{{ category.name }}</text>
-            </a>
+              <rect width="100%" height="100%" fill="#fff"></rect>
+              <text x="36%" y="50%" fill="#6c757d" dy=".5em">{{ category.name }}</text>
+            </router-link>
           </svg>
         </div>
       </div>
@@ -66,6 +66,13 @@ export default {
         .then((result) => {
           this.categories = result;
         })
+    } else {
+      this.$EventBus.$on('message',(text) =>{
+        this.$http.get('/categories/?email='+text)
+          .then((result) => {
+            this.categories = result;
+          })
+      });
     }
   }
 }
@@ -86,5 +93,6 @@ li {
 }
 a {
   color: #42b983;
+  text-decoration:none;
 }
 </style>

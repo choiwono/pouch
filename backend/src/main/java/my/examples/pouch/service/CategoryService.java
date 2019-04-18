@@ -20,13 +20,14 @@ public class CategoryService {
     private EntityManager entityManager;
 
     @Transactional
-    public Category getAccountCategory(Long id) {
-        return categoryRepository.findMyCategory(id);
+    public Category getCategories(Long id) {
+        return categoryRepository.getCategories(id);
     }
 
     public List<Category> findMyCategoryList(String email) {
         return categoryRepository.findMyCategoryByEmail(email);
     }
+
 
     final static int SEARCH_BY_CATEGORY = 1;
     final static int SEARCH_BY_TAG = 2;
@@ -38,5 +39,16 @@ public class CategoryService {
         } else{
             return categoryRepository.searchTag(searchStr);
         }
+
+    public List<CustomCategory> getCustomCategory(List<Category> categories){
+        List<CustomCategory> customCategories = new ArrayList<>();
+        for(int i=0; i<categories.size(); i++){
+            CustomCategory customCategory = new CustomCategory();
+            customCategory.setId(categories.get(i).getId());
+            customCategory.setName(categories.get(i).getCategoryName());
+            customCategories.add(customCategory);
+        }
+        return customCategories;
+
     }
 }

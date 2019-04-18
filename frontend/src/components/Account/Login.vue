@@ -36,8 +36,10 @@ export default {
           this.$http.post('/accounts/auth')
             .then((result) => {
               this.$cookies.set('Token',result.email,'8h');
+              this.$EventBus.$emit('message',result.email);
           })
-          this.$router.push('home');
+          alert('로그인에 성공하셨습니다.');
+          this.$router.push({name:'home'});
         }, (err) => {
           console.log('err', err)
         })
