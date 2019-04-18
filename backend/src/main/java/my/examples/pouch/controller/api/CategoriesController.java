@@ -17,27 +17,6 @@ import java.util.List;
 public class CategoriesController {
     private final CategoryService categoryService;
 
-    /*기존 코드
-    @GetMapping(value="/{id}")
-    public List<CustomCategory> myCategory(@PathVariable(value="id") Long id
-            ,Principal principal){
-
-/*기존 코드
-@GetMapping(value="/{id}")
-public List<CustomCategory> myCategory(@PathVariable(value="id") Long id
-,Principal principal){
-List<CustomCategory> list = new ArrayList<>();
-List<Category> categories = categoryService.findMyCategoryList(id);
-for(int i=0; i<categories.size(); i++){
-CustomCategory customCategory = new CustomCategory();
-customCategory.setId(categories.get(i).getId());
-customCategory.setName(categories.get(i).getCategoryName());
-list.add(customCategory);
-}
-return list;
-}
-*/
-
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
@@ -48,7 +27,17 @@ return list;
 
     //특정 유저의 카테고리 목록 가져오기
     @GetMapping
-    public void getCategoryByAccount(@RequestParam(name = "accountId") Long accountId) {}
+    public List<CustomCategory> getCategoryByAccount(@RequestParam(name = "email") String email) {
+        List<Category> categories = categoryService.findMyCategoryList(email);
+        List<CustomCategory> list = new ArrayList<>();
+        for(int i=0; i<categories.size(); i++){
+            CustomCategory customCategory = new CustomCategory();
+            customCategory.setId(categories.get(i).getId());
+            customCategory.setName(categories.get(i).getCategoryName());
+            list.add(customCategory);
+        }
+        return list;
+    }
 
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
