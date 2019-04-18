@@ -2,12 +2,14 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
+import my.examples.pouch.dto.CustomCategory;
 import my.examples.pouch.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,11 +20,22 @@ public class CategoryService {
     private EntityManager entityManager;
 
     @Transactional
-    public Category getAccountCategory(Long id) {
-        return categoryRepository.findMyCategory(id);
+    public Category getCategories(Long id) {
+        return categoryRepository.getCategories(id);
     }
 
     public List<Category> findMyCategoryList(String email) {
         return categoryRepository.findMyCategoryByEmail(email);
+    }
+
+    public List<CustomCategory> getCustomCategory(List<Category> categories){
+        List<CustomCategory> customCategories = new ArrayList<>();
+        for(int i=0; i<categories.size(); i++){
+            CustomCategory customCategory = new CustomCategory();
+            customCategory.setId(categories.get(i).getId());
+            customCategory.setName(categories.get(i).getCategoryName());
+            customCategories.add(customCategory);
+        }
+        return customCategories;
     }
 }
