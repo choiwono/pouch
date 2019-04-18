@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailerHandler authFailerHandler;
     private final HttpLogoutSuccessHandler logoutSuccessHandler;
-    private final AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

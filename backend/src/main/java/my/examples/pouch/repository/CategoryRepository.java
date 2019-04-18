@@ -14,8 +14,8 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
     Category findMyCategory(@Param("id") Long id);
 
     @Query("SELECT c FROM Category c inner join fetch c.account" +
-           " WHERE c.account.id=:id")
-    List<Category> findMyCategoryByEmail(Long id);
+           " WHERE c.account.email=:email")
+    List<Category> findMyCategoryByEmail(String email);
 
     @Query("SELECT DISTINCT c FROM Category c INNER JOIN FETCH c.links l"+
             " INNER JOIN FETCH l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")

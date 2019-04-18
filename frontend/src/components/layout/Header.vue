@@ -93,12 +93,12 @@
           }
         },
         mounted(){
-          if(this.$cookies.get('Token') != null) {
-            this.$http.get('/categories/1')
+          if(this.$cookies.isKey('Token')){
+            this.$http.get('/categories/?email='+this.$cookies.get('Token'))
               .then((result) => {
                 console.log(result);
                 this.categories = result;
-              })
+            })
           }
         }
     }
