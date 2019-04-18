@@ -22,8 +22,17 @@ public class CategoriesController {
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
-                         @RequestParam(name = "searchStr") String searchStr, Model model) {
+                         @RequestParam(name = "searchStr") String searchStr) {
+        List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
+        System.out.println("cate"+categories.size());
         List<CustomCategory> list = new ArrayList<>();
+        for(int i=0; i<categories.size(); i++){
+            CustomCategory customCategory = new CustomCategory();
+            customCategory.setId(categories.get(i).getId());
+            customCategory.setName(categories.get(i).getCategoryName());
+            list.add(customCategory);
+        }
+
         return list;
     }
 

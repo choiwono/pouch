@@ -6,9 +6,28 @@
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="#"><icon name="search"></icon></b-nav-item>
+
+          <b-nav-item-dropdown no-caret dropleft>
+            <b-dropdown-form @submit.prevent="onSubmit">
+                <b-form-select
+                  :value="null"
+                  :options="{ '1': '카테고리', '2': '태그' }"
+                  id="searchType"
+                  v-model="searchType"
+                >
+                  <option slot="first" :value="null" disabled="true">구분</option> </b-form-select>
+
+                <b-form-input id="searchStr2" v-model="searchStr"></b-form-input>
+                <b-button type="submit" variant="secondary" size="sm" >검색</b-button>
+              <!--@click="onClick"-->
+            </b-dropdown-form>
+            <template slot="button-content"><icon name="search"></icon></template>
+
+          </b-nav-item-dropdown >
+
           <b-nav-item href="#"><icon name="envelope"></icon></b-nav-item>
           <b-nav-item v-b-modal.modal-link><icon name="plus"></icon></b-nav-item>
+
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><icon name="user"></icon></template>
@@ -16,6 +35,7 @@
               <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
               <router-link to="/join" tag="b-dropdown-item">회원가입</router-link>
           </b-nav-item-dropdown>
+
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -47,9 +67,15 @@
           return {
             url : '',
             categoryId: '',
-            categories : [
-
-            ]
+            categories : [],
+            selected: null,
+            options: [
+              { value: null, text: '구분', disabled:true},
+              { value: 'category', text: '카테고리' },
+              { value: 'tag', text: '태그' }],
+            searchType: '',
+            searchStr: '',
+            list: []
           }
         },
         methods: {
@@ -90,6 +116,20 @@
               // Wrapped in $nextTick to ensure DOM is rendered before closing
               this.$refs.modal.hide()
             })
+          },
+          onSubmit() {
+            let searchType = this.searchType;
+            let searchStr = this.searchStr;
+            this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
+            then((response) => {
+              if(response.status === 200){
+                  searchType = '';
+                  searchStr = '';
+                this.$router.push('search');
+              }
+            }, (err) => {
+              console.log('err', err)
+            })
           }
         },
         mounted(){
@@ -99,7 +139,7 @@
                 this.categories = result;
             })
           }
-        }
+        },
     }
 </script>
 
