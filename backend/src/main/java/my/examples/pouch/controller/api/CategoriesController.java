@@ -21,17 +21,22 @@ public class CategoriesController {
     @GetMapping(value="/{id}")
     public List<CustomCategory> myCategory(@PathVariable(value="id") Long id
             ,Principal principal){
-        List<CustomCategory> list = new ArrayList<>();
-        List<Category> categories = categoryService.findMyCategoryList(id);
-        for(int i=0; i<categories.size(); i++){
-            CustomCategory customCategory = new CustomCategory();
-            customCategory.setId(categories.get(i).getId());
-            customCategory.setName(categories.get(i).getCategoryName());
-            list.add(customCategory);
-        }
-        return list;
-    }
-    */
+
+/*기존 코드
+@GetMapping(value="/{id}")
+public List<CustomCategory> myCategory(@PathVariable(value="id") Long id
+,Principal principal){
+List<CustomCategory> list = new ArrayList<>();
+List<Category> categories = categoryService.findMyCategoryList(id);
+for(int i=0; i<categories.size(); i++){
+CustomCategory customCategory = new CustomCategory();
+customCategory.setId(categories.get(i).getId());
+customCategory.setName(categories.get(i).getCategoryName());
+list.add(customCategory);
+}
+return list;
+}
+*/
 
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
@@ -49,9 +54,6 @@ public class CategoriesController {
     @GetMapping(value = "/{id}")
     public void getCategory(@PathVariable(value="id") Long id){}
 
-
-
-   //카테고리 수정하기
     @PutMapping(value = "/{id}")
     public void editCategory(@PathVariable(value="id") Long id){
 
@@ -69,3 +71,4 @@ public class CategoriesController {
 
     }
 }
+

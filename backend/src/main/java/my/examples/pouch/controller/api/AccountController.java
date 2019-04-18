@@ -65,6 +65,4 @@ public class AccountController {
     //회원가입
     @PostMapping
     public void join(){}
-
-
 }
