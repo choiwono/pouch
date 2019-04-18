@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
+import Categories from "../components/Contents/Categories";
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ const router = new Router({
       path: '/join/',
       name: 'join',
       component: Join
+    },
+    {
+      path: '/categories/:id',
+      name: 'categories',
+      component: Categories
     }
   ]
 })
