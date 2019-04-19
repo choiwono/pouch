@@ -7,23 +7,19 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
 
-          <b-nav-item-dropdown no-caret dropleft>
+          <b-nav-item-dropdown right>
             <b-dropdown-form @submit.prevent="onSubmit">
                 <b-form-select
                   :value="null"
                   :options="{ '1': '카테고리', '2': '태그' }"
                   id="searchType"
-                  v-model="searchType"
-                >
-                  <option slot="first" :value="null" disabled="true">구분</option> </b-form-select>
-
-                <b-form-input id="searchStr2" v-model="searchStr"></b-form-input>
-                <b-button type="submit" variant="secondary" size="sm" >검색</b-button>
-              <!--@click="onClick"-->
+                  v-model="searchType">
+                  <option slot="first" :value="null" disabled="true" style="width: 80px">구분</option> </b-form-select>
+                <b-form-input id="searchStr2" v-model="searchStr" style="width: 100px"></b-form-input>
+                <b-button type="submit" variant="secondary" size="sm" style="width: 50px" >검색</b-button>
             </b-dropdown-form>
             <template slot="button-content"><icon name="search"></icon></template>
-
-          </b-nav-item-dropdown >
+          </b-nav-item-dropdown>
 
           <b-nav-item href="#"><icon name="envelope"></icon></b-nav-item>
           <b-nav-item v-b-modal.modal-link><icon name="plus"></icon></b-nav-item>
@@ -135,7 +131,8 @@
             then((response) => {
               searchType = '';
               searchStr = '';
-              console.log(response);
+              this.$store.state.searchCategory = response;
+              console.log(this.$store.state.searchCategory);
               this.$router.push({name:'search'});
             }, (err) => {
               console.log('err', err)
