@@ -48,12 +48,12 @@
     >
       <form @submit.stop.prevent="handleSubmit">
         <b-form-group id="input-group-3" label-for="input-3">
-          <b-form-select v-model="categoryId">
+          <b-form-select v-model="$store.state.categoryId">
             <option value="" disabled>카테고리를 선택해주세요</option>
             <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
           </b-form-select>
         </b-form-group>
-        <b-form-input v-model="url" placeholder="https://..."></b-form-input>
+        <b-form-input v-model="$store.state.url" placeholder="https://..."></b-form-input>
       </form>
     </b-modal>
   </div>
@@ -65,8 +65,8 @@
         name: "Header",
         data(){
           return {
-            url : '',
-            categoryId: '',
+            //url : '',
+            //categoryId: '',
             categories : [],
             selected: null,
             options: [
@@ -88,14 +88,16 @@
             this.$router.push('/login');
           },
           clearName() {
-            this.url = '',
-            this.categoryId = ''
+            this.$store.state.url = '',
+            this.$store.state.categoryId = ''
           },
 
           handleOk(bvModalEvt) {
             // Prevent modal from closing
             bvModalEvt.preventDefault()
-            if (!this.url && !this.categoryId) {
+            //console.log(this.$store.state.url);
+            //console.log(this.$store.state.categoryId);
+            if (!this.$store.state.url || !this.$store.state.categoryId) {
               alert("url와 카테고리를 반드시 선택해주세요.");
             } else {
               this.handleSubmit()
@@ -108,14 +110,13 @@
           },
 
           handleSubmit() {
+            let data = new FormData();
+            data.append('categoryId',this.$store.state.categoryId)
+            data.append('url',this.$store.state.url)
             this.clearName(),
-              //var data = new FormData();
-              //data.append('categoryId',this.categoryId);
-              this.$http.post('/links/1',data).
+              this.$http.post('/crawling/save',data).
               then((response) => {
-                if(response.status === 200){
-                  this.$router.push('home');
-                }
+                this.$router.push('home');
               }, (err) => {
                 console.log('err', err)
               })
@@ -151,8 +152,15 @@
               .then((result) => {
                 this.categories = result;
             })
+          } else {
+            this.$EventBus.$on('message', (text) => {
+              this.$http.get('/categories/?email=' + text)
+                .then((result) => {
+                  this.categories = result;
+                })
+            });
           }
-        },
+        }
     }
 </script>
 

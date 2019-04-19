@@ -11,6 +11,7 @@ import 'vue-awesome/icons'
 import icon from 'vue-awesome/components/Icon'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
+import { store } from './store'
 
 Vue.component('icon',icon)
 Vue.use(Vuetify)
@@ -52,6 +53,7 @@ axios.interceptors.response.use(response => {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

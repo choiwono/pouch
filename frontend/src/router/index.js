@@ -39,12 +39,15 @@ const router = new Router({
     {
       path: '/categories/search/',
       name: 'search',
-      component: Search
-    },
-    {
+
+      component: Search,
+      meta: { requiresAuth: true }
+    },{
       path: '/categories/:id',
       name: 'categories',
-      component: Categories
+      component: Categories,
+      meta: { requiresAuth: true }
+
     }
   ]
 })
@@ -53,9 +56,6 @@ router.beforeEach((to,from,next) => {
   const authUser = window.$cookies.get('Token');
 
   if(to.meta.requiresAuth){
-    console.log(to);
-    console.log(from);
-
     if(authUser == null){
       router.push('/login');
     } else {
