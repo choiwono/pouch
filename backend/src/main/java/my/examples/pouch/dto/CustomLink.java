@@ -7,6 +7,7 @@ import java.util.*;
 public class CustomLink {
     private Long id;
     private String title;
+    private String tagName;
     private Date regDate;
     Set<CustomTag> tags;
 

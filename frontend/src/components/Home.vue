@@ -23,7 +23,7 @@
       <div class="col-md-3 mb-4">
         <div class="card mb-4 shadow-sm">
           <div class="card-img-top d-flex align-items-center cursor-pointer"
-               style="width:100%; height:225px; opacity:0.5;" >
+               style="width:100%; height:225px; opacity:0.5;" v-b-modal.category-link>
             <img style="flex:0 !important;" class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
           </div>
         </div>
@@ -43,32 +43,67 @@
       </div>
       </div>
     </div>
+    <b-modal
+      id="category-link"
+      ref="modal"
+      title="카테고리를 추가해주세요"
+      @ok="handleOk">
+      <form @submit.stop.prevent="handleSubmit">
+        <b-form-input v-model="categoryName" placeholder="카테고리 이름"></b-form-input>
+      </form>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import Header from './layout/Header'
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       q : '',
-      categories: []
+      categories: [],
+      categoryName: ''
     }
   },
   methods: {
     googleSearch(e){
       this.$refs.form.submit()
+    },
+    handleOk(){
+      if(!this.categoryName){
+        alert('카테고리 이름을 입력해주세요.');
+      } else {
+        this.handleSubmit();
+      }
+    },
+    handleSubmit(){
+      let data = new FormData();
+      data.append('name',this.categoryName)
+      this.categoryName = '';
+        this.$http.post('/categories/',data).
+        then((response) => {
+          //this.$router.push('home');
+          alert('카테고리가 추가됐습니다.');
+        }, (err) => {
+          console.log('err', err)
+        })
+      this.$nextTick(() => {
+        // Wrapped in $nextTick to ensure DOM is rendered before closing
+        this.$refs.modal.hide()
+      })
     }
   },
-  mounted(){
-    if(this.$cookies.isKey('Token')) {
-      this.$http.get('/categories/?email='+this.$cookies.get('Token'))
+  mounted() {
+    if (this.$cookies.isKey('Token')) {
+      this.$http.get('/categories/?email=' + this.$cookies.get('Token'))
         .then((result) => {
           this.categories = result;
         })
     } else {
-      this.$EventBus.$on('message',(text) =>{
-        this.$http.get('/categories/?email='+text)
+      this.$EventBus.$on('message', (text) => {
+        this.$http.get('/categories/?email=' + text)
           .then((result) => {
             this.categories = result;
           })
