@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3>search</h3>
+    <div v-for="category in $store.state.searchCategory">
+      <h3>{{ category.id }}</h3>
+    </div>
   </div>
 </template>
 
