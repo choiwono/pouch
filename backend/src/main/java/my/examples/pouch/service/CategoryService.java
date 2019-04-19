@@ -36,10 +36,10 @@ public class CategoryService {
 
         if (searchType == SEARCH_BY_CATEGORY) {
             return categoryRepository.searchCategory(searchStr);
-        } else{
+        } else {
             return categoryRepository.searchTag(searchStr);
         }
-
+    }
     public List<CustomCategory> getCustomCategory(List<Category> categories){
         List<CustomCategory> customCategories = new ArrayList<>();
         for(int i=0; i<categories.size(); i++){

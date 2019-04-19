@@ -24,13 +24,18 @@ public class CategoriesController {
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
                          @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
-        System.out.println("cate"+categories.size());
+
         List<CustomCategory> list = new ArrayList<>();
         for(int i=0; i<categories.size(); i++){
             CustomCategory customCategory = new CustomCategory();
             customCategory.setId(categories.get(i).getId());
             customCategory.setName(categories.get(i).getCategoryName());
             list.add(customCategory);
+            System.out.println(list.size());
+            for (int j = 0; j <list.size() ; j++) {
+                System.out.println(j+list.get(j).getName());
+            }
+
         }
 
         return list;

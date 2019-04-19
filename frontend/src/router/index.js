@@ -4,7 +4,7 @@ import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 
-import Search from '@/components/Search'
+import Search from '@/components/Contents/Search'
 
 import Categories from "../components/Contents/Categories";
 
@@ -37,15 +37,14 @@ const router = new Router({
       component: Join
     },
     {
-
       path: '/categories/search/',
       name: 'search',
       component: Search
-    },{
+    },
+    {
       path: '/categories/:id',
       name: 'categories',
       component: Categories
-
     }
   ]
 })
