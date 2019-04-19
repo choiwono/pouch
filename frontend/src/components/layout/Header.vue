@@ -91,6 +91,7 @@
             this.$store.state.url = '',
             this.$store.state.categoryId = ''
           },
+
           handleOk(bvModalEvt) {
             // Prevent modal from closing
             bvModalEvt.preventDefault()
@@ -102,6 +103,12 @@
               this.handleSubmit()
             }
           },
+
+          clearSearch(){
+            this.searchType= null,
+              this.searchStr = ''
+          },
+
           handleSubmit() {
             let data = new FormData();
             data.append('categoryId',this.$store.state.categoryId)
@@ -119,17 +126,23 @@
             })
           },
           onSubmit() {
+
             let searchType = this.searchType;
             let searchStr = this.searchStr;
+            //this.dropdown.hide(true),
+            //this.clearSearch(),
             this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
             then((response) => {
-              if(response.status === 200){
-                  searchType = '';
-                  searchStr = '';
-                this.$router.push('search');
-              }
+              searchType = '';
+              searchStr = '';
+              console.log(response);
+              this.$router.push({name:'search'});
             }, (err) => {
               console.log('err', err)
+            })
+            this.$nextTick(() => {
+              // Wrapped in $nextTick to ensure DOM is rendered before closing
+              //this.$refs.modal.hide()
             })
           }
         },
