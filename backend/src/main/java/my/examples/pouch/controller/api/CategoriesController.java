@@ -1,9 +1,11 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
+import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.dto.CustomCategory;
 import my.examples.pouch.dto.CustomLink;
+import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.LinkService;
 import org.springframework.ui.Model;
@@ -19,20 +21,14 @@ import java.util.List;
 public class CategoriesController {
     private final CategoryService categoryService;
     private final LinkService linkService;
+    private final AccountService accountService;
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
                          @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
         System.out.println("cate"+categories.size());
-        List<CustomCategory> list = new ArrayList<>();
-        for(int i=0; i<categories.size(); i++){
-            CustomCategory customCategory = new CustomCategory();
-            customCategory.setId(categories.get(i).getId());
-            customCategory.setName(categories.get(i).getCategoryName());
-            list.add(customCategory);
-        }
-
+        List<CustomCategory> list = categoryService.getCustomCategory(categories);
         return list;
     }
 
@@ -47,13 +43,22 @@ public class CategoriesController {
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
     public CustomCategory getCategory(@PathVariable(value="id") Long id){
-        Category category = categoryService.getCategories(id);
+        Category category = categoryService.getCategory(id);
         CustomCategory customCategory = new CustomCategory();
         customCategory.setId(category.getId());
         customCategory.setName(category.getCategoryName());
         customCategory.setLinks(linkService.getCustomLinks(category.getLinks()));
-        //System.out.println(category.getLinks());
         return customCategory;
+    }
+
+    @PostMapping
+    public void addCategory(@RequestParam(name = "name") String name,
+                            Principal principal){
+        Account account = accountService.findAccountByEmail(principal.getName());
+        Category category = new Category();
+        category.setCategoryName(name);
+        category.setAccount(account);
+        categoryService.addCategory(category);
     }
 
     @PutMapping(value = "/{id}")
@@ -68,9 +73,9 @@ public class CategoriesController {
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
-    @PostMapping
+    /*@PostMapping
     public void shareCategory(@RequestParam(name = "id") Long id){
 
-    }
+    }*/
 }
 
