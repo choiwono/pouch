@@ -20,7 +20,7 @@ public class CategoryService {
     private EntityManager entityManager;
 
     @Transactional
-    public Category getCategories(Long id) {
+    public Category getCategory(Long id) {
         return categoryRepository.getCategories(id);
     }
 
@@ -36,9 +36,10 @@ public class CategoryService {
 
         if (searchType == SEARCH_BY_CATEGORY) {
             return categoryRepository.searchCategory(searchStr);
-        } else{
+        } else {
             return categoryRepository.searchTag(searchStr);
         }
+    }
 
     public List<CustomCategory> getCustomCategory(List<Category> categories){
         List<CustomCategory> customCategories = new ArrayList<>();
@@ -49,6 +50,9 @@ public class CategoryService {
             customCategories.add(customCategory);
         }
         return customCategories;
+    }
 
+    public Category addCategory(Category category) {
+        return categoryRepository.save(category);
     }
 }
