@@ -4,7 +4,7 @@ import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 
-import Search from '@/components/Search'
+import Search from '@/components/Contents/Search'
 
 import Categories from "../components/Contents/Categories";
 
@@ -39,6 +39,7 @@ const router = new Router({
     {
       path: '/categories/search/',
       name: 'search',
+
       component: Search,
       meta: { requiresAuth: true }
     },{
@@ -46,6 +47,7 @@ const router = new Router({
       name: 'categories',
       component: Categories,
       meta: { requiresAuth: true }
+
     }
   ]
 })
