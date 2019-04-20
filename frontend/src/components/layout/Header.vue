@@ -60,108 +60,104 @@
 </template>
 
 <script>
+  export default {
+    name: "Header",
+    data(){
+      return {
+        //url : '',
+        //categoryId: '',
+        categories : [],
+        selected: null,
+        options: [
+          { value: null, text: '구분', disabled:true},
+          { value: 'category', text: '카테고리' },
+          { value: 'tag', text: '태그' }],
+        searchType: '',
+        searchStr: '',
+        list: []
+      }
+    },
+    methods: {
+      logout(){
+        console.log("로그아웃");
+        this.$http.get('/logout')
+          .then((result) => {
+            //this.$store.commit('logOut');
+        })
+        this.$router.push('/login');
+      },
+      clearName() {
+        this.$store.state.url = '',
+        this.$store.state.categoryId = ''
+      },
 
-    export default {
-        name: "Header",
-        data(){
-          return {
-            //url : '',
-            //categoryId: '',
-            categories : [],
-            selected: null,
-            options: [
-              { value: null, text: '구분', disabled:true},
-              { value: 'category', text: '카테고리' },
-              { value: 'tag', text: '태그' }],
-            searchType: '',
-            searchStr: '',
-            list: []
-          }
-        },
-        methods: {
-          logout(){
-            console.log("로그아웃");
-            this.$http.get('/logout')
-              .then((result) => {
-              this.$cookies.remove('Token');
-            })
-            this.$router.push('/login');
-          },
-          clearName() {
-            this.$store.state.url = '',
-            this.$store.state.categoryId = ''
-          },
-
-          handleOk(bvModalEvt) {
-            // Prevent modal from closing
-            bvModalEvt.preventDefault()
-            //console.log(this.$store.state.url);
-            //console.log(this.$store.state.categoryId);
-            if (!this.$store.state.url || !this.$store.state.categoryId) {
-              alert("url와 카테고리를 반드시 선택해주세요.");
-            } else {
-              this.handleSubmit()
-            }
-          },
-
-          clearSearch(){
-            this.searchType= null,
-              this.searchStr = ''
-          },
-
-          handleSubmit() {
-            let data = new FormData();
-            data.append('categoryId',this.$store.state.categoryId)
-            data.append('url',this.$store.state.url)
-            this.clearName(),
-              this.$http.post('/crawling/save',data).
-              then((response) => {
-                this.$router.push('home');
-              }, (err) => {
-                console.log('err', err)
-              })
-            this.$nextTick(() => {
-              // Wrapped in $nextTick to ensure DOM is rendered before closing
-              this.$refs.modal.hide()
-            })
-          },
-          onSubmit() {
-
-            let searchType = this.searchType;
-            let searchStr = this.searchStr;
-            //this.dropdown.hide(true),
-            //this.clearSearch(),
-            this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
-            then((response) => {
-              searchType = '';
-              searchStr = '';
-              console.log(response);
-              this.$router.push({name:'search'});
-            }, (err) => {
-              console.log('err', err)
-            })
-            this.$nextTick(() => {
-              // Wrapped in $nextTick to ensure DOM is rendered before closing
-              //this.$refs.modal.hide()
-            })
-          }
-        },
-        mounted(){
-          if(this.$cookies.isKey('Token')){
-            this.$http.get('/categories/?email='+this.$cookies.get('Token'))
-              .then((result) => {
-                this.categories = result;
-            })
-          } else {
-            this.$EventBus.$on('message', (text) => {
-              this.$http.get('/categories/?email=' + text)
-                .then((result) => {
-                  this.categories = result;
-                })
-            });
-          }
+      handleOk(bvModalEvt) {
+        // Prevent modal from closing
+        bvModalEvt.preventDefault()
+        //console.log(this.$store.state.url);
+        //console.log(this.$store.state.categoryId);
+        if (!this.$store.state.url || !this.$store.state.categoryId) {
+          alert("url와 카테고리를 반드시 선택해주세요.");
+        } else {
+          this.handleSubmit()
         }
+      },
+
+      clearSearch(){
+        this.searchType= null,
+          this.searchStr = ''
+      },
+
+      handleSubmit() {
+        let data = new FormData();
+        data.append('categoryId',this.$store.state.categoryId)
+        data.append('url',this.$store.state.url)
+        this.clearName(),
+          this.$http.post('/crawling/save',data).
+          then((response) => {
+            this.$router.push('home');
+          }, (err) => {
+            console.log('err', err)
+          })
+        this.$nextTick(() => {
+          // Wrapped in $nextTick to ensure DOM is rendered before closing
+          this.$refs.modal.hide()
+        })
+      },
+      onSubmit() {
+
+        let searchType = this.searchType;
+        let searchStr = this.searchStr;
+        //this.dropdown.hide(true),
+        //this.clearSearch(),
+        this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
+        then((response) => {
+          searchType = '';
+          searchStr = '';
+          console.log(response);
+          this.$router.push({name:'search'});
+        }, (err) => {
+          console.log('err', err)
+        })
+        this.$nextTick(() => {
+          // Wrapped in $nextTick to ensure DOM is rendered before closing
+          //this.$refs.modal.hide()
+        })
+      }
+    },
+    computed:{
+      getToken(){
+        const user = this.$store.state.token;
+        //return user.email;
+        if(user != null){
+          this.$http.get('/categories/?email=' + user.email)
+            .then((result) => {
+              return this.categories = result;
+            })
+        }
+      }
     }
+  }
 </script>
 
 <style scoped>

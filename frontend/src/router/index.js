@@ -5,9 +5,8 @@ import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 
 import Search from '@/components/Contents/Search'
-
+import { store } from '../store/store';
 import Categories from "../components/Contents/Categories";
-
 
 Vue.use(Router)
 
@@ -47,14 +46,12 @@ const router = new Router({
       name: 'categories',
       component: Categories,
       meta: { requiresAuth: true }
-
     }
   ]
 })
 
 router.beforeEach((to,from,next) => {
-  const authUser = window.$cookies.get('Token');
-
+  const authUser = store.state.token;
   if(to.meta.requiresAuth){
     if(authUser == null){
       router.push('/login');
