@@ -28,7 +28,8 @@ const router = new Router({
     {
       path: '/home/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true }
     },
     {
       path: '/join/',
@@ -38,7 +39,6 @@ const router = new Router({
     {
       path: '/categories/search/',
       name: 'search',
-
       component: Search,
       meta: { requiresAuth: true }
     },{
