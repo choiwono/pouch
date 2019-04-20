@@ -94,21 +94,6 @@ export default {
         this.$refs.modal.hide()
       })
     }
-  },
-  mounted() {
-    if (this.$cookies.isKey('Token')) {
-      this.$http.get('/categories/?email=' + this.$cookies.get('Token'))
-        .then((result) => {
-          this.categories = result;
-        })
-    } else {
-      this.$EventBus.$on('message', (text) => {
-        this.$http.get('/categories/?email=' + text)
-          .then((result) => {
-            this.categories = result;
-          })
-      });
-    }
   }
 }
 </script>
