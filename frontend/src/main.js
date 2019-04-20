@@ -11,7 +11,7 @@ import 'vue-awesome/icons'
 import icon from 'vue-awesome/components/Icon'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
-import { store } from './store'
+import { store } from './store/store'
 
 Vue.component('icon',icon)
 Vue.use(Vuetify)
@@ -55,5 +55,6 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  render: h => h(App)
 })
