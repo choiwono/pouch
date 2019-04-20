@@ -145,13 +145,14 @@
         getToken(){
           const user = this.$store.state.token;
           //return user.email;
-          if(user != null){
+          if(user != null) {
             this.$http.get('/categories/?email=' + user.email)
-              .then((result) => {
-                return this.categories = result;
+            .then((result) => {
+              return this.categories = result;
+            })
           }
-      },    
-    }
+        },
+      }
   }
 </script>
 
