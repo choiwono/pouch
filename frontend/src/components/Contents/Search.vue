@@ -7,8 +7,8 @@
   <div class="container">
    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
     <div class="container text-center">
-      <div v-if="category in $store.state.searchCategory" class="form-group d-flex justify-content-center">
-        <h5>{{category.name}}</h5>
+      <div v-if="$store.state.searchCategory.length >0" class="form-group d-flex justify-content-center">
+        <h5>{{$store.state.searchCategory.length}}건의 검색 결과가 있습니다</h5>
       </div>
       <div v-else class="form-group d-flex justify-content-center">
          <h5>검색결과가 없습니다</h5>
