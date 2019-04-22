@@ -30,7 +30,7 @@ public class CrawlingController {
     public void crawling(@RequestParam(required = true) String url,
                            @RequestParam(required = true) Long categoryId,
                            Principal principal) throws Exception{
-        Document doc = Jsoup.connect(url).get();
+        Document doc = Jsoup.connect(url).timeout(5*1000).get();
         Elements title = doc.select("title");
         Elements sub = doc.select("meta[name=description]");
         String content = title.html();
