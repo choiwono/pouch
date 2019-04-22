@@ -23,6 +23,8 @@ public class Link {
     @Column(name="reg_date")
     private Date regDate;
     private Long repository;
+    @Column(name="tags_name")
+    private String tagsName;
 
     @Column(name="link_option")
     private Long linkOption;

@@ -76,16 +76,16 @@ Values(7,'Algorithm',NOW(),2,4);
 
 
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(1,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(2,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(3,1,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(4,1,'jaehee@gmail.com',NOW(),0,'부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(5,1,'jaehee@gmail.com',NOW(),0,'TCP School', 'http://tcpschool.com/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(1,1,'jaehee@gmail.com',NOW(),0,'','[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(2,1,'jaehee@gmail.com',NOW(),0,'','[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(3,1,'jaehee@gmail.com',NOW(),0,'','[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(4,1,'jaehee@gmail.com',NOW(),0,'','부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(5,1,'jaehee@gmail.com',NOW(),0,'','TCP School', 'http://tcpschool.com/',1,3);
 
 INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
 VALUES(6,1,'jaehee@gmail.com',NOW(),0,'Learn Spring', 'https://www.baeldung.com/learn-spring-course',1,4);

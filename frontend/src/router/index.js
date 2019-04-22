@@ -52,7 +52,7 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
-  const authUser = store.state.token;
+  const authUser = localStorage.getItem('pouch_user');
   if(to.meta.requiresAuth){
     if(authUser == null){
       router.push('/login');

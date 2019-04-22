@@ -7,19 +7,24 @@ export const store = new Vuex.Store({
   state : {
     token: '',
     categories: [],
+    category:[],
     categoryId: '',
     url: '',
+    paramsId: '',
     searchCategory : []
   },
   getters: {
-    getToken: function(state){
-      return state.token;
+    getCategories: (state) => {
+      return state.categories;
+    },
+    getCategory: (state) => {
+      return state.category;
     }
   },
   mutations: {
-    loginToken : (state, payload) => {
-      state.token = payload;
-    },
+    changeCategories: (state,payload) => {
+      return state.categories = payload.arr;
+    }
     /*logOut: (state) => {
       if(state.token){
         state.token = '';
