@@ -76,65 +76,65 @@ Values(7,'Algorithm',NOW(),2,4);
 
 
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(1,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(2,1,'jaehee@gmail.com',NOW(),0,'[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(3,1,'jaehee@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(4,1,'jaehee@gmail.com',NOW(),0,'부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',1,3);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(5,1,'jaehee@gmail.com',NOW(),0,'TCP School', 'http://tcpschool.com/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(1,1,'jaehee@gmail.com',NOW(),0,'','[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(2,1,'jaehee@gmail.com',NOW(),0,'','[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(3,1,'jaehee@gmail.com',NOW(),0,'','[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(4,1,'jaehee@gmail.com',NOW(),0,'','부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',1,3);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(5,1,'jaehee@gmail.com',NOW(),0,'','TCP School', 'http://tcpschool.com/',1,3);
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(6,1,'jaehee@gmail.com',NOW(),0,'Learn Spring', 'https://www.baeldung.com/learn-spring-course',1,4);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(7,1,'jaehee@gmail.com',NOW(),0,'Spring security', 'https://www.baeldung.com/learn-spring-security-course',1,4);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(8,1,'jaehee@gmail.com',NOW(),0,'spring boot interview question', 'https://www.baeldung.com/spring-boot-interview-questions',1,4);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(9,1,'jaehee@gmail.com',NOW(),0,'Rest Query Language', 'https://www.baeldung.com/spring-rest-api-query-search-language-tutorial',1,4);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(6,1,'jaehee@gmail.com',NOW(),0,'','Learn Spring', 'https://www.baeldung.com/learn-spring-course',1,4);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(7,1,'jaehee@gmail.com',NOW(),0,'','Spring security', 'https://www.baeldung.com/learn-spring-security-course',1,4);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(8,1,'jaehee@gmail.com',NOW(),0,'','spring boot interview question', 'https://www.baeldung.com/spring-boot-interview-questions',1,4);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(9,1,'jaehee@gmail.com',NOW(),0,'','Rest Query Language', 'https://www.baeldung.com/spring-rest-api-query-search-language-tutorial',1,4);
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(10,1,'jaehee@gmail.com',NOW(),0,'프로그래머스', 'https://programmers.co.kr/learn/challenges',1,5);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(11,1,'jaehee@gmail.com',NOW(),0,'알고스팟', 'https://algospot.com/wiki/read/%EC%95%8C%EA%B3%A0%EC%8A%A4%ED%8C%9F_%EC%98%A8%EB%9D%BC%EC%9D%B8_%EC%A0%80%EC%A7%80',1,5);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(12,1,'jaehee@gmail.com',NOW(),0,'알고리즘 팁', 'https://blog.yena.io/studynote/2018/11/14/Algorithm-Basic.html?fbclid=IwAR3voH_5IVOHXbZdFEl2IwAOeQqnnKQmNL82GmhBN16ymbhzEvNXDAzYE5c',1,5);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(13,1,'jaehee@gmail.com',NOW(),0,'코딜리티', 'https://www.codility.com/',1,5);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(10,1,'jaehee@gmail.com',NOW(),0,'','프로그래머스', 'https://programmers.co.kr/learn/challenges',1,5);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(11,1,'jaehee@gmail.com',NOW(),0,'','알고스팟', 'https://algospot.com/wiki/read/%EC%95%8C%EA%B3%A0%EC%8A%A4%ED%8C%9F_%EC%98%A8%EB%9D%BC%EC%9D%B8_%EC%A0%80%EC%A7%80',1,5);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(12,1,'jaehee@gmail.com',NOW(),0,'','알고리즘 팁', 'https://blog.yena.io/studynote/2018/11/14/Algorithm-Basic.html?fbclid=IwAR3voH_5IVOHXbZdFEl2IwAOeQqnnKQmNL82GmhBN16ymbhzEvNXDAzYE5c',1,5);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(13,1,'jaehee@gmail.com',NOW(),0,'','코딜리티', 'https://www.codility.com/',1,5);
 
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(18,1,'treasureb1330@gmail.com',NOW(),0,'[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',2,1);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(19,1,'treasureb1330@gmail.com',NOW(),0,'[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',2,1);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(20,1,'treasureb1330@gmail.com',NOW(),0,'[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',2,1);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(21,1,'treasureb1330@gmail.com',NOW(),0,'부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',2,1);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(22,1,'treasureb1330@gmail.com',NOW(),0,'TCP School', 'http://tcpschool.com/',2,1);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(18,1,'treasureb1330@gmail.com',NOW(),0,'','[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',2,1);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(19,1,'treasureb1330@gmail.com',NOW(),0,'','[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',2,1);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(20,1,'treasureb1330@gmail.com',NOW(),0,'','[Programming] 객체 지향 프로그래밍이란?', 'https://jaehee0145.github.io/programming/',2,1);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(21,1,'treasureb1330@gmail.com',NOW(),0,'','부스트코스_웹 프로그래밍', 'https://www.edwith.org/boostcourse-web',2,1);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(22,1,'treasureb1330@gmail.com',NOW(),0,'','TCP School', 'http://tcpschool.com/',2,1);
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(23,1,'treasureb1330@gmail.com',NOW(),0,'html_poiema', 'https://poiemaweb.com/html5-syntax',2,2);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(24,1,'treasureb1330@gmail.com',NOW(),0,'w3school', 'https://www.w3schools.com/default.asp',2,2);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(23,1,'treasureb1330@gmail.com',NOW(),0,'','html_poiema', 'https://poiemaweb.com/html5-syntax',2,2);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(24,1,'treasureb1330@gmail.com',NOW(),0,'','w3school', 'https://www.w3schools.com/default.asp',2,2);
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(25,1,'james@gmail.com',NOW(),0,'html_poiema', 'https://poiemaweb.com/html5-syntax',4,6);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(26,1,'james@gmail.com',NOW(),0,'w3school', 'https://www.w3schools.com/default.asp',4,6);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(25,1,'james@gmail.com',NOW(),0,'','html_poiema', 'https://poiemaweb.com/html5-syntax',4,6);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(26,1,'james@gmail.com',NOW(),0,'','w3school', 'https://www.w3schools.com/default.asp',4,6);
 
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(27,1,'james@gmail.com',NOW(),0,'프로그래머스', 'https://programmers.co.kr/learn/challenges',4,7);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(28,1,'james@gmail.com',NOW(),0,'알고스팟', 'https://algospot.com/wiki/read/%EC%95%8C%EA%B3%A0%EC%8A%A4%ED%8C%9F_%EC%98%A8%EB%9D%BC%EC%9D%B8_%EC%A0%80%EC%A7%80',4,7);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(29,1,'james@gmail.com',NOW(),0,'알고리즘 팁', 'https://blog.yena.io/studynote/2018/11/14/Algorithm-Basic.html?fbclid=IwAR3voH_5IVOHXbZdFEl2IwAOeQqnnKQmNL82GmhBN16ymbhzEvNXDAzYE5c',4,7);
-INSERT INTO link(id,link_option,email, reg_date, repository,title,url,account_id,category_id)
-VALUES(30,1,'james@gmail.com',NOW(),0,'코딜리티', 'https://www.codility.com/',4,7);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(27,1,'james@gmail.com',NOW(),0,'','프로그래머스', 'https://programmers.co.kr/learn/challenges',4,7);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(28,1,'james@gmail.com',NOW(),0,'','알고스팟', 'https://algospot.com/wiki/read/%EC%95%8C%EA%B3%A0%EC%8A%A4%ED%8C%9F_%EC%98%A8%EB%9D%BC%EC%9D%B8_%EC%A0%80%EC%A7%80',4,7);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(29,1,'james@gmail.com',NOW(),0,'','알고리즘 팁', 'https://blog.yena.io/studynote/2018/11/14/Algorithm-Basic.html?fbclid=IwAR3voH_5IVOHXbZdFEl2IwAOeQqnnKQmNL82GmhBN16ymbhzEvNXDAzYE5c',4,7);
+INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
+VALUES(30,1,'james@gmail.com',NOW(),0,'','코딜리티', 'https://www.codility.com/',4,7);
 
 
 

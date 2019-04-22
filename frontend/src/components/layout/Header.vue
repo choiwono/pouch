@@ -48,7 +48,7 @@
         <b-form-group id="input-group-3" label-for="input-3">
           <b-form-select v-model="$store.state.categoryId">
             <option value="" disabled>카테고리를 선택해주세요</option>
-            <option v-for="item in $store.state.categories" :value="item.id">{{ item.name }}</option>
+            <option v-for="item in $store.getters.getCategories" :value="item.id">{{ item.name }}</option>
           </b-form-select>
         </b-form-group>
         <b-form-input v-model="$store.state.url" placeholder="https://..."></b-form-input>
@@ -112,7 +112,8 @@
         this.clearName(),
           this.$http.post('/crawling/save',data).
           then((response) => {
-            this.$router.push('home');
+            alert('정상적으로 추가되었습니다.');
+            //this.$router.push('home');
           }, (err) => {
             console.log('err', err)
           })
@@ -142,6 +143,19 @@
           //this.$refs.modal.hide()
         })
       }
+
+    },
+    mounted(){
+      const user = JSON.parse(localStorage.getItem('pouch_user'));
+      if(user != null){
+        this.$http.get('/categories/?email=' + user.email)
+          .then((result) => {
+            this.$store.commit('changeCategories',{
+              arr : result
+            });
+          })
+      }
+
     }
   }
 </script>

@@ -36,11 +36,11 @@ export default {
         then((response) => {
           this.$http.post('/accounts/auth')
             .then((result) => {
-              console.log(result);
               localStorage.setItem('pouch_user',JSON.stringify(result));
               alert('로그인에 성공하셨습니다.');
               this.$router.push({name:'home'});
           })
+
 
         }, (err) => {
           console.log('err', err)

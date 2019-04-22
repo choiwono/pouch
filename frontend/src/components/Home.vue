@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div v-for="category in $store.state.categories" class="col-md-3 mb-4">
+      <div v-for="category in $store.getters.getCategories" class="col-md-3 mb-4">
         <div class="card mb-4 shadow-sm">
           <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
@@ -70,7 +70,8 @@ export default {
     googleSearch(e){
       this.$refs.form.submit()
     },
-    handleOk(){
+    handleOk(bvModalEvt){
+      bvModalEvt.preventDefault();
       if(!this.categoryName){
         alert('카테고리 이름을 입력해주세요.');
       } else {
@@ -101,12 +102,21 @@ export default {
       })
     }
   },
+
+  computed:{
+
+  },
+
   mounted(){
     const user = JSON.parse(localStorage.getItem('pouch_user'));
     if(user != null){
       this.$http.get('/categories/?email=' + user.email)
         .then((result) => {
-          this.$store.state.categories = result;
+
+          this.$store.commit('changeCategories',{
+            arr : result
+          });
+
         })
     }
   }
