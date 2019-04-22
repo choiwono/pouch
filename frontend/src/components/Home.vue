@@ -102,17 +102,21 @@ export default {
       })
     }
   },
+
   computed:{
 
   },
+
   mounted(){
     const user = JSON.parse(localStorage.getItem('pouch_user'));
     if(user != null){
       this.$http.get('/categories/?email=' + user.email)
         .then((result) => {
+
           this.$store.commit('changeCategories',{
             arr : result
           });
+
         })
     }
   }

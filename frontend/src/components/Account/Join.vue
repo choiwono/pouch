@@ -10,7 +10,7 @@
             <div class="form-group">
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input type="text" class="form-control mt-1" v-model="name" name="name" id="name" minlength="2" placeholder="이름.."/>
+                  <input type="text" class="form-control mt-1" v-model="name" name="name" id="name" minlength="2" placeholder="이름"/>
                 </div>
               </div>
             </div>
@@ -24,9 +24,9 @@
             <div class="form-group" id="check-email">
               <div class="cols-sm-10">
                 <div class="input-group">
-                  <input type="text" class="form-control mt-1" v-model="email" name="email" id="email"  placeholder="이메일.."/>
+                  <input type="text" class="form-control mt-1" v-model="email" name="email" id="email"  placeholder="이메일"/>
                 </div>
-                <button type="button" id="check-id" style="margin-top:7.5px;"  class="btn btn-primary">중복체크</button>
+                <button type="button" id="check-id" style="margin-top:7.5px;"  class="btn btn-primary">중복 체크</button>
               </div>
             </div>
 
@@ -45,7 +45,7 @@
               </div>
             </div>
             <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-            <input type="submit" class="form-control" value="등 록">
+            <input type="submit" class="form-control btn-primary" value="등 록">
           </form>
         </div>
       </div>

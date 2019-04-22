@@ -29,7 +29,7 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><icon name="user"></icon></template>
-              <router-link to="/login" tag="b-dropdown-item">로그인</router-link>
+              <router-link to="/login" tag="b-dropdown-item" >로그인</router-link>
               <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
               <router-link to="/join" tag="b-dropdown-item">회원가입</router-link>
           </b-nav-item-dropdown>
@@ -143,6 +143,7 @@
           //this.$refs.modal.hide()
         })
       }
+
     },
     mounted(){
       const user = JSON.parse(localStorage.getItem('pouch_user'));
@@ -154,6 +155,7 @@
             });
           })
       }
+
     }
   }
 </script>
