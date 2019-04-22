@@ -100,6 +100,15 @@ export default {
         this.$refs.modal.hide();
       })
     }
+  },
+  mounted(){
+    const user = JSON.parse(localStorage.getItem('pouch_user'));
+    if(user != null){
+      this.$http.get('/categories/?email=' + user.email)
+        .then((result) => {
+          this.$store.state.categories = result;
+        })
+    }
   }
 }
 </script>
