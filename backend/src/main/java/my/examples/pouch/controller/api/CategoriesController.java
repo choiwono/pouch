@@ -27,10 +27,8 @@ public class CategoriesController {
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
                          @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
-
-        System.out.println("cate"+categories.size());
+        //System.out.println("cate"+categories.size());
         List<CustomCategory> list = categoryService.getCustomCategory(categories);
-
         return list;
     }
 
@@ -54,13 +52,13 @@ public class CategoriesController {
     }
 
     @PostMapping
-    public void addCategory(@RequestParam(name = "name") String name,
+    public Category addCategory(@RequestParam(name = "name") String name,
                             Principal principal){
         Account account = accountService.findAccountByEmail(principal.getName());
         Category category = new Category();
         category.setCategoryName(name);
         category.setAccount(account);
-        categoryService.addCategory(category);
+        return categoryService.addCategory(category);
     }
 
     @PutMapping(value = "/{id}")

@@ -50,7 +50,7 @@
         <b-form-group id="input-group-3" label-for="input-3">
           <b-form-select v-model="$store.state.categoryId">
             <option value="" disabled>카테고리를 선택해주세요</option>
-            <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+            <option v-for="item in $store.state.categories" :value="item.id">{{ item.name }}</option>
           </b-form-select>
         </b-form-group>
         <b-form-input v-model="$store.state.url" placeholder="https://..."></b-form-input>
@@ -64,9 +64,7 @@
     name: "Header",
     data(){
       return {
-        //url : '',
-        //categoryId: '',
-        categories : [],
+        //categories : [],
         selected: null,
         options: [
           { value: null, text: '구분', disabled:true},
@@ -82,7 +80,8 @@
         console.log("로그아웃");
         this.$http.get('/logout')
           .then((result) => {
-            //this.$store.commit('logOut');
+            localStorage.removeItem('pouch_user');
+            alert('로그아웃에 성공하셨습니다.');
         })
         this.$router.push('/login');
       },
@@ -145,16 +144,13 @@
         })
       }
     },
-    computed:{
-      getToken(){
-        const user = this.$store.state.token;
-        //return user.email;
-        if(user != null){
-          this.$http.get('/categories/?email=' + user.email)
-            .then((result) => {
-              return this.categories = result;
-            })
-        }
+    mounted(){
+      const user = JSON.parse(localStorage.getItem('pouch_user'));
+      if(user != null){
+        this.$http.get('/categories/?email=' + user.email)
+          .then((result) => {
+            this.$store.state.categories = result;
+          })
       }
     }
   }

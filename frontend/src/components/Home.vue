@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div v-for="category in categories" class="col-md-3 mb-4">
+      <div v-for="category in $store.state.categories" class="col-md-3 mb-4">
         <div class="card mb-4 shadow-sm">
           <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
@@ -63,7 +63,6 @@ export default {
   data () {
     return {
       q : '',
-      categories: [],
       categoryName: ''
     }
   },
@@ -83,15 +82,22 @@ export default {
       data.append('name',this.categoryName)
       this.categoryName = '';
         this.$http.post('/categories/',data).
-        then((response) => {
+        then((result) => {
           //this.$router.push('home');
           alert('카테고리가 추가됐습니다.');
+          const user = JSON.parse(localStorage.getItem('pouch_user'));
+          if(user != null){
+            this.$http.get('/categories/?email=' + user.email)
+              .then((result) => {
+                this.$store.state.categories = result;
+              })
+          }
         }, (err) => {
           console.log('err', err)
         })
       this.$nextTick(() => {
         // Wrapped in $nextTick to ensure DOM is rendered before closing
-        this.$refs.modal.hide()
+        this.$refs.modal.hide();
       })
     }
   }
