@@ -47,6 +47,7 @@ public class CategoryService {
             CustomCategory customCategory = new CustomCategory();
             customCategory.setId(categories.get(i).getId());
             customCategory.setName(categories.get(i).getCategoryName());
+            customCategory.setNickName(categories.get(i).getAccount().getNickName());
             customCategories.add(customCategory);
         }
         return customCategories;

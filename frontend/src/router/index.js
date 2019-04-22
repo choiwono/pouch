@@ -41,7 +41,8 @@ const router = new Router({
       name: 'search',
       component: Search,
       meta: { requiresAuth: true }
-    },{
+    },
+    {
       path: '/categories/:id',
       name: 'categories',
       component: Categories,
