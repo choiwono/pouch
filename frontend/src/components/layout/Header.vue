@@ -161,5 +161,8 @@
 </script>
 
 <style scoped>
-
+  .navbar-brand > a {
+    color:#00bfa5;
+    font-weight:700;
+  }
 </style>
