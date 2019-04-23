@@ -6,18 +6,19 @@
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-
           <b-nav-item-dropdown no-caret right>
             <b-dropdown-form style="display:flex" @submit.prevent="onSubmit">
-                <b-form-select
+
+              <b-form-select
                   :value="null"
                   :options="{ '1': '카테고리', '2': '태그' }"
+                  :rules="[v => !!v || 'Item is required']"
                   id="searchType"
-                  v-model="searchType">
+                  v-model="searchType"
+                  required>
                   <option slot="first" value="" disabled style="width: 80px">구분</option>
-                  <!--<option  :value="null" disabled="true" style="width: 80px">구분</option>-->
                 </b-form-select>
-                <b-form-input id="searchStr2" v-model="searchStr" style="width: 100px"></b-form-input>
+                <b-form-input :rules="nameRules" id="searchStr2" v-model="searchStr" style="width: 100px" required></b-form-input>
                 <b-button type="submit" variant="secondary" size="sm" style="width: 100px" >검색</b-button>
             </b-dropdown-form>
             <template slot="button-content"><icon name="search"></icon></template>
@@ -66,11 +67,18 @@
         selected: null,
         options: [
           { value: null, text: '구분', disabled:true},
-          { value: 'category', text: '카테고리' },
+          { value: 'category', text: '카테고리2' },
           { value: 'tag', text: '태그' }],
         searchType: '',
         searchStr: '',
-        list: []
+        list: [],
+        valid: true,
+        name: '',
+        nameRules: [
+          v => !!v || 'Name is required',
+          v => (v && v.length >= 2) || 'Keyword must be more than 2 characters'
+        ],
+        items: ['Foo', 'Bar', 'Fizz', 'Buzz']
       }
     },
     methods: {
