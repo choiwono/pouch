@@ -7,6 +7,7 @@ import my.examples.pouch.dto.*;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
+import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,11 @@ public class TagController {
     @DeleteMapping(value = "/{id}")
     public void deleteTag(@PathVariable(value = "id") Long id){}
 
-
+    @GetMapping
+    public List<CustomTagDto> getTags(@RequestParam(value="category-id") Long id){
+        List<CustomTagDto> list = tagService.findTagListByCategoryId(id);
+        return list;
+    }
     /*기존 코드
     @PostMapping("/search")
     public List<CustomLink> myCategory(@RequestBody TagItem tagItem,
