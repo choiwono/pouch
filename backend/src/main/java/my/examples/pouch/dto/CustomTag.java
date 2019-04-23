@@ -8,9 +8,4 @@ import java.util.*;
 public class CustomTag {
     private Long id;
     private String tagName;
-
-    public CustomTag(Long id, String tagName) {
-        this.id = id;
-        this.tagName = tagName;
-    }
 }
