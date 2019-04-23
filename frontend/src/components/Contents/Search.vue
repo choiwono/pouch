@@ -1,10 +1,6 @@
 <template>
-  <!--<div>-->
-    <!--<div v-for="category in $store.state.searchCategory">-->
-      <!--<h3>{{ category.id }}</h3>-->
-    <!--</div>-->
-  <!--</div>-->
   <div class="container">
+
    <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
     <div class="container text-center">
       <div v-if="$store.state.searchCategory.length >0" class="form-group d-flex justify-content-center">
@@ -13,7 +9,6 @@
       <div v-else class="form-group d-flex justify-content-center">
          <h5>검색결과가 없습니다</h5>
       </div>
-
     </div>
   </div>
 
@@ -34,6 +29,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 </template>
