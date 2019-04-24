@@ -50,39 +50,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.addAllowedHeader(CorsConfiguration.ALL);
-            configuration.addAllowedMethod(CorsConfiguration.ALL);
-            configuration.addAllowedOrigin(CorsConfiguration.ALL);
-            configuration.setAllowCredentials(true);
-            configuration.setMaxAge(3600L);
-            UrlBasedCorsConfigurationSource source =
-                    new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**",configuration);
-            http.httpBasic()
-            .and().cors().configurationSource(source)
-            .and()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
-            //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/login").permitAll()
-            .antMatchers(HttpMethod.GET,"/api/categories/**").hasRole("USER")
-            .antMatchers("/api/account/**").hasRole("USER")
-            .antMatchers("/api/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-            .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
-            .loginProcessingUrl("/api/login") // 로그인 화면
-            .usernameParameter("loginId")
-            .passwordParameter("loginPassword")
-            .successHandler(authSuccessHandler)
-            .failureHandler(authFailerHandler)
-            .and()
-            .logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
-            .logoutSuccessHandler(logoutSuccessHandler)
-            .deleteCookies("JSESSIONID")
-            .and()
-            .csrf().ignoringAntMatchers("/**");
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedHeader(CorsConfiguration.ALL);
+        configuration.addAllowedMethod(CorsConfiguration.ALL);
+        configuration.addAllowedOrigin(CorsConfiguration.ALL);
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        http.httpBasic()
+                .and().cors().configurationSource(source)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+                //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/accounts/join").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/categories/**").hasRole("USER")
+                .antMatchers("/api/accounts/**").hasRole("USER")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
+                .loginProcessingUrl("/api/login") // 로그인 화면
+                .usernameParameter("loginId")
+                .passwordParameter("loginPassword")
+                .successHandler(authSuccessHandler)
+                .failureHandler(authFailerHandler)
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
+                .and()
+                .csrf().ignoringAntMatchers("/**");
     }
 }
