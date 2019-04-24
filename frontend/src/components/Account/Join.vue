@@ -1,162 +1,138 @@
 <template>
   <div class="container">
     <div class="row justify-content-center mt-5 mb-5">
+      <!--<div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">-->
+      <div class="container text-center">
+        <h3>회원가입</h3>
+      </div>
+      <v-app style="width:50%; background: #ffffff;" id="inspire"  >
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            :rules="nameRules"
+            label="이름"
+            required
+          ></v-text-field>
 
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-      >
-        <v-text-field
-          v-model="nickName"
-          :counter="10"
-          :rules="nameRules"
-          label="닉네임"
-          required
-        ></v-text-field>
+          <v-text-field
+            v-model="nickName"
+            :counter="10"
+            :rules="nameRules"
+            label="닉네임"
+            required
+          ></v-text-field>
 
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="이메일"
-          required
-        ></v-text-field>
+          <div class="row">
+            <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="이메일"
+              required style="width:10%"
+            ></v-text-field>
 
-        <v-text-field
+            <v-btn
+              color="success"
+              @click="validate"
+            >
+              중복 확인
+            </v-btn>
+          </div>
+
+
+          <v-text-field
           v-model="password"
           :type="'password'"
           :counter="10"
           :rules="[rules.required, rules.min]"
           label="비밀번호"
-        ></v-text-field>
+          ></v-text-field>
 
-        <v-text-field
-          v-model="password2"
+          <v-text-field
+          v-model="passwordCheck"
           :counter="10"
-          :rules="[rules.required, rules.min]"
+          :rules="[rules.required, rules.min, rules.passwordMatch]"
           :type="'password'"
           label="비밀번호 확인"
           required
         ></v-text-field>
 
-        <v-btn
-          :disabled="!valid"
+          <v-btn
           color="success"
-          @click="validate"
-        >
-          Validate
-        </v-btn>
+          @click="submit"
+          >
+          등록
+          </v-btn>
 
-        <v-btn
-          color="error"
-        >
-          Reset Form
-        </v-btn>
-
-        <v-btn
-          color="warning"
-          @click="resetValidation"
-        >
-          Reset Validation
-        </v-btn>
-        <v-btn
-          color="error"
-        >
-          Reset Form
-        </v-btn>
-      </v-form>
-
-      <!--<div class="card" style="min-width:450px;">-->
-        <!--<div class="card-header">-->
-          <!--회원가입-->
-        <!--</div>-->
-        <!--<div class="card-body">-->
-          <!--<form id="registerForm" class="form-horizontal">-->
-            <!--<div class="form-group">-->
-              <!--<div class="cols-sm-10">-->
-                <!--<div class="input-group">-->
-                  <!--<input type="text" class="form-control mt-1" v-model="name" name="name" id="name" minlength="2" placeholder="이름"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<div class="cols-sm-10">-->
-                <!--<div class="input-group">-->
-                  <!--<input type="text" class="form-control mt-1" v-model="nickname" name="nickname" id="nickname" minlength="2" placeholder="닉네임"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="form-group" id="check-email">-->
-              <!--<div class="cols-sm-10">-->
-                <!--<div class="input-group">-->
-                  <!--<input type="text" class="form-control mt-1" v-model="email" name="email" id="email"  placeholder="이메일"/>-->
-                <!--</div>-->
-                <!--<button type="button" id="check-id" style="margin-top:7.5px;"  class="btn btn-primary">중복 체크</button>-->
-              <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-              <!--<div class="cols-sm-10">-->
-                <!--<div class="input-group">-->
-                  <!--<input type="password" class="form-control mt-1" v-model="passwd" name="passwd" id="passwd"  placeholder="비밀번호"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<div class="cols-sm-10">-->
-                <!--<div class="input-group">-->
-                  <!--<input type="password" class="form-control mt-1" v-model="passwd2" name="passwd2" id="passwd2"  placeholder="비밀번호 확인"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>&ndash;&gt;-->
-            <!--<input type="submit" class="form-control btn-primary" value="등 록">-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</div>-->
+        </v-form>
+      </v-app>
     </div>
   </div>
 </template>
 
 <script>
-    export default {
-        name: "Join",
-      data: () => ({
-        valid: true,
-        name: '',
-        nameRules: [
-          v => !!v || 'NickName is required',
-          v => (v && 2<= v.length && v.length <= 10) || 'Name must be less than 10 characters'
-        ],
-        email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+/.test(v) || 'E-mail must be valid'
-        ],
+  export default {
+    name: "Join",
+    data: () => ({
+      valid: true,
+      name:'',
+      nickName: '',
+      nameRules: [
+        v => !!v || 'NickName is required',
+        v => (v && 2 <= v.length && v.length <= 10) || 'Name must be less than 10 characters'
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
 
-        password: '',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 4 || 'Min 4 characters',
-          emailMatch: () => ('The email and password you entered don\'t match')
-        }
+      password: '',
+      passwordCheck: '',
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 4 || 'Min 4 characters',
+        passwordMatch: v => (this.password === v) || '비밀번호가 일치하지 않습니다'
 
-      }),
-      methods: {
-        validate () {
-          if (this.$refs.form.validate()) {
-            this.snackbar = true
-          }
-        },
-        reset () {
-          this.$refs.form.reset()
-        },
-        resetValidation () {
-          this.$refs.form.resetValidation()
-        }
-
+        // emailMatch: () => ('비밀번호가 일치하지 않습니다')
       }
+
+    }),
+    methods: {
+      validate() {
+        if (this.$refs.form.validate()) {
+          this.snackbar = true
+        }
+      },
+      reset() {
+        this.$refs.form.reset()
+      },
+      submit(){
+        let data = new FormData();
+        data.append('name', this.name)
+        data.append('nickname', this.nickName)
+        data.append('email', this.email)
+        data.append('passwd', this.password)
+
+        this.$http.post('/accounts/join', data).
+        then((response) => {
+          alert('환영합니다');
+          this.$router.push('login');
+        }, (err) => {
+          console.log('err', err)
+        })
+        this.$nextTick(() => {
+          // Wrapped in $nextTick to ensure DOM is rendered before closing
+        })
+      }
+
+
     }
+  }
 </script>
 
 <style scoped>

@@ -21,7 +21,7 @@ public class Joinform {
     @NotEmpty(message="비밀번호를 입력해주세요")
     @Size(min=4, max=12)
     private String passwd;
-    @NotEmpty(message="비밀번호 확인을 입력해주세요")
-    @Size(min=4, max=12)
-    private String passwd2;
+//    @NotEmpty(message="비밀번호 확인을 입력해주세요")
+//    @Size(min=4, max=12)
+//    private String passwd2;
 }
