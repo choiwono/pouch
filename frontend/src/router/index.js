@@ -46,7 +46,14 @@ const router = new Router({
       path: '/categories/:id',
       name: 'categories',
       component: Categories,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path:'tag/:tagId',
+          name:'categoriesByTag',
+          component: Categories
+        }
+      ]
     }
   ]
 })

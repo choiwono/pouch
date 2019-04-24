@@ -14,7 +14,9 @@
     <div class="container d-flex">
       <ul class="col-md-2 list-group">
         <li class="list-group-item cursor-pointer" v-for="item in tags" :key="item.id">
-          {{ item.tagName }}
+          <router-link :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
+            {{ item.tagName }}
+          </router-link>
           <v-badge class="v-badge badge" right color="teal accent-4">
             <span slot="badge">{{ item.cnt }}</span>
           </v-badge>
@@ -22,7 +24,7 @@
       </ul>
       <div class="col-md-10">
         <div class="row" id="card-row">
-          <div v-for="item in getCategory" :key="item.id" class="col-md-4 mb-4 card-list">
+          <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
             <div class="card mb-4 shadow-sm links">
               <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                    xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
@@ -60,28 +62,51 @@
           getCategories(){
             return this.$store.getters.getCategories;
           },
-          getCategory(){
-            return this.$store.getters.getCategory.links;
-          }
         },
         watch:{
-          '$route': 'fetchData'
+          //'$route.params.id': 'fetchData',
+          //'$route.params.tagName': 'fetchLinkByTag'
+          '$route' (to,from){
+            let id = to.params.id;
+            let tagId = to.params.tagId;
+
+            if(id !== '' && id !== undefined && id !== null &&
+                tagId !== '' && tagId !== undefined && tagId !== null){
+              this.fetchLinkByTag();
+            } else if(id !== '' && id !== undefined && id !== null){
+              this.fetchData();
+            }
+
+          }
         },
         methods:{
           fetchData(){
             this.$store.state.paramsId = this.$router.history.current.params.id;
             this.$http.get('/categories/'+this.$store.state.paramsId)
             .then((result) => {
+              console.log(result);
               this.$store.state.category = result;
+              this.links = this.$store.state.category.links;
               this.selectedCategory = result.name;
             })
             this.$http.get('/tags/?category-id='+this.$store.state.paramsId)
             .then((result) => {
               this.tags = result;
             })
+          },
+          fetchLinkByTag(){
+            console.log(this.$router.history.current.params);
+            let id = this.$router.history.current.params.id;
+            let tagId = this.$router.history.current.params.tagId;
+            this.$http.get('/links/?category-id='+id+'&tag-id='+tagId)
+              .then((result) => {
+                 this.links = result;
+              })
+            //console.log('tag 데이터 호출');
           }
         },
         mounted() {
+          //this.links = this.fetchLinkByTag();
           this.fetchData();
         }
     }

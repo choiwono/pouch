@@ -1,6 +1,8 @@
 package my.examples.pouch.dto;
 
 import lombok.Data;
+import my.examples.pouch.service.serviceImpl.CustomTagDto;
+
 import java.util.*;
 
 @Data
@@ -11,8 +13,9 @@ public class CustomLink {
     private String url;
     private Date regDate;
     Set<CustomTag> tags;
-
+    List<CustomTagDto> tagDtos;
     public CustomLink(){
+        tagDtos = new ArrayList<>();
         tags = new HashSet<>();
     }
 }

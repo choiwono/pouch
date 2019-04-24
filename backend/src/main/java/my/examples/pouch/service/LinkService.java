@@ -26,8 +26,9 @@ public class LinkService {
         return linkRepository.getLinkByTagName(categoryId,tagName);
     }
 
-    public List<Link> getSearchPouchByCategory(Long categoryId) {
-        return linkRepository.getSearchPouchByCategory(categoryId);
+    public List<CustomLink> getSearchPouchByCategory(Long categoryId) {
+        List<Link> list = linkRepository.getSearchPouchByCategory(categoryId);
+        return getCustomLinks(list);
     }
 
     public List<CustomLink> getCustomLinks(List<Link> links) {

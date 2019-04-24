@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar class="p-3 border-bottom pl-5 pr-5" fixed="top" toggleable="lg" type="light" variant="white">
+    <b-navbar class="p-3 border-bottom pl-3 pr-3" fixed="top" toggleable="lg" type="light" variant="white">
       <b-navbar-brand><router-link to="/home">Pouch</router-link></b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -127,7 +127,7 @@
           })
         this.$nextTick(() => {
           // Wrapped in $nextTick to ensure DOM is rendered before closing
-          this.$refs.modal.hide()
+          this.$refs.modal.hide();
         })
       },
       onSubmit() {
@@ -172,5 +172,6 @@
   .navbar-brand > a {
     color:#00bfa5;
     font-weight:700;
+    text-decoration:none;
   }
 </style>
