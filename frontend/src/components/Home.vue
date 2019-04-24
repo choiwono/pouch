@@ -20,32 +20,34 @@
     <hr class="my-4 mt-0">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 mb-4">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-img-top d-flex align-items-center cursor-pointer"
-                 style="width:100%; height:225px; opacity:0.5;" v-b-modal.category-link>
-              <img style="flex:0 !important;" class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
-            </div>
-          </div>
-        </div>
+        <v-flex md3 sm12 xs12>
+            <v-card hover class="first-card">
+              <v-card-text v-b-modal.category-link class="vertical-center">
+                <img style="opacity:0.5;" class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
+              </v-card-text>
+            </v-card>
+        </v-flex>
+            <!---->
         <!--<div v-if="$store.getters.getCategories != ''">-->
-          <div v-for="category in $store.getters.getCategories" class="col-md-3 mb-4">
-              <div class="card mb-4 shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
-                     role="img" aria-label="Placeholder: Thumbnail">
-                  <router-link :to="{ name: 'categories',params:{ id:category.id }}">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#fff"></rect>
-                    <text x="36%" y="50%" fill="#6c757d" dy=".5em">{{ category.name }}</text>
-                  </router-link>
-                </svg>
-              </div>
-          </div>
-        <!--</div>-->
+        <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
+          <v-layout column>
+            <router-link :to="{ name: 'categories',params:{ id:item.id }}">
+              <v-card hover class="card-title" >
+                <v-card-text class="vertical-center">
+                  <h4 class="mx-auto d-block">{{ item.name }}</h4>
+                </v-card-text>
+              </v-card>
+            </router-link>
+          </v-layout>
+        </v-flex>
+          <!--<div v-if="$store.getters.getCategories != ''">-->
+
+            <!---->
       </div>
     </div>
+
     <b-modal
+      ref="modal"
       id="category-link"
       title="카테고리를 추가해주세요"
       @ok="handleOk" ok-only>
@@ -131,6 +133,31 @@ export default {
 .body {
   padding-right:0px !important;
 }
+.first-card {
+  margin:10px;
+  min-height:200px;
+}
+
+.card-title {
+  max-height:225px;
+  min-height:200px;
+  margin:10px;
+}
+
+.btn-secondary {
+  background-color:#00bfa5;
+  border-color:#00bfa5;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  color:#00bfa5;
+}
+
 h1, h2 {
   font-weight: normal;
 }
