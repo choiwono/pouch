@@ -12,16 +12,29 @@
     </div>
     <hr>
     <div class="container d-flex">
-      <ul class="col-md-2 list-group">
-        <li class="list-group-item cursor-pointer" v-for="item in tags" :key="item.id">
-          <router-link :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
-            {{ item.tagName }}
-          </router-link>
-          <v-badge class="v-badge badge" right color="teal accent-4">
-            <span slot="badge">{{ item.cnt }}</span>
-          </v-badge>
-        </li>
-      </ul>
+      <!--<ul class="col-md-2 list-group">
+        <span v-for="item in tags" :key="item.id">
+          <li class="list-group-item cursor-pointer">
+            <router-link :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
+              {{ item.tagName }}
+            </router-link>
+            <v-badge class="v-badge badge" right color="teal accent-4">
+              <span slot="badge">{{ item.cnt }}</span>
+            </v-badge>
+          </li>
+        </span>
+      </ul>-->
+      <v-flex md2>
+        <v-card hover>
+          <v-list>
+            <v-list-group v-for="item in tags" :value="item.active" :key="item.id">
+              <v-list-tile>
+                {{ item.tagName }}
+              </v-list-tile>
+            </v-list-group>
+          </v-list>
+        </v-card>
+      </v-flex>
       <div class="col-md-10">
         <div class="row" id="card-row">
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">

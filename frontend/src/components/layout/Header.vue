@@ -7,7 +7,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown no-caret right>
-            <b-dropdown-form style="display:flex" @submit.prevent="onSubmit">
+            <b-dropdown-form style="display:flex; min-width:380px;" @submit.prevent="onSubmit">
 
               <b-form-select
                   :value="null"
@@ -15,11 +15,11 @@
                   :rules="[v => !!v || 'Item is required']"
                   id="searchType"
                   v-model="searchType"
-                  required>
+                  required class="col-lg-5 col-md-5">
                   <option slot="first" value="" disabled style="width: 80px">구분</option>
                 </b-form-select>
-                <b-form-input :rules="nameRules" id="searchStr2" v-model="searchStr" style="width: 100px" required></b-form-input>
-                <b-button type="submit" variant="secondary" size="sm" style="width: 100px" >검색</b-button>
+                <b-form-input :rules="nameRules" id="searchStr2" v-model="searchStr" style="min-width: 100px" required></b-form-input>
+                <b-button type="submit" variant="secondary" size="sm" style="min-width: 50px">검색</b-button>
             </b-dropdown-form>
             <template slot="button-content"><icon name="search"></icon></template>
           </b-nav-item-dropdown>
