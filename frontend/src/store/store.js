@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.use(Vuex);
+Vue.use(VueAxios,axios);
+//axios.defaults.baseURL = 'http://localhost:8080/api';
 
 export const store = new Vuex.Store({
   state : {
@@ -23,6 +27,11 @@ export const store = new Vuex.Store({
   mutations: {
     changeCategories: (state,payload) => {
       return state.categories = payload.arr;
-    },
+    }
   },
+  actions: {
+    getAuth(){
+
+    }
+  }
 });

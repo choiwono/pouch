@@ -13,28 +13,13 @@
     <hr>
     <div class="container d-flex">
       <ul class="col-md-2 list-group">
-        <span v-for="item in tags" :key="item.id">
-          <li class="list-group-item cursor-pointer">
-            <router-link :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
-              {{ item.tagName }}
-            </router-link>
+          <router-link @click="selectedTag = item.id" class="list-group-item cursor-pointer" v-for="item in tags" :key="item.id" tag="li" :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
+            {{ item.tagName }}
             <v-badge class="v-badge badge" right color="teal accent-4">
               <span slot="badge">{{ item.cnt }}</span>
             </v-badge>
-          </li>
-        </span>
+          </router-link>
       </ul>
-      <!--<v-flex md2>-->
-        <!--<v-card hover>-->
-          <!--<v-list>-->
-            <!--<v-list-group v-for="item in tags" :value="item.active" :key="item.id">-->
-              <!--<v-list-tile>-->
-                <!--{{ item.tagName }}-->
-              <!--</v-list-tile>-->
-            <!--</v-list-group>-->
-          <!--</v-list>-->
-        <!--</v-card>-->
-      <!--</v-flex>-->
       <div class="col-md-10">
         <div class="row" id="card-row">
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
@@ -50,7 +35,31 @@
                 <p class="card-title m-2 d-flex">
                   <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
                 <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
+                <div class="mb-3 mt-3" v-if="item.tagName.length > 0">
+                  <span class="tag-span" v-for="tag in item.tagName.split(',')">
+                    {{ tag }}
+                  </span>
+                </div>
+                <div class="mb-3 mt-3">
+                  <span @click="showModal(item.id)">
+                    <icon name="tag"></icon>
+                  </span>
+                </div>
               </div>
+              <b-modal
+                :ref="'tagModal'+item.id"
+                id="tag-link"
+                title="태그편집"
+                ok-only
+                centered>
+                <form @submit.stop.prevent="handleSubmit()">
+                  <ul class="edit-tag-list w-100">
+                    <li class="token-input-input-token w-100">
+                      <input @keyup="tagKeyUp($event,$event.target.value)" @keydown="tagKeyDown($event,$event.target.value)" type="text" class="border-0" style="outline:none;">
+                    </li>
+                  </ul>
+                </form>
+              </b-modal>
             </div>
           </div>
         </div>
@@ -68,7 +77,8 @@
           return {
             tags : [],
             links : [],
-            selectedCategory: ''
+            selectedTag : undefined,
+            selectedCategory: '',
           }
         },
         computed:{
@@ -108,14 +118,33 @@
             })
           },
           fetchLinkByTag(){
-            console.log(this.$router.history.current.params);
             let id = this.$router.history.current.params.id;
             let tagId = this.$router.history.current.params.tagId;
             this.$http.get('/links/?category-id='+id+'&tag-id='+tagId)
               .then((result) => {
                  this.links = result;
               })
-            //console.log('tag 데이터 호출');
+          },
+          tagKeyDown(event,value){
+            console.log(event.keyCode);
+            console.log(value);
+          },
+          tagKeyUp(event,value){
+            let key = event.keyCode;
+            let keyword = value.replace(",","");
+
+            if(key == 188 || key == 32 || key == 13){
+              if(keyword.length > 2){
+                console.log('키다운이벤틑ㅌㅌㅌ');
+              }
+            }
+          },
+          handleSubmit(){
+            alert("submit");
+          },
+          showModal(id){
+            alert(id);
+            //this.$refs[''+id+''].show();
           }
         },
         mounted() {
@@ -131,6 +160,57 @@
   }
   .card-title > a {
     color:#00bfa5;
+    font-weight:700;
     text-decoration:none;
+    display:block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+  }
+
+  .list-group-item > a {
+    font-size:0.9rem;
+    color:#161613;
+    font-weight:400;
+    text-decoration: none;
+  }
+  .list-group-item.active {
+    background-color:white;
+    border-color:#00bfa5;
+    color:#161613;
+    cursor:pointer;
+  }
+  .router-link-active {
+    border-color:#00bfa5;
+  }
+  .tag-span {
+    border:1px solid #00bfa5;
+    padding:5px;
+    margin:3px;
+    border-radius:4px;
+    background-color:#00bfa5;
+    color:white;
+    font-weight:700;
+  }
+  .cursor-pointer {
+    cursor:pointer;
+  }
+  .token-input-input-token {
+    float: left;
+    margin: 3px 0 3px 5px;
+    text-align: left;
+  }
+  .edit-tag-list {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-weight: 600;
+    float: left;
+    padding: 3px 6px 0;
+    width: 100%;
+    margin: 0;
+    min-height: 38px;
+    list-style: none;
   }
 </style>
