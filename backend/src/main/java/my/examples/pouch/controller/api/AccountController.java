@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.Console;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +62,19 @@ public class AccountController {
 
     //이메일 중복 확인하기
     @PostMapping(value = "/emailcheck")
-    public void emailCheck() {
+    public String emailCheck(String email, Model model) {
+        Account emailCheck = accountService.findAccountByEmail(email);
+        String result = "fail";
+        if(emailCheck == null){
+            result = "success";
+        } else {
+            result = "duplicate";
+        }
+        return result;
     }
+
+
+
 
     //로그인
     @PostMapping(value = "/login")
@@ -81,13 +93,18 @@ public class AccountController {
         if (bindingResult.hasErrors()) {
             System.out.println("---"); }
 
-
-        Account account = new Account();
-        account.setName(joinform.getName());
-        account.setEmail(joinform.getEmail());
-        account.setNickName(joinform.getNickname());
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
-        return accountService.join(account);
+        Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
+        if(emailCheck == null){
+            Account account = new Account();
+            account.setName(joinform.getName());
+            account.setEmail(joinform.getEmail());
+            account.setNickName(joinform.getNickname());
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
+            return accountService.join(account);
+        } else {
+            System.out.println("가입 실패");
+            return null;
+        }
     }
 }
