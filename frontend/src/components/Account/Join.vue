@@ -5,11 +5,10 @@
       <div class="container text-center">
         <h3>회원가입</h3>
       </div>
-      <v-app style="width:50%; background: #ffffff;" id="inspire"  >
+      <v-app style="width:50%; background: #ffffff;" id="inspire">
         <v-form
           ref="form"
           v-model="valid"
-          lazy-validation
         >
           <v-text-field
             v-model="name"
@@ -27,45 +26,49 @@
             required
           ></v-text-field>
 
+
           <div class="row">
             <v-text-field
+              ref="email"
               v-model="email"
-              :rules="emailRules"
+              :rules="[emailRules.rule1, emailRules.rule2, emailError]"
               label="이메일"
-              required style="width:10%"
+              required style="width:45px"
             ></v-text-field>
 
             <v-btn
               color="success"
-              @click="validate"
+              @click="emailCheck"
             >
-              중복 확인
+              <span v-if="emailCheckFlag">체크완료</span>
+              <span v-else>중복 확인</span>
             </v-btn>
           </div>
 
 
           <v-text-field
-          v-model="password"
-          :type="'password'"
-          :counter="10"
-          :rules="[rules.required, rules.min]"
-          label="비밀번호"
+            v-model="password"
+            :type="'password'"
+            :counter="10"
+            :rules="[rules.required, rules.min]"
+            label="비밀번호"
           ></v-text-field>
 
           <v-text-field
-          v-model="passwordCheck"
-          :counter="10"
-          :rules="[rules.required, rules.min, rules.passwordMatch]"
-          :type="'password'"
-          label="비밀번호 확인"
-          required
-        ></v-text-field>
+            v-model="passwordCheck"
+            :type="'password'"
+            :counter="10"
+            :rules="[rules.required, rules.min,comparePasswords]"
+            label="비밀번호 확인"
+            required
+          ></v-text-field>
 
           <v-btn
-          color="success"
-          @click="submit"
+            :disabled="!valid"
+            color="success"
+            @click="submit()"
           >
-          등록
+            등록
           </v-btn>
 
         </v-form>
@@ -77,60 +80,77 @@
 <script>
   export default {
     name: "Join",
+    computed: {
+      comparePasswords() {
+        return this.password === this.passwordCheck || 'Passwords don\'t match';
+      },
+      emailError() {
+        return this.emailFlag === true || '이미 사용중인 이메일입니다.';
+      }
+    },
     data: () => ({
       valid: true,
-      name:'',
+
+      name: '',
       nickName: '',
       nameRules: [
         v => !!v || 'NickName is required',
         v => (v && 2 <= v.length && v.length <= 10) || 'Name must be less than 10 characters'
       ],
       email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid'
-      ],
+      emailFlag: true,
+      emailCheckFlag : false,
+      emailRules: {
+        rule1: v => !!v || 'E-mail is required',
+        rule2: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      },
 
       password: '',
       passwordCheck: '',
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 4 || 'Min 4 characters',
-        passwordMatch: v => (this.password === v) || '비밀번호가 일치하지 않습니다'
-
-        // emailMatch: () => ('비밀번호가 일치하지 않습니다')
-      }
+      },
 
     }),
     methods: {
-      validate() {
-        if (this.$refs.form.validate()) {
-          this.snackbar = true
+      emailCheck() {
+        if(this.$refs.email.validate()){
+          let data = new FormData();
+          data.append('email', this.email)
+          this.$http.post('/accounts/emailcheck', data).then((data) => {
+            if (data == "success") {
+              this.emailFlag = true;
+              this.emailCheckFlag = true;
+            } else if (data == "duplicate") {
+              this.emailFlag = false;
+              console.log(this.emailFlag);
+            }
+          })
         }
-      },
-      reset() {
-        this.$refs.form.reset()
-      },
-      submit(){
-        let data = new FormData();
-        data.append('name', this.name)
-        data.append('nickname', this.nickName)
-        data.append('email', this.email)
-        data.append('passwd', this.password)
 
-        this.$http.post('/accounts/join', data).
-        then((response) => {
-          alert('환영합니다');
-          this.$router.push('login');
-        }, (err) => {
-          console.log('err', err)
-        })
-        this.$nextTick(() => {
-          // Wrapped in $nextTick to ensure DOM is rendered before closing
-        })
+      },
+
+      submit() {
+        if (this.$refs.form.validate()) {
+          this.$refs.form.validate()
+          let data = new FormData();
+          data.append('name', this.name)
+          data.append('nickname', this.nickName)
+          data.append('email', this.email)
+          data.append('passwd', this.password)
+
+          this.$http.post('/accounts/join', data).then((response) => {
+            alert('환영합니다');
+            this.$router.push('login');
+          }, (err) => {
+            console.log('err', err)
+          })
+          this.$nextTick(() => {
+            // Wrapped in $nextTick to ensure DOM is rendered before closing
+          })
+        }
       }
-
-
     }
   }
 </script>
