@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
-
 import Search from '@/components/Contents/Search'
 import { store } from '../store/store';
 import Categories from "../components/Contents/Categories";
@@ -60,12 +59,20 @@ const router = new Router({
 
 router.beforeEach((to,from,next) => {
   const authUser = localStorage.getItem('pouch_user');
+
   if(to.meta.requiresAuth){
     if(authUser == null){
       router.push('/login');
     } else {
       next();
     }
+  } else if(to.name === null){
+    alert('존재하지 않는 페이지입니다.');
+    next({
+      query: {
+        redirect: history.back()
+      },
+    })
   } else {
     next();
   }
