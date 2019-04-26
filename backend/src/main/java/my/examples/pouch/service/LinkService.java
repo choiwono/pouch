@@ -39,6 +39,7 @@ public class LinkService {
             customLink.setTitle(links.get(i).getTitle());
             customLink.setUrl(links.get(i).getUrl());
             customLink.setRegDate(links.get(i).getRegDate());
+            customLink.setTagName(links.get(i).getTagsName());
             customLinks.add(customLink);
         }
         return customLinks;
