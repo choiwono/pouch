@@ -77,7 +77,7 @@ Values(7,'Algorithm',NOW(),2,4);
 
 
 INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
-VALUES(1,1,'jaehee@gmail.com',NOW(),0,'java,variables,web','[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
+VALUES(1,1,'jaehee@gmail.com',NOW(),0,'java,variables','[JAVA] 변수', 'https://jaehee0145.github.io/java/JAVA-%EB%B3%80%EC%88%98/',1,3);
 INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
 VALUES(2,1,'jaehee@gmail.com',NOW(),0,'java','[JAVA] 자바 시작하기', 'https://jaehee0145.github.io/java/',1,3);
 INSERT INTO link(id,link_option,email, reg_date, repository,tags_name,title,url,account_id,category_id)
