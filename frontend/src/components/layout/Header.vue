@@ -25,7 +25,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item href="#"><icon name="envelope"></icon></b-nav-item>
-          <b-nav-item v-b-modal.modal-link><icon name="plus"></icon></b-nav-item>
+          <b-nav-item @click="showModalLink"><icon name="plus"></icon></b-nav-item>
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
@@ -150,11 +150,25 @@
           // Wrapped in $nextTick to ensure DOM is rendered before closing
           //this.$refs.modal.hide()
         })
+      },
+      showModalLink() {
+        //alert('test');
+        const user = JSON.parse(localStorage.getItem('pouch_user'));
+        if(user != null){
+          this.$refs['modal'].show();
+          this.$http.get('/categories/?email=' + user.email)
+            .then((result) => {
+              this.$store.commit('changeCategories',{
+                arr : result
+              });
+            })
+        } else {
+          alert('로그인이 필요합니다.');
+        }
       }
-
     },
     mounted(){
-      const user = JSON.parse(localStorage.getItem('pouch_user'));
+      /*const user = JSON.parse(localStorage.getItem('pouch_user'));
       if(user != null){
         this.$http.get('/categories/?email=' + user.email)
           .then((result) => {
@@ -162,7 +176,7 @@
               arr : result
             });
           })
-      }
+      }*/
     }
   }
 </script>

@@ -47,15 +47,22 @@
                 </div>
               </div>
               <b-modal
-                :ref="'tagModal'+item.id"
-                id="tag-link"
+                :ref="item.id"
                 title="태그편집"
                 ok-only
                 centered>
                 <form @submit.stop.prevent="handleSubmit()">
                   <ul class="edit-tag-list w-100">
                     <li class="token-input-input-token w-100">
-                      <input @keyup="tagKeyUp($event,$event.target.value)" @keydown="tagKeyDown($event,$event.target.value)" type="text" class="border-0" style="outline:none;">
+                      <span v-if="item.tagName.length > 0">
+                        <p v-for="tag in item.tagName.split(',')" class="d-inline-block p-2 border">
+                          <span>
+                            {{ tag }}<span type="button" class="close tag-close" @click="removeTagItem($event)">x</span>
+                          </span>
+                        </p>
+                      </span>
+                      <input autofocus :ref="'tagInput'+item.id" @keyup="tagKeyUp($event,item.id)"
+                           @keydown="tagKeyDown($event,item.id)" type="text" class="border-0" style="outline:none;">
                     </li>
                   </ul>
                 </form>
@@ -77,6 +84,7 @@
           return {
             tags : [],
             links : [],
+            linkTags : [],
             selectedTag : undefined,
             selectedCategory: '',
           }
@@ -122,29 +130,36 @@
             let tagId = this.$router.history.current.params.tagId;
             this.$http.get('/links/?category-id='+id+'&tag-id='+tagId)
               .then((result) => {
+                 console.log(result);
                  this.links = result;
               })
           },
-          tagKeyDown(event,value){
-            console.log(event.keyCode);
-            console.log(value);
+          tagKeyDown(event,id){
+
           },
-          tagKeyUp(event,value){
+          tagKeyUp(event,id){
             let key = event.keyCode;
-            let keyword = value.replace(",","");
+            let keyword = this.$refs['tagInput'+id][0].value;
+            let tagInput = this.$refs['tagInput'+id][0].previousElementSibling;
 
             if(key == 188 || key == 32 || key == 13){
-              if(keyword.length > 2){
-                console.log('키다운이벤틑ㅌㅌㅌ');
-              }
+                if(keyword.length > 2){
+                  //console.log(tagInput.lastElementChild.appendChild('<p>'+'test'+'</p>'));
+                  console.log(this.links);
+                }
             }
+          },
+          removeTagItem(event){
+            console.log(event.path[2].remove());
           },
           handleSubmit(){
             alert("submit");
           },
           showModal(id){
-            alert(id);
-            //this.$refs[''+id+''].show();
+            //console.log(this.$refs[id][0].focus);
+
+            this.$refs[id][0].show();
+            //console.log(this.$refs[id][0]);
           }
         },
         mounted() {
@@ -212,5 +227,13 @@
     margin: 0;
     min-height: 38px;
     list-style: none;
+  }
+  .tag-close {
+    border: 2px solid #ddd;
+    height: 22px;
+    font-size: 1.25rem;
+    line-height:0.6;
+    padding:1.5px;
+    margin-left:2px;
   }
 </style>
