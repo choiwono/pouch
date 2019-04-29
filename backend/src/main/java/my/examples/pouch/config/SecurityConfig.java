@@ -6,21 +6,16 @@ import my.examples.pouch.config.handler.AuthSuccessHandler;
 import my.examples.pouch.config.handler.HttpLogoutSuccessHandler;
 import my.examples.pouch.config.handler.RestAuthenticationEntryPoint;
 import my.examples.pouch.security.CustomUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -69,7 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/accounts/join").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/accounts/findpswd").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/accounts/emailcheck").permitAll()
+
                 .antMatchers(HttpMethod.GET, "/api/categories/**").hasRole("USER")
                 .antMatchers("/api/accounts/**").hasRole("USER")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")

@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import Login from '@/components/Account/Login'
 import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
+import FindPswd from '@/components/Account/FindPswd'
 import Search from '@/components/Contents/Search'
 import { store } from '../store/store';
 import Categories from "../components/Contents/Categories";
+
 
 Vue.use(Router)
 
@@ -34,6 +36,11 @@ const router = new Router({
       path: '/join/',
       name: 'join',
       component: Join
+    },
+    {
+      path: '/findpswd/',
+      name: 'findpswd',
+      component: FindPswd
     },
     {
       path: '/categories/search/',
