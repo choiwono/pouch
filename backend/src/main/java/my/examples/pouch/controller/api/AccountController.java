@@ -2,38 +2,27 @@ package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
-import my.examples.pouch.domain.Category;
 import my.examples.pouch.dto.AccountInfo;
-import my.examples.pouch.dto.CustomCategory;
 import my.examples.pouch.dto.Joinform;
-import my.examples.pouch.repository.CategoryRepository;
 import my.examples.pouch.security.CustomSecurityUser;
-import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
-import org.hibernate.annotations.JoinFormula;
-import org.springframework.security.core.Authentication;
+import my.examples.pouch.service.EmailService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.Console;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final EmailService emailService;
 
     // 계정 토큰 발급
     @PostMapping(value = "/auth")
@@ -57,7 +46,17 @@ public class AccountController {
 
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
-    public void findPassword() {
+    public void findPassword(String email) {
+        System.out.println(email);
+        Account account = accountService.findAccountByEmail(email);
+        if(!account.getEmail().isEmpty()) {
+            String password = UUID.randomUUID().toString();
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            account.setPasswd(passwordEncoder.encode(password));
+            accountService.updateUserPassword(account);
+            emailService.sendEmail(account);
+
+        }
     }
 
     //이메일 중복 확인하기
