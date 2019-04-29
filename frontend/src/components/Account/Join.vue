@@ -1,11 +1,10 @@
 <template>
   <div class="container">
     <div class="row justify-content-center mt-5 mb-5">
-      <!--<div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">-->
       <div class="container text-center">
         <h3>회원가입</h3>
       </div>
-      <v-app style="width:50%; background: #ffffff;" id="inspire">
+      <v-app style="width:30%; background: #ffffff;" id="inspire">
         <v-form
           ref="form"
           v-model="valid"
@@ -31,16 +30,19 @@
             <v-text-field
               ref="email"
               v-model="email"
-              :rules="[emailRules.rule1, emailRules.rule2, emailError]"
+              :rules="[emailRules.rule1, emailRules.rule2]"
               label="이메일"
-              required style="width:45px"
+              required
+              success-messages
             ></v-text-field>
 
             <v-btn
               color="success"
               @click="emailCheck"
+              :rules="emailDuplicateCheck"
+              :disabled="emailCheckFlag"
             >
-              <span v-if="emailCheckFlag">체크완료</span>
+              <span v-if="emailCheckFlag" >체크완료</span>
               <span v-else>중복 확인</span>
             </v-btn>
           </div>
@@ -58,13 +60,13 @@
             v-model="passwordCheck"
             :type="'password'"
             :counter="10"
-            :rules="[rules.required, rules.min,comparePasswords]"
+            :rules="[rules.required, rules.min, comparePasswords]"
             label="비밀번호 확인"
             required
           ></v-text-field>
 
           <v-btn
-            :disabled="!valid"
+            :disabled="!emailFlag || !valid"
             color="success"
             @click="submit()"
           >
@@ -86,6 +88,9 @@
       },
       emailError() {
         return this.emailFlag === true || '이미 사용중인 이메일입니다.';
+      },
+      emailDuplicateCheck(){
+        return this.emailCheckFlag === true || '이메일 중복 확인을 해주세요.';
       }
     },
     data: () => ({
@@ -98,12 +103,13 @@
         v => (v && 2 <= v.length && v.length <= 10) || 'Name must be less than 10 characters'
       ],
       email: '',
-      emailFlag: true,
+      emailFlag: false,
       emailCheckFlag : false,
       emailRules: {
         rule1: v => !!v || 'E-mail is required',
         rule2: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       },
+
 
       password: '',
       passwordCheck: '',
@@ -124,7 +130,10 @@
               this.emailCheckFlag = true;
             } else if (data == "duplicate") {
               this.emailFlag = false;
-              console.log(this.emailFlag);
+              console.log('duplicate check'+this.emailFlag);
+              alert("이미 사용중인 이메일입니다")
+              this.email=''
+
             }
           })
         }

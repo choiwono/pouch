@@ -35,4 +35,8 @@ public class AccountService {
     public Account findAccountByEmail(String email) {
         return accountRepository.findMyAccount(email);
     }
+
+    public void updateUserPassword(Account account) {
+        accountRepository.updatePasswordByEmail(account.getEmail(), account.getPasswd());
+    }
 }
