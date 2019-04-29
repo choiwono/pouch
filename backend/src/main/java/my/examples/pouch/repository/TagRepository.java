@@ -1,12 +1,14 @@
 package my.examples.pouch.repository;
 
 import my.examples.pouch.domain.Tag;
+import my.examples.pouch.dto.CustomTag;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TagRepository extends JpaRepository<Tag,Long> {
 
@@ -27,4 +29,8 @@ public interface TagRepository extends JpaRepository<Tag,Long> {
             "WHERE li.category_id=:id "+
             "GROUP BY t.tag_name",nativeQuery = true)
     List<CustomTagDto> findTagListByCategoryId(@Param("id")Long categoryId);
+
+    @Query(value = "SELECT T FROM Tag T INNER JOIN FETCH T.links l" +
+            " WHERE l.id=:linkId")
+    List<Tag> findTagListByLinksId(@Param("linkId") Long linkId);
 }

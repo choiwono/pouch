@@ -37,11 +37,16 @@ public class TagController {
     @DeleteMapping(value = "/{id}")
     public void deleteTag(@PathVariable(value = "id") Long id){}
 
+    @GetMapping(value="/{id}")
+    public List<CustomTag> getTagsByLink(@PathVariable(value = "id") Long id){
+        return tagService.findTagListByLinksId(id);
+    }
+
     @GetMapping
     public List<CustomTagDto> getTags(@RequestParam(value="category-id") Long id){
-        List<CustomTagDto> list = tagService.findTagListByCategoryId(id);
-        return list;
+        return tagService.findTagListByCategoryId(id);
     }
+
     /*기존 코드
     @PostMapping("/search")
     public List<CustomLink> myCategory(@RequestBody TagItem tagItem,
