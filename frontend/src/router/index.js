@@ -5,9 +5,8 @@ import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 import FindPswd from '@/components/Account/FindPswd'
 import Search from '@/components/Contents/Search'
-import { store } from '../store/store';
 import Categories from "../components/Contents/Categories";
-
+import axios from 'axios';
 
 Vue.use(Router)
 
@@ -67,13 +66,17 @@ const router = new Router({
 router.beforeEach((to,from,next) => {
   const authUser = localStorage.getItem('pouch_user');
 
-  if(to.meta.requiresAuth){
-    if(authUser == null){
-      router.push('/login');
-    } else {
-      next();
+  if (to.meta.requiresAuth) {
+    if(authUser != null){
+      axios.post("/accounts/auth").then((result)=> {
+        if (result.roles.length === 0) {
+          router.push('/login');
+        } else {
+          next();
+        }
+      })
     }
-  } else if(to.name === null){
+  } else if(to.name === null) {
     alert('존재하지 않는 페이지입니다.');
     next({
       query: {

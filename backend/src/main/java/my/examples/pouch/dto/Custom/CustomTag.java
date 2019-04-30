@@ -1,4 +1,4 @@
-package my.examples.pouch.dto;
+package my.examples.pouch.dto.Custom;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

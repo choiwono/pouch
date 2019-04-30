@@ -1,7 +1,6 @@
-package my.examples.pouch.dto;
+package my.examples.pouch.dto.Custom;
 
 import lombok.Data;
-import my.examples.pouch.domain.Account;
 
 import java.util.List;
 

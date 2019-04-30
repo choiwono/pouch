@@ -3,19 +3,19 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.*;
+import my.examples.pouch.dto.Custom.CustomTag;
+import my.examples.pouch.dto.Custom.CustomTagItem;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/tags")
@@ -27,7 +27,21 @@ public class TagController {
 
     //태그 추가
     @PostMapping
-    public void addTag(){}
+    public void addTagItem(CustomTagItem customTagItem,
+                             Principal principal){
+        Link link = linkService.getLinkById(customTagItem.getId());
+        Set<Link> linkset = new HashSet<>();
+        linkset.add(link);
+
+        for(String s : customTagItem.getTags()){
+            Tag tag = new Tag();
+            tag.setLinks(linkset);
+            tag.setTagName(s);
+            tag.setRegDate(new Date());
+            tag.setEmail(principal.getName());
+            tagRepository.save(tag);
+        }
+    }
 
     //태그 수정
     @PutMapping(value = "/{id}")
@@ -35,7 +49,9 @@ public class TagController {
 
     //태그 삭제
     @DeleteMapping(value = "/{id}")
-    public void deleteTag(@PathVariable(value = "id") Long id){}
+    public void deleteTag(@PathVariable(value = "id") Long id){
+        tagService.deleteTag(tagService.getTagById(id));
+    }
 
     @GetMapping(value="/{id}")
     public List<CustomTag> getTagsByLink(@PathVariable(value = "id") Long id){

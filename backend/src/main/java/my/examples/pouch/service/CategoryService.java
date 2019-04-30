@@ -2,7 +2,7 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.dto.CustomCategory;
+import my.examples.pouch.dto.Custom.CustomCategory;
 import my.examples.pouch.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
