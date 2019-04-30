@@ -4,7 +4,7 @@
       <div class="container text-center">
         <h3>{{ selectedCategory }}</h3>
         <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2">
-          <b-dropdown-item v-for="item in getCategories" :key="item.id">
+          <b-dropdown-item v-for="item in $store.state.categories" :key="item.id">
             <router-link tag="b-dropdown-item" :to="{ name: 'categories',params:{ id:item.id }}">{{ item.name }}</router-link>
           </b-dropdown-item>
         </b-dropdown>
@@ -49,20 +49,22 @@
               <b-modal
                 :ref="item.id"
                 title="태그편집"
+                @ok="handleOk(item.id)"
                 ok-only
                 centered>
                 <form @submit.stop.prevent="handleSubmit()">
                   <ul class="edit-tag-list w-100">
                     <li class="token-input-input-token w-100">
-                      <span v-if="item.tagName.length > 0">
-                        <p v-for="tag in item.tagName.split(',')" class="d-inline-block p-2 border">
+                      <span v-if="linkTags.length > 0">
+                        <p v-for="tag in linkTags" class="d-inline-block p-2 border">
                           <span>
-                            {{ tag }}<span type="button" class="close tag-close" @click="removeTagItem($event)">x</span>
+                            {{ tag.tagName }}
+                            <span type="button" class="close tag-close" @click="removeTagItem($event,tag.id)">x</span>
                           </span>
                         </p>
                       </span>
                       <input autofocus :ref="'tagInput'+item.id" @keyup="tagKeyUp($event,item.id)"
-                           @keydown="tagKeyDown($event,item.id)" type="text" class="border-0" style="outline:none;">
+                           type="text" class="border-0" style="outline:none;">
                     </li>
                   </ul>
                 </form>
@@ -95,8 +97,6 @@
           },
         },
         watch:{
-          //'$route.params.id': 'fetchData',
-          //'$route.params.tagName': 'fetchLinkByTag'
           '$route' (to,from){
             let id = to.params.id;
             let tagId = to.params.tagId;
@@ -120,50 +120,76 @@
               this.links = this.$store.state.category.links;
               this.selectedCategory = result.name;
             })
+            this.fetchTag();
+          },
+          fetchCategory(){
+            return this.$store.getters.getCategories;
+          },
+          fetchTag(){
             this.$http.get('/tags/?category-id='+this.$store.state.paramsId)
-            .then((result) => {
-              this.tags = result;
-            })
+              .then((result) => {
+                this.tags = result;
+              })
           },
           fetchLinkByTag(){
             let id = this.$router.history.current.params.id;
             let tagId = this.$router.history.current.params.tagId;
+
             this.$http.get('/links/?category-id='+id+'&tag-id='+tagId)
               .then((result) => {
                  console.log(result);
                  this.links = result;
               })
-          },
-          tagKeyDown(event,id){
-
+            this.fetchCategory();
           },
           tagKeyUp(event,id){
             let key = event.keyCode;
             let keyword = this.$refs['tagInput'+id][0].value;
-            let tagInput = this.$refs['tagInput'+id][0].previousElementSibling;
 
-            if(key == 188 || key == 32 || key == 13){
+            if(key === 188 || key === 32 || key === 13){
                 if(keyword.length > 2){
-                  //console.log(tagInput.lastElementChild.appendChild('<p>'+'test'+'</p>'));
-                  console.log(this.links);
+                  this.linkTags.push({id:0,tagName:keyword.replace(",","")});
+                  this.$refs['tagInput'+id][0].value = "";
                 }
             }
           },
-          removeTagItem(event){
-            console.log(event.path[2].remove());
+          removeTagItem(event,id){
+            if(id === 0) {
+              event.path[2].remove();
+            } else {
+              this.$http.delete("/tags/" + id).then((result) => {
+                event.path[2].remove();
+                this.fetchTag();
+              })
+            }
           },
-          handleSubmit(){
-            alert("submit");
+          handleOk(id){
+            this.handleSubmit(id);
+          },
+          handleSubmit(id){
+            let arr = new Array();
+            let tags = this.linkTags;
+            let data = new FormData();
+            for(let key in tags){
+              if(tags[key].id === 0){
+                arr.push(tags[key].tagName);
+              }
+            }
+            data.append('id',id);
+            data.append('tags',arr);
+            this.$http.post("/tags",data).then((result) => {
+               this.fetchTag();
+            })
           },
           showModal(id){
-            //console.log(this.$refs[id][0].focus);
-
             this.$refs[id][0].show();
-            //console.log(this.$refs[id][0]);
+            this.$http.get("/tags/"+id)
+              .then((result) => {
+                this.linkTags = result;
+              })
           }
         },
         mounted() {
-          //this.links = this.fetchLinkByTag();
           this.fetchData();
         }
     }

@@ -1,9 +1,8 @@
 package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.CustomTag;
+import my.examples.pouch.dto.Custom.CustomTag;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +45,13 @@ public class TagService {
 
     public List<CustomTagDto> findTagListByCategoryId(Long categoryId) {
         return tagRepository.findTagListByCategoryId(categoryId);
+    }
+
+    public Tag getTagById(Long id) {
+        return tagRepository.findTagById(id);
+    }
+
+    public void deleteTag(Tag tag) {
+        tagRepository.delete(tag);
     }
 }

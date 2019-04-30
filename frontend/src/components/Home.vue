@@ -91,7 +91,7 @@ export default {
         alert('카테고리가 추가됐습니다.');
         const user = JSON.parse(localStorage.getItem('pouch_user'));
         if(user != null){
-          this.$http.get('/categories/?email=' + user.email)
+          this.$http.get('/categories/?email=' + user)
             .then((result) => {
               this.$store.state.categories = result;
             })
@@ -117,7 +117,7 @@ export default {
   mounted(){
     const user = JSON.parse(localStorage.getItem('pouch_user'));
     if(user != null){
-      this.$http.get('/categories/?email=' + user.email)
+      this.$http.get('/categories/?email=' + user)
         .then((result) => {
           this.$store.commit('changeCategories',{
             arr : result

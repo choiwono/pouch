@@ -3,19 +3,14 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.domain.Link;
-import my.examples.pouch.dto.CustomCategory;
-import my.examples.pouch.dto.CustomLink;
+import my.examples.pouch.dto.Custom.CustomCategory;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
-import my.examples.pouch.service.serviceImpl.CustomTagDto;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

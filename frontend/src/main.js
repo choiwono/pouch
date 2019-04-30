@@ -17,10 +17,11 @@ Vue.component('icon',icon)
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
-Vue.use(VueAxios,axios)
+Vue.use(VueAxios)
 Vue.axios.defaults.baseURL = 'http://localhost:8080/api'
 Vue.router = router
 Vue.use(VueCookie)
+Vue.prototype.$axios = axios;
 Vue.prototype.$EventBus = new Vue();
 
 axios.interceptors.response.use(response => {

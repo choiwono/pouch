@@ -1,7 +1,6 @@
 package my.examples.pouch.repository;
 
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.dto.CustomCategory;
 import my.examples.pouch.repository.custom.CategoryRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -2,10 +2,7 @@ package my.examples.pouch.repository.custom;
 
 import com.querydsl.jpa.JPQLQuery;
 import my.examples.pouch.domain.*;
-import my.examples.pouch.dto.CustomCategory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-
-import java.util.List;
 
 public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements CategoryRepositoryCustom {
 

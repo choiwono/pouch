@@ -153,10 +153,10 @@
       },
       showModalLink() {
         //alert('test');
-        const user = JSON.parse(localStorage.getItem('pouch_user'));
-        if(user != null){
+        const email = JSON.parse(localStorage.getItem('pouch_user'));
+        if(email != null){
           this.$refs['modal'].show();
-          this.$http.get('/categories/?email=' + user.email)
+          this.$http.get('/categories/?email=' + email)
             .then((result) => {
               this.$store.commit('changeCategories',{
                 arr : result
