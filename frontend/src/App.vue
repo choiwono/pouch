@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header/>
     <router-view/>
-    <Footer></Footer>
+    <Footer/>
+    <notifications position="bottom center" group="foo"/>
   </div>
 </template>
 

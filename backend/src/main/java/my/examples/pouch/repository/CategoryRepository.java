@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category,Long>, CategoryRepositoryCustom {
 
-    @Query("SELECT c FROM Category c INNER JOIN FETCH c.links WHERE c.id=:id")
+    @Query("SELECT c FROM Category c LEFT JOIN FETCH c.links WHERE c.id=:id")
     Category getCategories(@Param("id") Long id);
 
     @Query("SELECT c FROM Category c inner join fetch c.account" +

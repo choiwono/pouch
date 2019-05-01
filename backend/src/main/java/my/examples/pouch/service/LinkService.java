@@ -13,12 +13,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LinkService {
+    //private final LinkService linkService;
     private final LinkRepository linkRepository;
     private final TagService tagService;
-
-    public List<Link> getMyPouchByCategory(Long categoryId, String email) {
-        return linkRepository.getMyPouchByCategory(categoryId,email);
-    }
 
     public Link getLinkById(Long id) {
         return linkRepository.getOne(id);
@@ -42,15 +39,12 @@ public class LinkService {
             customLink.setId(links.get(i).getId());
             customLink.setTitle(links.get(i).getTitle());
             customLink.setUrl(links.get(i).getUrl());
+            customLink.setSrc(links.get(i).getSrc());
+            customLink.setContent(links.get(i).getContent());
             customLink.setRegDate(links.get(i).getRegDate());
             customLink.setTagName(links.get(i).getTagsName());
-
-            for(int j=0; j<links.get(i).getTags().size(); j++){
-                //tagService.customTagList(links.get(i).getTags());
-            }
             customLinks.add(customLink);
         }
         return customLinks;
     }
-
 }

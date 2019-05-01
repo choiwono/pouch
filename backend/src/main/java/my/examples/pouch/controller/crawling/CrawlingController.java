@@ -31,23 +31,41 @@ public class CrawlingController {
                            @RequestParam(required = true) Long categoryId,
                            Principal principal) throws Exception{
         Document doc = Jsoup.connect(url).timeout(5*1000).get();
-        Elements title = doc.select("title");
+
+        Elements top = doc.select("title");
         Elements sub = doc.select("meta[name=description]");
-        String content = title.html();
-        if(content == null){
-            content = sub.attr("content");
+        Elements img = doc.select("meta[property=og:image]");
+
+        String title = top.html();
+        if(title.length() > 0) {
+            title = sub.attr("content");
+        } else {
+            Elements subTitle = doc.getElementsByTag("p");
+            title = subTitle.get(0).html();
         }
+        //System.out.println(title);
+
+        String imgSrc = img.attr("content");
+        System.out.println(imgSrc.length());
+        if(imgSrc.length() == 0){
+            Elements str = doc.getElementsByTag("img");
+            if(str.size() > 0){
+                imgSrc = str.get(0).attr("src");
+            }
+        }
+
         Category category = categoryService.getCategory(categoryId);
         Account account = accountService.findAccountByEmail(principal.getName());
         Link link = new Link();
-        link.setTitle(content);
+
+        link.setTitle(title);
         link.setUrl(url);
         link.setEmail(principal.getName());
+        link.setSrc(imgSrc);
         link.setLinkOption(0L);
         link.setRepository(account.getId());
         link.setCategory(category);
         link.setAccount(account);
         linkRepository.save(link);
-        //return "redirect:/link/view/"+categoryId;
     }
 }

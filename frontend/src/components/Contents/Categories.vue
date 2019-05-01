@@ -4,7 +4,7 @@
       <div class="container text-center">
         <h3>{{ selectedCategory }}</h3>
         <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2">
-          <b-dropdown-item v-for="item in $store.state.categories" :key="item.id">
+          <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
             <router-link tag="b-dropdown-item" :to="{ name: 'categories',params:{ id:item.id }}">{{ item.name }}</router-link>
           </b-dropdown-item>
         </b-dropdown>
@@ -13,6 +13,9 @@
     <hr>
     <div class="container d-flex">
       <ul class="col-md-2 list-group">
+          <router-link class="list-group-item cursor-pointer" tag="li" :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">
+            전체
+          </router-link>
           <router-link @click="selectedTag = item.id" class="list-group-item cursor-pointer" v-for="item in tags" :key="item.id" tag="li" :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
             {{ item.tagName }}
             <v-badge class="v-badge badge" right color="teal accent-4">
@@ -24,22 +27,24 @@
         <div class="row" id="card-row">
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
             <div class="card mb-4 shadow-sm links">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                   xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
-                   focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c"></rect>
-                <text x="36.5%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-              </svg>
+              <span v-if="item.src.length === 0">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
+                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                     focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                  <title>Placeholder</title>
+                  <rect width="100%" height="100%" fill="#333"></rect>
+                  <text x="36.5%" y="50%" fill="#fff" dy=".3em">
+                    {{ item.title }}
+                  </text>
+                </svg>
+              </span>
+              <span v-else>
+                <img width="100%" height="180" :src="item.src">
+              </span>
               <div class="card-body p-2 pl-3 pr-3">
                 <p class="card-title m-2 d-flex">
                   <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
                 <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
-                <div class="mb-3 mt-3" v-if="item.tagName.length > 0">
-                  <span class="tag-span" v-for="tag in item.tagName.split(',')">
-                    {{ tag }}
-                  </span>
-                </div>
                 <div class="mb-3 mt-3">
                   <span @click="showModal(item.id)">
                     <icon name="tag"></icon>
@@ -92,9 +97,7 @@
           }
         },
         computed:{
-          getCategories(){
-            return this.$store.getters.getCategories;
-          },
+
         },
         watch:{
           '$route' (to,from){
@@ -115,21 +118,30 @@
             this.$store.state.paramsId = this.$router.history.current.params.id;
             this.$http.get('/categories/'+this.$store.state.paramsId)
             .then((result) => {
-              console.log(result);
               this.$store.state.category = result;
               this.links = this.$store.state.category.links;
               this.selectedCategory = result.name;
             })
             this.fetchTag();
           },
-          fetchCategory(){
-            return this.$store.getters.getCategories;
-          },
           fetchTag(){
             this.$http.get('/tags/?category-id='+this.$store.state.paramsId)
               .then((result) => {
                 this.tags = result;
               })
+          },
+          fetchCategory(){
+            if(this.$store.getters.getCategories.length === 0){
+              const email = JSON.parse(localStorage.getItem('pouch_user'));
+              if(email != null){
+                this.$http.get('/categories/?email=' + email)
+                  .then((result) => {
+                    this.$store.commit('changeCategories',{
+                      arr : result
+                    });
+                  })
+              }
+            }
           },
           fetchLinkByTag(){
             let id = this.$router.history.current.params.id;
@@ -140,7 +152,6 @@
                  console.log(result);
                  this.links = result;
               })
-            this.fetchCategory();
           },
           tagKeyUp(event,id){
             let key = event.keyCode;
@@ -189,7 +200,8 @@
               })
           }
         },
-        mounted() {
+        mounted(){
+          this.fetchCategory();
           this.fetchData();
         }
     }
