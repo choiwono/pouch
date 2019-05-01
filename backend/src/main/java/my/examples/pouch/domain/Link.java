@@ -19,7 +19,8 @@ public class Link {
     @Lob
     private String url;
     private String email;
-
+    private String src;
+    private String content;
     @Column(name="reg_date")
     private Date regDate;
     private Long repository;

@@ -39,7 +39,6 @@ export default {
           this.$http.post('/accounts/auth')
             .then((result) => {
               localStorage.setItem('pouch_user',JSON.stringify(result.email));
-              alert('로그인에 성공하셨습니다.');
               this.$router.push({name:'home'});
           })
         }, (err) => {

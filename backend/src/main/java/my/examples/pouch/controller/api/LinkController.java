@@ -34,7 +34,7 @@ public class LinkController {
     @GetMapping
     public List<CustomLink> linksByTag(@RequestParam(name = "category-id") Long categoryId,
                                        @RequestParam(name = "tag-id") Long tagId){
-        Tag tag = tagRepository.getOne(tagId);
+        Tag tag = tagService.getTagById(tagId);
         return linkService.getLinkByTagName(categoryId,tag.getTagName());
     }
 }

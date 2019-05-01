@@ -23,12 +23,11 @@
         <v-flex md3 sm12 xs12>
             <v-card hover class="first-card">
               <v-card-text v-b-modal.category-link class="vertical-center">
-                <img style="opacity:0.5;" class="rounded mx-auto d-block" src="https://img.icons8.com/ios/50/000000/plus-math.png" >
+                <img style="opacity:0.5;" class="rounded mx-auto d-block"
+                     src="https://img.icons8.com/ios/50/000000/plus-math.png" >
               </v-card-text>
             </v-card>
         </v-flex>
-            <!---->
-        <!--<div v-if="$store.getters.getCategories != ''">-->
         <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
           <v-layout column>
             <router-link :to="{ name: 'categories',params:{ id:item.id }}">
@@ -40,9 +39,6 @@
             </router-link>
           </v-layout>
         </v-flex>
-          <!--<div v-if="$store.getters.getCategories != ''">-->
-
-            <!---->
       </div>
     </div>
 
@@ -87,8 +83,13 @@ export default {
       this.categoryName = '';
       this.$http.post('/categories/',data).
       then((result) => {
-        //this.$router.push('home');
-        alert('카테고리가 추가됐습니다.');
+        this.$notify({
+          group:'foo',
+          title:'데이터 저장성공',
+          text:'성공했습니다',
+          type:'success',
+          width:'300px'
+        });
         const user = JSON.parse(localStorage.getItem('pouch_user'));
         if(user != null){
           this.$http.get('/categories/?email=' + user)
@@ -101,13 +102,9 @@ export default {
       }),
 
       this.$nextTick(() => {
-        // Wrapped in $nextTick to ensure DOM is rendered before closing
         this.$refs.modal.hide();
       })
-    },/*
-    showModal(id){
-      this.$refs[''+id+''].show();
-    }*/
+    },
   },
 
   computed:{

@@ -8,9 +8,7 @@ import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +23,19 @@ public class TagService {
     /*public List<CustomTagDto> customTagList(List<Tag> tags){
         return tags.stream().map(tag -> modelMapper.map(tag, CustomTagDto.class))
                 .collect(Collectors.toList());
+    }*/
+
+    /*public Set<CustomTag> customTagSet(Set<Tag> tags){
+        Set<CustomTag> list = new HashSet<>();
+        Iterator<Tag> itr = tags.iterator();
+        while(itr.hasNext()){
+            CustomTag customTag = new CustomTag();
+            customTag.setId(itr.next().getId());
+            customTag.setTagName(itr.next().getTagName());
+            list.add(customTag);
+            System.out.println(itr.next());
+        }
+        return list;
     }*/
 
     public List<CustomTag> customTagList(List<Tag> tags){
@@ -53,5 +64,9 @@ public class TagService {
 
     public void deleteTag(Tag tag) {
         tagRepository.delete(tag);
+    }
+
+    public Tag saveOne(Tag tag) {
+        return tagRepository.save(tag);
     }
 }
