@@ -75,15 +75,18 @@ router.beforeEach((to,from,next) => {
           next();
         }
       })
+    } else {
+      router.push('login');
     }
   } else if(to.name === null) {
-    alert('존재하지 않는 페이지입니다.');
+    //alert('존재하지 않는 페이지입니다.');
     next({
       query: {
         redirect: history.back()
       },
     })
   } else {
+    //console.log(authUser);
     next();
   }
 });

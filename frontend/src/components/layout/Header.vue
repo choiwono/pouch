@@ -97,10 +97,7 @@
       },
 
       handleOk(bvModalEvt) {
-        // Prevent modal from closing
         bvModalEvt.preventDefault()
-        //console.log(this.$store.state.url);
-        //console.log(this.$store.state.categoryId);
         if (!this.$store.state.url || !this.$store.state.categoryId) {
           alert("url와 카테고리를 반드시 선택해주세요.");
         } else {
@@ -131,11 +128,9 @@
         })
       },
       onSubmit() {
-
         let searchType = this.searchType;
         let searchStr = this.searchStr;
-        //this.dropdown.hide(true),
-        //this.clearSearch(),
+
         this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
         then((response) => {
           searchType = '';
@@ -147,12 +142,9 @@
           console.log('err', err)
         })
         this.$nextTick(() => {
-          // Wrapped in $nextTick to ensure DOM is rendered before closing
-          //this.$refs.modal.hide()
         })
       },
-      showModalLink() {
-        //alert('test');
+      showModalLink(){
         const email = JSON.parse(localStorage.getItem('pouch_user'));
         if(email != null){
           this.$refs['modal'].show();
@@ -168,15 +160,7 @@
       }
     },
     mounted(){
-      /*const user = JSON.parse(localStorage.getItem('pouch_user'));
-      if(user != null){
-        this.$http.get('/categories/?email=' + user.email)
-          .then((result) => {
-            this.$store.commit('changeCategories',{
-              arr : result
-            });
-          })
-      }*/
+
     }
   }
 </script>

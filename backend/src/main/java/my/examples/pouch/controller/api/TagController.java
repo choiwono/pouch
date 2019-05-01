@@ -12,10 +12,7 @@ import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/tags")
@@ -33,13 +30,13 @@ public class TagController {
         Set<Link> linkset = new HashSet<>();
         linkset.add(link);
 
-        for(String s : customTagItem.getTags()){
+        for(String str : customTagItem.getTags()){
             Tag tag = new Tag();
             tag.setLinks(linkset);
-            tag.setTagName(s);
+            tag.setTagName(str);
             tag.setRegDate(new Date());
             tag.setEmail(principal.getName());
-            tagRepository.save(tag);
+            tagService.saveOne(tag);
         }
     }
 
