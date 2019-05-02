@@ -21,18 +21,18 @@
                 <b-form-input :rules="nameRules" id="searchStr2" v-model="searchStr" style="min-width: 100px" required></b-form-input>
                 <b-button type="submit" variant="secondary" size="sm" style="min-width: 50px">검색</b-button>
             </b-dropdown-form>
-            <template slot="button-content"><icon name="search"></icon></template>
+            <template v-if="$store.getters.getAuth" slot="button-content"><icon name="search"></icon></template>
           </b-nav-item-dropdown>
 
-          <b-nav-item href="#"><icon name="envelope"></icon></b-nav-item>
-          <b-nav-item @click="showModalLink"><icon name="plus"></icon></b-nav-item>
+          <b-nav-item v-if="$store.getters.getAuth" href="#"><icon name="envelope"></icon></b-nav-item>
+          <b-nav-item v-if="$store.getters.getAuth" @click="showModalLink"><icon name="plus"></icon></b-nav-item>
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><icon name="user"></icon></template>
-              <router-link to="/login" tag="b-dropdown-item" >로그인</router-link>
-              <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
-              <router-link to="/join" tag="b-dropdown-item">회원가입</router-link>
+              <router-link v-if="!$store.getters.getAuth" to="/login" tag="b-dropdown-item" >로그인</router-link>
+              <b-dropdown-item v-if="$store.getters.getAuth" @click="logout">로그아웃</b-dropdown-item>
+              <router-link v-if="!$store.getters.getAuth" to="/join" tag="b-dropdown-item">회원가입</router-link>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
@@ -77,18 +77,25 @@
         nameRules: [
           v => !!v || 'Name is required',
           v => (v && v.length >= 2) || 'Keyword must be more than 2 characters'
-        ],
-        items: ['Foo', 'Bar', 'Fizz', 'Buzz']
+        ]
       }
     },
     methods: {
       logout(){
-        console.log("로그아웃");
         this.$http.get('/logout')
           .then((result) => {
             localStorage.removeItem('pouch_user');
-            alert('로그아웃에 성공하셨습니다.');
-        })
+            this.$notify({
+              group:'notify',
+              title:'로그아웃',
+              text:'성공했습니다',
+              type:'success',
+              width:'100%'
+            });
+            this.$store.commit('changeAuth',{
+                value:false
+            });
+        });
         this.$router.push('/login');
       },
       clearName() {
@@ -99,7 +106,12 @@
       handleOk(bvModalEvt) {
         bvModalEvt.preventDefault()
         if (!this.$store.state.url || !this.$store.state.categoryId) {
-          alert("url와 카테고리를 반드시 선택해주세요.");
+          this.$notify({
+            group:'notify',
+            title:'입력 실패',
+            text:'URL과 카테고리값을 반드시 넣어주세요',
+            type:'error'
+          });
         } else {
           this.handleSubmit()
         }
@@ -117,8 +129,12 @@
         this.clearName(),
           this.$http.post('/crawling/save',data).
           then((response) => {
-            alert('정상적으로 추가되었습니다.');
-            //this.$router.push('home');
+            this.$notify({
+              group:'notify',
+              title:'성공',
+              text:'데이터가 저장되었습니다.',
+              type:'success'
+            });
           }, (err) => {
             console.log('err', err)
           })
@@ -136,7 +152,6 @@
           searchType = '';
           searchStr = '';
           this.$store.state.searchCategory = response;
-          console.log(this.$store.state.searchCategory);
           this.$router.push({name:'search'});
         }, (err) => {
           console.log('err', err)
@@ -147,15 +162,15 @@
       showModalLink(){
         const email = JSON.parse(localStorage.getItem('pouch_user'));
         if(email != null){
-          this.$refs['modal'].show();
           this.$http.get('/categories/?email=' + email)
             .then((result) => {
               this.$store.commit('changeCategories',{
                 arr : result
               });
+              this.$refs['modal'].show();
             })
         } else {
-          alert('로그인이 필요합니다.');
+          status.code(401);
         }
       }
     },

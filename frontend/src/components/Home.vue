@@ -31,7 +31,7 @@
         <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
           <v-layout column>
             <router-link :to="{ name: 'categories',params:{ id:item.id }}">
-              <v-card hover class="card-title" >
+              <v-card hover class="card-title">
                 <v-card-text class="vertical-center">
                   <h4 class="mx-auto d-block">{{ item.name }}</h4>
                 </v-card-text>
@@ -61,6 +61,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      boxOne : '',
       q : '',
       categoryName: ''
     }
@@ -84,7 +85,7 @@ export default {
       this.$http.post('/categories/',data).
       then((result) => {
         this.$notify({
-          group:'foo',
+          group:'notify',
           title:'데이터 저장성공',
           text:'성공했습니다',
           type:'success',

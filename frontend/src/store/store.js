@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     categoryId: '',
     url: '',
     paramsId: '',
+    auth: '',
     searchCategory : []
   },
   getters: {
@@ -21,16 +22,20 @@ export const store = new Vuex.Store({
     },
     getCategory: (state) => {
       return state.category;
+    },
+    getAuth: (state) => {
+      return state.auth;
     }
   },
   mutations: {
     changeCategories: (state,payload) => {
       return state.categories = payload.arr;
+    },
+    changeAuth: (state,payload) => {
+      return state.auth = payload.value;
     }
   },
   actions: {
-    getAuth(){
 
-    }
   }
 });
