@@ -43,7 +43,6 @@ public class CrawlingController {
             Elements subTitle = doc.getElementsByTag("p");
             title = subTitle.get(0).html();
         }
-        //System.out.println(title);
 
         String imgSrc = img.attr("content");
         System.out.println(imgSrc.length());

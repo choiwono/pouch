@@ -6,7 +6,6 @@ import VueAxios from 'vue-axios'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueCookie from 'vue-cookies'
 import 'vue-awesome/icons'
 import icon from 'vue-awesome/components/Icon'
 import 'vuetify/dist/vuetify.min.css'
@@ -19,27 +18,42 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(VueAxios);
-Vue.axios.defaults.baseURL = 'http://localhost:8080/api'
+Vue.axios.defaults.baseURL = 'http://localhost:8080/api';
 Vue.router = router;
-Vue.use(VueCookie);
 Vue.use(Notifications);
 Vue.prototype.$axios = axios;
 Vue.prototype.$EventBus = new Vue();
-Vue.prototype.$flash = Notifications;
 
 axios.interceptors.response.use(response => {
-    return response.data;
-  }, error => {
+  return response.data;
+}, error => {
   if (error.response && error.response.data) {
     let errCode = error.response.status;
     if(errCode === 401){
-      //alert('권한이 없는 페이지입니다.');
+      Vue.notify({
+        group:'notify',
+        title:'실패했습니다',
+        text:'권한이 필요한 페이지입니다',
+        type:'error'
+      });
       router.push({name:'login'})
     } else if(errCode === 404 || errCode === 405 || errCode === 500){
       switch (errCode){
-        case 404 : alert("존재하지 않는 페이지입니다."); break;
-        case 405 : alert("존재하지 않는 페이지입니다."); break;
-        case 500 : alert("서버에서 데이터를 요청할 수 없습니다."); break;
+        case 404 :
+        case 405 : Vue.notify({
+          group:'notify',
+          title:'에러',
+          text:'존재하지 않는 페이지입니다',
+          type:'error'
+        });
+        break;
+        case 500 : Vue.notify({
+          group:'notify',
+          title:'에러',
+          text:'서버에서 데이터를 요청할수 없습니다.',
+          type:'error'
+        });
+        break;
       }
       router.beforeEach((to,from,next) => {
         next({
