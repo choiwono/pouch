@@ -46,17 +46,22 @@ public class AccountController {
 
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
-    public void findPassword(String email) {
-        System.out.println(email);
+    public String findPassword(String email) {
+        String result = "fail";
         Account account = accountService.findAccountByEmail(email);
-        if(!account.getEmail().isEmpty()) {
+        if(account!=null) {
             String password = UUID.randomUUID().toString();
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             account.setPasswd(passwordEncoder.encode(password));
             accountService.updateUserPassword(account);
-            emailService.sendEmail(account);
-
+            emailService.sendEmail(account, password);
+            result = "success";
+            System.out.println(result);
+        }else{
+            result = "fail";
+            System.out.println(result);
         }
+        return result;
     }
 
     //이메일 중복 확인하기
@@ -88,7 +93,7 @@ public class AccountController {
     //회원가입
     @PostMapping(value = "/join")
     public Account join(@Valid Joinform joinform,
-                     BindingResult bindingResult, Model model) {
+                        BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             System.out.println("---"); }
 
@@ -102,7 +107,6 @@ public class AccountController {
             account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
             return accountService.join(account);
         } else {
-            System.out.println("가입 실패");
             return null;
         }
     }

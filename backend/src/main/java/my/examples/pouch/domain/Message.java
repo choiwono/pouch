@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import my.examples.pouch.dto.UseEnum;
@@ -23,6 +24,7 @@ public class Message {
     @Column(name="reg_date")
     private Date regDate;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="options_id",referencedColumnName = "id")
     private MessageOption messageOption;

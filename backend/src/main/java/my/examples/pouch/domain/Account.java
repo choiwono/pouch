@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,10 +32,12 @@ public class Account {
     )
     private Set<Role> roles;
 
+    @JsonIgnore
     @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name="account_id")
     private List<Message> messages;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "account")
     private AccountTheme accountTheme;
 

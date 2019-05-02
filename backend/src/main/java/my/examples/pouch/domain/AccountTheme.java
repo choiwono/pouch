@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,7 @@ public class AccountTheme {
     @Column(name="reg_date")
     private Date regDate;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="account_id",referencedColumnName = "id")
     private Account account;
