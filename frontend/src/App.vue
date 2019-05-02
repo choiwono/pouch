@@ -3,7 +3,7 @@
     <Header/>
     <router-view/>
     <Footer/>
-    <notifications position="bottom center" group="foo"/>
+    <notifications number :max="2" width="50%" position="top center" group="notify"/>
   </div>
 </template>
 

@@ -61,7 +61,7 @@ const router = new Router({
       ]
     }
   ]
-})
+});
 
 router.beforeEach((to,from,next) => {
   const authUser = localStorage.getItem('pouch_user');
@@ -70,6 +70,7 @@ router.beforeEach((to,from,next) => {
     if(authUser != null){
       axios.post("/accounts/auth").then((result)=> {
         if (result.roles.length === 0) {
+          alert('로그인이 필요한 페이지입니다.');
           router.push('/login');
         } else {
           next();
@@ -79,14 +80,13 @@ router.beforeEach((to,from,next) => {
       router.push('login');
     }
   } else if(to.name === null) {
-    //alert('존재하지 않는 페이지입니다.');
+    alert('존재하지 않는 페이지입니다.');
     next({
       query: {
         redirect: history.back()
       },
     })
   } else {
-    //console.log(authUser);
     next();
   }
 });
