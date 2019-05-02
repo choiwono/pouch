@@ -27,4 +27,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
     @Query("SELECT COUNT(DISTINCT c) FROM Category c INNER JOIN c.links l"+
             " INNER JOIN l.tags t WHERE t.tagName like concat('%',:searchStr,'%')")
     Long countSearchTag(String searchStr);
+
+    @Query(value = "INSERT INTO Category (account_id, category_name, ordering) ", nativeQuery = true)
+    Category share(Category category);
 }

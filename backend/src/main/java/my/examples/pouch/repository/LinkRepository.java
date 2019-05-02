@@ -42,4 +42,11 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
 
     @Query("SELECT DISTINCT L FROM Link L WHERE L.category.id=:categoryId")
     List<Link> getSearchPouchByCategory(@Param("categoryId") Long categoryId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO Link (title, url, email, account_id, category_id, link_option, src, content, reg_date, repository, tags_name) " +
+            "VALUES (:title, :url, :email, :accountId, :categoryId, 1, '', '', NOW(), 0, '')", nativeQuery = true)
+    void share(String title, String url, String email, Long accountId, Long categoryId);
+
 }

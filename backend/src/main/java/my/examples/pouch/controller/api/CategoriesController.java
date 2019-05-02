@@ -3,6 +3,7 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
+import my.examples.pouch.domain.Link;
 import my.examples.pouch.dto.Custom.CustomCategory;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
@@ -11,6 +12,7 @@ import my.examples.pouch.service.TagService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +27,7 @@ public class CategoriesController {
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
     public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
-                         @RequestParam(name = "searchStr") String searchStr) {
+                                                 @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
         //System.out.println("cate"+categories.size());
         List<CustomCategory> list = categoryService.getCustomCategory(categories);
@@ -42,7 +44,7 @@ public class CategoriesController {
 
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
-    public CustomCategory getCategory(@PathVariable(value="id") Long id){
+    public CustomCategory getCategory(@PathVariable(value = "id") Long id) {
         Category category = categoryService.getCategory(id);
         CustomCategory customCategory = new CustomCategory();
         customCategory.setId(category.getId());
@@ -53,7 +55,7 @@ public class CategoriesController {
 
     @PostMapping
     public Category addCategory(@RequestParam(name = "name") String name,
-                            Principal principal){
+                                Principal principal) {
         Account account = accountService.findAccountByEmail(principal.getName());
         Category category = new Category();
         category.setCategoryName(name);
@@ -62,20 +64,31 @@ public class CategoriesController {
     }
 
     @PutMapping(value = "/{id}")
-    public void editCategory(@PathVariable(value="id") Long id){
+    public void editCategory(@PathVariable(value = "id") Long id) {
 
     }
 
     //카테고리 삭제
     @DeleteMapping(value = "/{id}")
-    public void deleteCategory(@PathVariable(value = "id") Long id){
+    public void deleteCategory(@PathVariable(value = "id") Long id) {
 
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
-    /*@PostMapping
-    public void shareCategory(@RequestParam(name = "id") Long id){
+    @PostMapping(value = "/share")
+    public Category shareCategory(@RequestParam(name = "id") Long id, Principal principal) {
+        Category category = categoryService.getCategory(id);
+        Category sharedCategory = new Category();
+        Account account = accountService.findAccountByEmail(principal.getName());
+        sharedCategory.setAccount(account);
+        sharedCategory.setCategoryName(category.getCategoryName());
+        Category newCategory = categoryService.saveCategory(sharedCategory);
 
-    }*/
+        List<Link> copy = new ArrayList<Link>();
+        for (Link link : category.getLinks()) {
+            linkService.share(link, account, newCategory.getId());
+        }
+        return category;
+    }
 }
 

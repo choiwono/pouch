@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class MessageOption {
     @Column(name="type_id")
     private Long typeId;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "messageOption")
     private Message message;
 
