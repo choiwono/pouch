@@ -2,12 +2,20 @@
   <div>
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
       <div class="container text-center">
-        <h3>{{ selectedCategory }}</h3>
+        <h3>{{ selectedCategory }}<icon v-b-modal.share class="ml-3" name="share"></icon></h3>
+
         <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2">
           <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
             <router-link tag="b-dropdown-item" :to="{ name: 'categories',params:{ id:item.id }}">{{ item.name }}</router-link>
           </b-dropdown-item>
         </b-dropdown>
+        <b-modal
+          id="share"
+          title="내 파우치에 저장하시겠습니까?"
+          @ok="ok()"
+          centered>
+          선택한 파우치: <strong>{{selectedCategory}}</strong>
+        </b-modal>
       </div>
     </div>
     <hr>
@@ -83,9 +91,11 @@
 </template>
 
 <script>
+    import FaIcon from "vue-awesome/components/Icon";
     export default {
         name: "Categories",
-        options: [],
+      components: {FaIcon},
+      options: [],
         props: ['id'],
         data(){
           return {
@@ -114,6 +124,17 @@
           }
         },
         methods:{
+          ok(){
+            let id = this.$router.history.current.params.id;
+
+            let data = new FormData();
+            data.append('id',id);
+            this.$http.post('/categories/share', data)
+              .then((result) => {
+                console.log(result);
+              })
+
+          },
           fetchData(){
             this.$store.state.paramsId = this.$router.history.current.params.id;
             this.$http.get('/categories/'+this.$store.state.paramsId)

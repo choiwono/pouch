@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,10 +23,12 @@ public class Category {
     @Column(name="ordering")
     private int ordering;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category",
             fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Link> links;
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;

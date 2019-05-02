@@ -1,9 +1,9 @@
 package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
+import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.dto.Custom.CustomLink;
-import my.examples.pouch.dto.Custom.CustomTag;
 import my.examples.pouch.repository.LinkRepository;
 import org.springframework.stereotype.Service;
 
@@ -47,4 +47,10 @@ public class LinkService {
         }
         return customLinks;
     }
+
+    public void share(Link link, Account account, Long categoryId ) {
+         linkRepository.share(link.getTitle(), link.getUrl(), account.getEmail(), account.getId(), categoryId);
+    }
+
+
 }

@@ -15,7 +15,7 @@
               ref="email"
               v-model="email"
               label="이메일"
-              :rules="[emailRules.rule2()]"
+              :rules="emailRules"
               required
             ></v-text-field>
 
@@ -37,10 +37,10 @@
     data: () => ({
       valid: true,
       email: '',
-      emailRules: {
-        rule1: v => !!v || 'E-mail is required',
-        rule2: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      }
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ]
     }),
     methods: {
       send() {
@@ -49,9 +49,14 @@
           let data = new FormData();
           data.append('email', this.email)
 
-          this.$http.put('/accounts/findpswd', data).then((response) => {
-            alert('메일이 발송되었습니다');
-            this.$router.push('login');
+          this.$http.put('/accounts/findpswd', data).then((data) => {
+            if (data == "success") {
+              alert('메일이 발송되었습니다');
+              this.$router.push('login');
+            } else if (data == "fail") {
+              console.log(data);
+              alert("이메일에 해당하는 계정이 없습니다")
+            }
           }, (err) => {
             console.log('err', err)
           })

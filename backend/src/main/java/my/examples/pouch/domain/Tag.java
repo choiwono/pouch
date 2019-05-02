@@ -1,5 +1,6 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +28,7 @@ public class Tag {
     @Column(name = "reg_date")
     private Date regDate;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tag_mapping",
             joinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")},

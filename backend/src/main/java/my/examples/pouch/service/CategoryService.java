@@ -54,6 +54,10 @@ public class CategoryService {
     }
 
     public Category addCategory(Category category) {
-        return categoryRepository.save(category);
+        return categoryRepository.share(category);
+    }
+
+    public Category saveCategory(Category sharedCategory) {
+        return categoryRepository.save(sharedCategory);
     }
 }

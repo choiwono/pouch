@@ -1,11 +1,13 @@
 package my.examples.pouch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
-
 import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="link")
@@ -30,13 +32,17 @@ public class Link {
     @Column(name="link_option")
     private Long linkOption;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "links")
+
     private Set<Tag> tags;
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="category_id")
     private Category category;
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
