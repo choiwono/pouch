@@ -12,7 +12,6 @@ import my.examples.pouch.service.TagService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,12 +43,13 @@ public class CategoriesController {
 
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
-    public CustomCategory getCategory(@PathVariable(value = "id") Long id) {
+    public CustomCategory getCategory(@PathVariable(value = "id") Long id, Principal principal) {
         Category category = categoryService.getCategory(id);
         CustomCategory customCategory = new CustomCategory();
         customCategory.setId(category.getId());
         customCategory.setName(category.getCategoryName());
         customCategory.setLinks(linkService.getCustomLinks(category.getLinks()));
+        customCategory.setEmail(category.getAccount().getEmail());
         return customCategory;
     }
 

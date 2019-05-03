@@ -10,5 +10,7 @@ public class CustomCategory {
     private String name;
     private List<CustomLink> links;
     private String nickName;
+    private String email;
+
 }
 
