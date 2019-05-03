@@ -30,18 +30,23 @@
         </v-flex>
         <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
           <v-layout column>
-            <router-link :to="{ name: 'categories',params:{ id:item.id }}">
-              <v-card hover class="card-title">
+              <v-card class="card-title">
+                <router-link :to="{ name: 'categories',params:{ id:item.id }}">
                 <v-card-text class="vertical-center">
                   <h4 class="mx-auto d-block">{{ item.name }}</h4>
                 </v-card-text>
+                </router-link>
+                <v-footer>
+                  <icon name="edit" class="edit-icon ml-2 mr-1 cursor-pointer"></icon>
+                  <span @click="deleteCategory(item.id)">
+                    <icon name="minus-circle" class="remove-icon ml-1 mr-1 cursor-pointer"></icon>
+                  </span>
+                </v-footer>
               </v-card>
-            </router-link>
           </v-layout>
         </v-flex>
       </div>
     </div>
-
     <b-modal
       ref="modal"
       id="category-link"
@@ -67,6 +72,18 @@ export default {
     }
   },
   methods: {
+    deleteCategory(id){
+      let val = confirm("삭제하시겠습니까?");
+      if(val === true){
+        this.$http.delete("/categories/"+id)
+          .then((result) => {
+
+          })
+        console.log(val);
+      } else {
+        console.log(val);
+      }
+    },
     googleSearch(e){
       this.$refs.form.submit()
     },
@@ -137,7 +154,7 @@ export default {
 }
 
 .card-title {
-  max-height:225px;
+  max-height:200px;
   min-height:200px;
   margin:10px;
 }
@@ -155,6 +172,9 @@ export default {
   transform: translateY(-50%);
   color:#00bfa5;
 }
+.mx-auto:hover {
+  font-weight:800;
+}
 
 h1, h2 {
   font-weight: normal;
@@ -170,5 +190,14 @@ li {
 a {
   color: #42b983;
   text-decoration:none;
+}
+.cursor-pointer {
+  cursor:pointer;
+}
+.edit-icon {
+  color:#20B2AA;
+}
+.remove-icon {
+  color:#DC143C;
 }
 </style>
