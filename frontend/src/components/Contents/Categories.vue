@@ -2,9 +2,11 @@
   <div>
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
       <div class="container text-center">
-        <h3>{{ selectedCategory }}<icon v-b-modal.share class="ml-3 cursor-pointer" name="share"></icon></h3>
+        <h3>{{ selectedCategory }}
+          <icon v-b-modal.share class="ml-3 cursor-pointer" name="share" v-if="iconFlag"></icon>
+        </h3>
 
-        <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2">
+        <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2" v-if="!iconFlag">
           <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
             <router-link tag="b-dropdown-item" :to="{ name: 'categories',params:{ id:item.id }}">{{ item.name }}</router-link>
           </b-dropdown-item>
@@ -107,6 +109,8 @@
             linkTags : [],
             selectedTag : undefined,
             selectedCategory: '',
+            email: '',
+            iconFlag: false
           }
         },
         computed:{
@@ -143,6 +147,11 @@
             .then((result) => {
               this.$store.state.category = result;
               this.links = this.$store.state.category.links;
+
+              const email = JSON.parse(localStorage.getItem('pouch_user'));
+              if(result.email!=email){
+                this.iconFlag = true;
+              }
               this.selectedCategory = result.name;
             })
             this.fetchTag();
