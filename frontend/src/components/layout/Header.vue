@@ -6,7 +6,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown no-caret right>
+          <b-nav-item-dropdown no-caret right ref="dropdown">
             <b-dropdown-form style="display:flex; min-width:380px;" @submit.prevent="onSubmit">
 
               <b-form-select
@@ -149,8 +149,9 @@
 
         this.$http.get('/categories/search?searchType='+searchType+'&searchStr='+searchStr).
         then((response) => {
-          searchType = '';
-          searchStr = '';
+          this.searchType = '';
+          this.searchStr = '';
+          this.$refs.dropdown.hide(true)
           this.$store.state.searchCategory = response;
           this.$router.push({name:'search'});
         }, (err) => {
