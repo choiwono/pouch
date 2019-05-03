@@ -37,14 +37,19 @@ public class CrawlingController {
         Elements img = doc.select("meta[property=og:image]");
 
         String title = top.html();
-        if(title.length() > 0) {
+
+        if(title.isEmpty()) {
             title = sub.attr("content");
-        } else {
-            title = url;
+        } else if(sub.attr("content").isEmpty()){
+            if(url.length() > 30){
+                title = url.substring(0,30);
+            } else {
+                title = url;
+            }
         }
 
         String imgSrc = img.attr("content");
-        System.out.println(imgSrc.length());
+
         if(imgSrc.length() == 0){
             Elements str = doc.getElementsByTag("img");
             if(str.size() > 0){

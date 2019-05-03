@@ -60,4 +60,8 @@ public class CategoryService {
     public Category saveCategory(Category sharedCategory) {
         return categoryRepository.save(sharedCategory);
     }
+
+    public void deleteCategory(Long id){
+        categoryRepository.deleteById(id);
+    }
 }
