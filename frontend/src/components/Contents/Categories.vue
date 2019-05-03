@@ -12,7 +12,7 @@
         <b-modal
           id="share"
           title="내 파우치에 저장하시겠습니까?"
-          @ok="ok()"
+          @ok="shareCategory()"
           centered>
           선택한 파우치: <strong>{{selectedCategory}}</strong>
         </b-modal>
@@ -35,29 +35,32 @@
         <div class="row" id="card-row">
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
             <div class="card mb-4 shadow-sm links">
+              <v-footer>
+                <span>
+                  <icon name="pen" class="m-2 cursor-pointer"></icon>
+                </span>
+                <span @click="showModal(item.id)">
+                   <icon name="tag" class="m-2 cursor-pointer" style="color:#0099cc;"></icon>
+                </span>
+                <span @click="removeLink(item.id)">
+                   <icon name="minus-circle" class="m-2 cursor-pointer remove-icon"></icon>
+                </span>
+              </v-footer>
               <span v-if="item.src.length === 0">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
                      xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
                      focusable="false" role="img" aria-label="Placeholder: Thumbnail">
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#333"></rect>
-                  <text x="36.5%" y="50%" fill="#fff" dy=".3em">
-                    {{ item.title }}
-                  </text>
                 </svg>
               </span>
               <span v-else>
                 <img width="100%" height="180" :src="item.src">
               </span>
-              <div class="card-body p-2 pl-3 pr-3">
+              <div class="card-body pb-2">
                 <p class="card-title m-2 d-flex">
                   <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
                 <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
-                <div class="mb-3 mt-3">
-                  <span @click="showModal(item.id)">
-                    <icon name="tag"></icon>
-                  </span>
-                </div>
               </div>
               <b-modal
                 :ref="item.id"
@@ -124,9 +127,8 @@
           }
         },
         methods:{
-          ok(){
+          shareCategory(){
             let id = this.$router.history.current.params.id;
-
             let data = new FormData();
             data.append('id',id);
             this.$http.post('/categories/share', data)
@@ -219,6 +221,14 @@
               .then((result) => {
                 this.linkTags = result;
               })
+          },
+          removeLink(id){
+            let val = confirm("정말 삭제하시겠습니까?");
+            if(val === true){
+              console.log(id+" : 동의");
+            } else {
+              console.log(id+" : 거부");
+            }
           }
         },
         mounted(){
@@ -269,6 +279,12 @@
   }
   .cursor-pointer {
     cursor:pointer;
+  }
+  .edit-icon {
+    color:#20B2AA;
+  }
+  .remove-icon {
+    color:#DC143C;
   }
   .token-input-input-token {
     float: left;

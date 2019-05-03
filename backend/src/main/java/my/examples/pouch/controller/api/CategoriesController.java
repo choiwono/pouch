@@ -71,7 +71,7 @@ public class CategoriesController {
     //카테고리 삭제
     @DeleteMapping(value = "/{id}")
     public void deleteCategory(@PathVariable(value = "id") Long id) {
-
+        categoryService.deleteCategory(id);
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
@@ -84,7 +84,7 @@ public class CategoriesController {
         sharedCategory.setCategoryName(category.getCategoryName());
         Category newCategory = categoryService.saveCategory(sharedCategory);
 
-        List<Link> copy = new ArrayList<Link>();
+        //List<Link> copy = new ArrayList<Link>();
         for (Link link : category.getLinks()) {
             linkService.share(link, account, newCategory.getId());
         }

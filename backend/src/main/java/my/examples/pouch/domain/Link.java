@@ -38,7 +38,7 @@ public class Link {
     private Set<Tag> tags;
 
     @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="category_id")
     private Category category;
 
