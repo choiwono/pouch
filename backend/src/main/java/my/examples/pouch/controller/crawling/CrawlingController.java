@@ -40,8 +40,7 @@ public class CrawlingController {
         if(title.length() > 0) {
             title = sub.attr("content");
         } else {
-            Elements subTitle = doc.getElementsByTag("p");
-            title = subTitle.get(0).html();
+            title = url;
         }
 
         String imgSrc = img.attr("content");

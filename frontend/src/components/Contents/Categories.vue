@@ -2,7 +2,7 @@
   <div>
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
       <div class="container text-center">
-        <h3>{{ selectedCategory }}<icon v-b-modal.share class="ml-3" name="share"></icon></h3>
+        <h3>{{ selectedCategory }}<icon v-b-modal.share class="ml-3 cursor-pointer" name="share"></icon></h3>
 
         <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2">
           <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
