@@ -18,7 +18,7 @@
                   required class="col-lg-5 col-md-5">
                   <option slot="first" value="" disabled style="width: 80px">구분</option>
                 </b-form-select>
-                <b-form-input :rules="nameRules" id="searchStr2" v-model="searchStr" style="min-width: 100px" required></b-form-input>
+                <b-form-input :rules="nameRules" id="searchStr" v-model="searchStr" style="min-width: 100px" required></b-form-input>
                 <b-button type="submit" variant="secondary" size="sm" style="min-width: 50px">검색</b-button>
             </b-dropdown-form>
             <template v-if="$store.getters.getAuth" slot="button-content"><icon name="search"></icon></template>
