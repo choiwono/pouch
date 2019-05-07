@@ -3,8 +3,10 @@ package my.examples.pouch.repository;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.repository.custom.CategoryRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +32,9 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
 
     @Query(value = "INSERT INTO Category (account_id, category_name, ordering) ", nativeQuery = true)
     Category share(Category category);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE c FROM category AS c WHERE c.id=:id", nativeQuery = true)
+    void deleteByCategoryId(@Param("id") Long id);
 }

@@ -49,12 +49,10 @@ public class LinkController {
 
     @PostMapping(value = "/changeTitle")
     public String changeTitle(Long id, String title) {
-
         Link link = linkService.getLinkById(id);
         link.setId(id);
         link.setTitle(title);
         linkRepository.save(link);
-
         Long categoryId = link.getCategory().getId();
 
         return "redirect:/link/view/" + categoryId;
@@ -68,4 +66,5 @@ public class LinkController {
         Long categoryId = link.getCategory().getId();
 
         return "redirect:/link/view/"+categoryId;
-    }}
+    }
+}
