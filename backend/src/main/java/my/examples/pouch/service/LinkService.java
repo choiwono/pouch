@@ -53,4 +53,11 @@ public class LinkService {
     }
 
 
+    public void deleteTagMappingByLinkId(Long id) {
+        linkRepository.deleteTagMappingByLinkId(id);
+    }
+
+    public void deleteLink(Long id) {
+        linkRepository.deleteByLinkId(id);
+    }
 }

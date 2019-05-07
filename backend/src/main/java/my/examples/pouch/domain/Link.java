@@ -33,8 +33,7 @@ public class Link {
     private Long linkOption;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "links")
-
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<Tag> tags;
 
     @JsonIgnore
