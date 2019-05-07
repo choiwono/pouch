@@ -49,4 +49,8 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
             "VALUES (:title, :url, :email, :accountId, :categoryId, 1, '', '', NOW(), 0, '')", nativeQuery = true)
     void share(String title, String url, String email, Long accountId, Long categoryId);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE l FROM link AS l WHERE l.id=:linkId", nativeQuery = true)
+    void deleteByLinkId(@Param("linkId") Long id);
 }

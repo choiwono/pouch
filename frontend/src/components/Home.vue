@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container main pt-5" style="padding: 24px; width: 100%;">
-      <!-- Another variation with a button -->
       <form action="https://google.com/search"
             target="_blank"
             method="get"
@@ -77,11 +76,15 @@ export default {
       if(val === true){
         this.$http.delete("/categories/"+id)
           .then((result) => {
-
-          })
-        console.log(val);
-      } else {
-        console.log(val);
+            this.$notify({
+                group:'notify',
+                title:'삭제성공',
+                text:'성공했습니다',
+                type:'success',
+                width:'300px'
+            });
+            this.fetchCategory();
+          });
       }
     },
     googleSearch(e){
@@ -123,6 +126,17 @@ export default {
         this.$refs.modal.hide();
       })
     },
+    fetchCategory(){
+      const user = JSON.parse(localStorage.getItem('pouch_user'));
+      if(user != null){
+        this.$http.get('/categories/?email=' + user)
+          .then((result) => {
+            this.$store.commit('changeCategories',{
+              arr : result
+            });
+          })
+      }
+    }
   },
 
   computed:{
@@ -130,15 +144,7 @@ export default {
   },
 
   mounted(){
-    const user = JSON.parse(localStorage.getItem('pouch_user'));
-    if(user != null){
-      this.$http.get('/categories/?email=' + user)
-        .then((result) => {
-          this.$store.commit('changeCategories',{
-            arr : result
-          });
-        })
-    }
+    this.fetchCategory();
   }
 }
 </script>
@@ -200,4 +206,5 @@ a {
 .remove-icon {
   color:#DC143C;
 }
+
 </style>

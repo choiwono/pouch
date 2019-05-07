@@ -2,6 +2,8 @@ package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Category;
+import my.examples.pouch.domain.Link;
+import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.Custom.CustomCategory;
 import my.examples.pouch.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final LinkService linkService;
 
     @Transactional
     public Category getCategory(Long id) {
@@ -62,6 +63,13 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id){
-        categoryRepository.deleteById(id);
+        Category category = categoryRepository.getOne(id);
+        List<Link> links = category.getLinks();
+        for(int i=0; i<links.size(); i++){
+            linkService.deleteTagMappingByLinkId(links.get(i).getId());
+            linkService.deleteLink(links.get(i).getId());
+            //System.out.println(link.getId());
+        }
+        categoryRepository.deleteByCategoryId(id);
     }
 }
