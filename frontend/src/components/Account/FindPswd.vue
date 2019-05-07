@@ -3,7 +3,7 @@
     <div class="row justify-content-center mt-5 mb-5">
       <div class="container text-center">
         <h3>비밀번호 찾기</h3>
-        <h6>회원가입시 등록한 이메일로 비밀번호를 보낸다</h6>
+        <h6>회원가입시 등록한 이메일로 임시 비밀번호를 보내드립니다</h6>
       </div>
       <v-app style="width:30%; background: #ffffff;" id="inspire">
         <v-form

@@ -43,10 +43,11 @@ public class CategoriesController {
 
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
-    public CustomCategory getCategory(@PathVariable(value = "id") Long id, Principal principal) {
+    public CustomCategory getCategory(@PathVariable(value = "id") Long id) {
         Category category = categoryService.getCategory(id);
         CustomCategory customCategory = new CustomCategory();
         customCategory.setId(category.getId());
+        customCategory.setNickName(category.getAccount().getNickName());
         customCategory.setName(category.getCategoryName());
         customCategory.setLinks(linkService.getCustomLinks(category.getLinks()));
         customCategory.setEmail(category.getAccount().getEmail());
@@ -88,6 +89,14 @@ public class CategoriesController {
         for (Link link : category.getLinks()) {
             linkService.share(link, account, newCategory.getId());
         }
+        return category;
+    }
+
+    // 다른 유저에게 내 카테고리 보내기
+    @PostMapping(value = "/send")
+    public Category sendCategory(@RequestParam(name="id")Long id){
+        Category category = categoryService.getCategory(id);
+
         return category;
     }
 }
