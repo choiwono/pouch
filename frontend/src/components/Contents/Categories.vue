@@ -5,29 +5,47 @@
 
       <div class="container text-center" v-if="!iconFlag">
         <h3>{{ selectedCategory }}
-          <icon @click="test" width="20px" height="20px" class="ml-2 cursor-pointer" name="paper-plane"
-          ></icon>
+          <b-button id="show-btn1" class="v-btn--round">
+            <icon v-b-modal.message width="20px" height="20px" class="cursor-pointer" name="paper-plane"
+            ></icon>
+          </b-button>
         </h3>
-        <b-modal id="message1">message111</b-modal>
+        <b-modal
+          id="message"
+          title="친구에게 파우치를 보내시겠습니까?"
+          @ok="sendCategory()"
+          centered>
+          선택한 파우치: <strong>{{selectedCategory}}</strong>
+          <v-form
+            ref="form"
+            v-model="valid">
+            <v-text-field
+              ref="email"
+              v-model="email"
+              label="이메일"
+              :rules="emailRules"
+              required
+            ></v-text-field>
+          </v-form>
+        </b-modal>
       </div>
 
       <div class="container text-center" v-else>
         <h5>{{nickName}}의 </h5>
         <h3>{{ selectedCategory }}
-          <icon @click="test" width="20px" height="20px" class="ml-2 cursor-pointer" name="share"></icon>
-
-          <b-button id="show-btn" @click="test">Open Modal</b-button>
-
-          <b-modal ref="my-modal" hide-footer title="Using Component Methods">
-            <div class="d-block text-center">
-              <h3>Hello From My Modal!</h3>
-            </div>
-          </b-modal>
-
+          <b-button id="show-btn2" @click="test" class="v-btn--round">
+            <icon width="20px" height="20px" class="cursor-pointer" name="share"></icon>
+          </b-button>
         </h3>
-
+        <b-modal
+          id="share"
+          ref="share"
+          title="내 파우치에 저장하시겠습니까?"
+          @ok="saveCategory()"
+          centered>
+          선택한 파우치: <strong>{{selectedCategory}}</strong>
+        </b-modal>
       </div>
-
 
       <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2" v-if="!iconFlag">
         <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
@@ -36,66 +54,43 @@
         </b-dropdown-item>
       </b-dropdown>
 
-      <!-- <b-modal
-         id="message"
-         title="친구에게 파우치를 보내시겠습니까?"
-         @ok="sendCategory()"
-         centered>
-         선택한 파우치: <strong>{{selectedCategory}}</strong>
-         <v-form
-           ref="form"
-           v-model="valid">
-           <v-text-field
-             ref="email"
-             v-model="email"
-             label="이메일"
-             :rules="emailRules"
-             required
-           ></v-text-field>
-         </v-form>
-       </b-modal>
 
-       <b-modal
-         id="test"
-         title="내 파우치에 저장하시겠습니까?"
-         @ok="shareCategory()"
-         centered>
-         선택한 파우치: <strong>{{selectedCategory}}</strong>
-       </b-modal>-->
-
-
-  </div>
-  <hr>
-  <div class="container d-flex">
-    <ul class="col-md-2 list-group">
-      <router-link class="list-group-item cursor-pointer" tag="li"
-                   :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">
-        전체
-      </router-link>
-      <router-link @click="selectedTag = item.id" class="list-group-item cursor-pointer" v-for="item in tags"
-                   :key="item.id" tag="li" :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
-        {{ item.tagName }}
-        <v-badge class="v-badge badge" right color="teal accent-4">
-          <span slot="badge">{{ item.cnt }}</span>
-        </v-badge>
-      </router-link>
-    </ul>
-    <div class="col-md-10">
-      <div class="row" id="card-row">
-        <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
-          <div class="card mb-4 shadow-sm links">
-            <v-footer>
-                <span>
+    </div>
+    <hr>
+    <div class="container d-flex">
+      <ul class="col-md-2 list-group">
+        <router-link class="list-group-item cursor-pointer" tag="li"
+                     :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">
+          전체
+        </router-link>
+        <router-link @click="selectedTag = item.id" class="list-group-item cursor-pointer" v-for="item in tags"
+                     :key="item.id" tag="li" :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
+          {{ item.tagName }}
+          <v-badge class="v-badge badge" right color="teal accent-4">
+            <span slot="badge">{{ item.cnt }}</span>
+          </v-badge>
+        </router-link>
+      </ul>
+      <div class="col-md-10">
+        <div class="row" id="card-row">
+          <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
+            <div class="card mb-4 shadow-sm links">
+              <v-footer>
+                <span v-if="!iconFlag">
                   <icon name="pen" class="m-2 cursor-pointer"></icon>
                 </span>
-              <span @click="showModal(item.id)">
+                <span @click="showModal(item.id)" v-if="!iconFlag">
                    <icon name="tag" class="m-2 cursor-pointer" style="color:#0099cc;"></icon>
                 </span>
-              <span @click="removeLink(item.id)">
+                <span @click="removeLink(item.id)" v-if="!iconFlag">
                    <icon name="minus-circle" class="m-2 cursor-pointer remove-icon"></icon>
                 </span>
-            </v-footer>
-            <span v-if="item.src.length === 0">
+                <span v-b-modal="'{{item.id}}'"  v-if="iconFlag">
+                   <icon name="share" class="m-2 cursor-pointer "></icon>
+                </span>
+
+              </v-footer>
+              <span v-if="item.src.length === 0">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
                      xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
                      focusable="false" role="img" aria-label="Placeholder: Thumbnail">
@@ -103,23 +98,23 @@
                   <rect width="100%" height="100%" fill="#333"></rect>
                 </svg>
               </span>
-            <span v-else>
+              <span v-else>
                 <img width="100%" height="180" :src="item.src">
               </span>
-            <div class="card-body pb-2">
-              <p class="card-title m-2 d-flex">
-                <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
-              <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
-            </div>
-            <b-modal
-              :ref="item.id"
-              title="태그편집"
-              @ok="handleOk(item.id)"
-              ok-only
-              centered>
-              <form @submit.stop.prevent="handleSubmit()">
-                <ul class="edit-tag-list w-100">
-                  <li class="token-input-input-token w-100">
+              <div class="card-body pb-2">
+                <p class="card-title m-2 d-flex">
+                  <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
+                <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
+              </div>
+              <b-modal
+                :ref="item.id"
+                title="태그편집"
+                @ok="handleOk(item.id)"
+                ok-only
+                centered>
+                <form @submit.stop.prevent="handleSubmit()">
+                  <ul class="edit-tag-list w-100">
+                    <li class="token-input-input-token w-100">
                       <span v-if="linkTags.length > 0">
                         <p v-for="tag in linkTags" class="d-inline-block p-2 border">
                           <span>
@@ -128,17 +123,31 @@
                           </span>
                         </p>
                       </span>
-                    <input autofocus :ref="'tagInput'+item.id" @keyup="tagKeyUp($event,item.id)"
-                           type="text" class="border-0" style="outline:none;">
-                  </li>
-                </ul>
-              </form>
-            </b-modal>
+                      <input autofocus :ref="'tagInput'+item.id" @keyup="tagKeyUp($event,item.id)"
+                             type="text" class="border-0" style="outline:none;">
+                    </li>
+                  </ul>
+                </form>
+              </b-modal>
+            </div>
           </div>
         </div>
       </div>
+      <b-modal
+        id="item.id"
+        title="내 파우치에 저장하시겠습니까?"
+        @ok="saveLink(item.id)"
+        centered>
+        <!--<p>{{item.title}}</p>-->
+        <b-form-select  id="category" variant="light" class="m-sm-2">
+          <option disabled>어떤 카테고리에 저장하시겠습니까?</option>
+          <option v-for="category in $store.getters.getCategories" id="category.id">
+            {{ category.name }}, {{category.id}}
+          </option>
+        </b-form-select>
+
+      </b-modal>
     </div>
-  </div>
   </div>
 </template>
 
@@ -182,8 +191,17 @@
       }
     },
     methods: {
+      saveLink(id) {
+        let data = new FormData();
+        data.append('id', id);
+        this.$http.post('/categories/save', data)
+          .then((result) => {
+            console.log(result);
+          })
+
+      },
       test() {
-        this.$refs['my-modal'].show()
+        this.$refs['share'].show()
       },
       sendCategory() {
         let id = this.$router.history.current.params.id;
@@ -191,21 +209,30 @@
         let data = new FormData();
         data.append('id', id);
         data.append('email', email);
-        this.$http.post('/categories/send', data)
-          .then((result) => {
-            console.log(result);
-          })
+
+        this.$http.post('/accounts/emailcheck', data).then((data) => {
+            if (data == "success") {
+              alert("등록되지 않은 이메일입니다")
+              this.email = ''
+            } else if (data == "duplicate") {
+              this.$http.post('/categories/send', data)
+                .then((result) => {
+                  console.log(result);
+                  this.email = ''
+                })
+            }
+          }
+        )
       },
 
-      shareCategory() {
+      saveCategory() {
         let id = this.$router.history.current.params.id;
         let data = new FormData();
         data.append('id', id);
-        this.$http.post('/categories/share', data)
+        this.$http.post('/categories/save', data)
           .then((result) => {
             console.log(result);
           })
-
       },
       fetchData() {
         this.$store.state.paramsId = this.$router.history.current.params.id;

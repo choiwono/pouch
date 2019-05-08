@@ -13,14 +13,18 @@ import java.util.Date;
 @Getter
 @Setter
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="receive_id")
     private String receiveId;
+
     @Enumerated(EnumType.STRING)
     @Column(name="use_yn")
     private UseEnum useYn;
+
     @Column(name="reg_date")
     private Date regDate;
 

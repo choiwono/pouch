@@ -20,7 +20,6 @@ import java.util.*;
 public class TagController {
     private final LinkService linkService;
     private final TagService tagService;
-    private final TagRepository tagRepository;
 
     //태그 추가
     @PostMapping

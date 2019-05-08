@@ -78,18 +78,6 @@ public class AccountController {
     }
 
 
-
-
-    //로그인
-    @PostMapping(value = "/login")
-    public void login() {
-    }
-
-    //로그아웃
-    @GetMapping(value = "/logout")
-    public void logout() {
-    }
-
     //회원가입
     @PostMapping(value = "/join")
     public Account join(@Valid Joinform joinform,
