@@ -76,7 +76,7 @@ public class CategoriesController {
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
-    @PostMapping(value = "/share")
+    @PostMapping(value = "/save")
     public Category shareCategory(@RequestParam(name = "id") Long id, Principal principal) {
         Category category = categoryService.getCategory(id);
         Category sharedCategory = new Category();
@@ -94,8 +94,10 @@ public class CategoriesController {
 
     // 다른 유저에게 내 카테고리 보내기
     @PostMapping(value = "/send")
-    public Category sendCategory(@RequestParam(name="id")Long id){
+    public Category sendCategory(@RequestParam(name="id")Long id,
+                                 @RequestParam(name="email") String email){
         Category category = categoryService.getCategory(id);
+        accountService.findAccountByEmail(email);
 
         return category;
     }

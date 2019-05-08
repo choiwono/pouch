@@ -1,10 +1,8 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.Custom.CustomLink;
-import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,7 @@ import java.util.List;
 public class LinkController {
     private final LinkService linkService;
     private final TagService tagService;
-    private final TagRepository tagRepository;
+
     //링크 추가하기
     @PostMapping
     public void addLink(){}
