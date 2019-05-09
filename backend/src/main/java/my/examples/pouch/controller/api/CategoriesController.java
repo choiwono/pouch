@@ -5,10 +5,13 @@ import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.dto.Custom.CustomCategory;
+import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -25,81 +28,82 @@ public class CategoriesController {
 
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
-    public List<CustomCategory> searchCategories(@RequestParam(name = "searchType") int searchType,
-                                                 @RequestParam(name = "searchStr") String searchStr) {
+    public ResponseEntity<List<CustomCategory>> searchCategories(@RequestParam(name = "searchType") int searchType,
+                                                                 @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
-        //System.out.println("cate"+categories.size());
-        List<CustomCategory> list = categoryService.getCustomCategory(categories);
-        return list;
+        List<CustomCategory> list = categoryService.getCustomCategories(categories);
+        return new ResponseEntity<List<CustomCategory>>(list, HttpStatus.OK);
     }
 
     //특정 유저의 카테고리 목록 가져오기
     @GetMapping
-    public List<CustomCategory> getCategoryByAccount(@RequestParam(name = "email") String email) {
+    public ResponseEntity<List<CustomCategory>> getCategoryByAccount(@RequestParam(name = "email") String email) {
         List<Category> categories = categoryService.findMyCategoryList(email);
-        List<CustomCategory> list = categoryService.getCustomCategory(categories);
-        return list;
+        List<CustomCategory> list = categoryService.getCustomCategories(categories);
+        return new ResponseEntity<List<CustomCategory>>(list,HttpStatus.OK);
     }
 
     //특정 카테고리 가져오기
     @GetMapping(value = "/{id}")
-    public CustomCategory getCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<CustomCategory> getCategory(@PathVariable(value = "id") Long id) {
         Category category = categoryService.getCategory(id);
-        CustomCategory customCategory = new CustomCategory();
-        customCategory.setId(category.getId());
-        customCategory.setNickName(category.getAccount().getNickName());
-        customCategory.setName(category.getCategoryName());
-        customCategory.setLinks(linkService.getCustomLinks(category.getLinks()));
-        customCategory.setEmail(category.getAccount().getEmail());
-        return customCategory;
+        CustomCategory customCategory = categoryService.getCustomCategory(category);
+        return new ResponseEntity<CustomCategory>(customCategory,HttpStatus.OK);
     }
 
     @PostMapping
-    public Category addCategory(@RequestParam(name = "name") String name,
+    public ResponseEntity<ResponseDto> addCategory(@RequestParam(name = "name") String name,
                                 Principal principal) {
         Account account = accountService.findAccountByEmail(principal.getName());
         Category category = new Category();
         category.setCategoryName(name);
         category.setAccount(account);
-        return categoryService.addCategory(category);
+        ResponseDto responseDto = new ResponseDto();
+        if(categoryService.addCategory(category) == null){
+            responseDto.setMessage("OK, created");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
+        } else {
+            responseDto.setMessage("Error, not created");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping(value = "/{id}")
-    public void editCategory(@PathVariable(value = "id") Long id) {
-
+    public ResponseEntity<ResponseDto> editCategory(@PathVariable(value = "id") Long id) {
+        ResponseDto responseDto = new ResponseDto();
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 
     //카테고리 삭제
     @DeleteMapping(value = "/{id}")
-    public void deleteCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<ResponseDto> deleteCategory(@PathVariable(value = "id") Long id) {
         categoryService.deleteCategory(id);
+        ResponseDto responseDto = new ResponseDto();
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
     @PostMapping(value = "/save")
-    public Category shareCategory(@RequestParam(name = "id") Long id, Principal principal) {
+    public ResponseEntity<ResponseDto> shareCategory(@RequestParam(name = "id") Long id, Principal principal) {
         Category category = categoryService.getCategory(id);
-        Category sharedCategory = new Category();
-        Account account = accountService.findAccountByEmail(principal.getName());
-        sharedCategory.setAccount(account);
-        sharedCategory.setCategoryName(category.getCategoryName());
-        Category newCategory = categoryService.saveCategory(sharedCategory);
-
-        //List<Link> copy = new ArrayList<Link>();
-        for (Link link : category.getLinks()) {
-            linkService.share(link, account, newCategory.getId());
+        ResponseDto responseDto = new ResponseDto();
+        if(categoryService.shareCategory(principal.getName(),category) == null){
+            responseDto.setMessage("error, not Created");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+        } else {
+            responseDto.setMessage("OK, Created");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
         }
-        return category;
     }
 
     // 다른 유저에게 내 카테고리 보내기
     @PostMapping(value = "/send")
-    public Category sendCategory(@RequestParam(name="id")Long id,
+    public ResponseEntity<ResponseDto> sendCategory(@RequestParam(name="id")Long id,
                                  @RequestParam(name="email") String email){
-        Category category = categoryService.getCategory(id);
-        accountService.findAccountByEmail(email);
-
-        return category;
+        //Category category = categoryService.getCategory(id);
+        //accountService.findAccountByEmail(email);
+        ResponseDto responseDto = new ResponseDto();
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
     }
 }
 
