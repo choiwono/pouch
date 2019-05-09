@@ -11,32 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-public class AccountService {
-    private final AccountRepository accountRepository;
-    private final RoleRepository roleRepository;
-
-    public List<Account> findAccountAll(){
-        return accountRepository.findAll();
-    }
-
-    @Transactional
-    public Account join(Account account) {
-        Role role = roleRepository.getRoleByName("user");
-        account.addRole(role);
-        return accountRepository.save(account);
-    }
-
-    @Transactional
-    public void deleteAccount(Long id){
-        accountRepository.deleteById(id);
-    }
-
-    public Account findAccountByEmail(String email) {
-        return accountRepository.findMyAccount(email);
-    }
-
-    public void updateUserPassword(Account account) {
-        accountRepository.updatePasswordByEmail(account.getEmail(), account.getPasswd());
-    }
+public interface AccountService {
+    public List<Account> findAccountAll();
+    public Account join(Account account);
+    public void deleteAccount(Long id);
+    public Account findAccountByEmail(String email);
+    public void updateUserPassword(Account account);
 }
