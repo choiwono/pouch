@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.dto.AccountInfo;
 import my.examples.pouch.dto.Joinform;
+import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.security.CustomSecurityUser;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.EmailService;
@@ -50,8 +51,9 @@ public class AccountController {
 
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
-    public ResponseEntity<String> findPassword(String email) {
+    public ResponseEntity<ResponseDto> findPassword(String email) {
         Account account = accountService.findAccountByEmail(email);
+        ResponseDto responseDto = new ResponseDto();
 
         // 요청한 이메일 계정이 있는 경우
         if (account != null) {
@@ -60,21 +62,26 @@ public class AccountController {
             account.setPasswd(passwordEncoder.encode(password));
             accountService.updateUserPassword(account);
             emailService.sendEmail(account, password);
-            return new ResponseEntity<>("success", HttpStatus.OK);
+                responseDto.setMessage("success");
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         // 요청한 이메일 계정이 없는 경우
         } else {
-            return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+            responseDto.setMessage("fail");
+            return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
         }
     }
 
     //이메일 중복 확인하기
     @PostMapping(value = "/emailcheck")
-    public ResponseEntity<String> emailCheck(String email, Model model) {
+    public ResponseEntity<ResponseDto> emailCheck(String email, Model model) {
+        ResponseDto responseDto = new ResponseDto();
         Account emailCheck = accountService.findAccountByEmail(email);
         if (emailCheck == null) {
-            return new ResponseEntity<>("success", HttpStatus.OK);
+            responseDto.setMessage("success");
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("duplicate", HttpStatus.CONFLICT);
+            responseDto.setMessage("duplicate");
+            return new ResponseEntity<>(responseDto, HttpStatus.CONFLICT);
         }
     }
 
