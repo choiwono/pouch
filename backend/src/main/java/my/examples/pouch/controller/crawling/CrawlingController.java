@@ -10,7 +10,8 @@ import my.examples.pouch.service.AccountService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +28,10 @@ public class CrawlingController {
     private final CategoryService categoryService;
 
     @PostMapping("/save")
-    public void crawling(@RequestParam(required = true) String url,
-                           @RequestParam(required = true) Long categoryId,
-                           Principal principal) throws Exception{
+    public ResponseEntity crawling(@RequestParam(required = true) String url,
+                                   @RequestParam(required = true) Long categoryId,
+                                   Principal principal) throws Exception {
+        // 타임아웃 설정
         Document doc = Jsoup.connect(url).timeout(5*1000).get();
 
         Elements top = doc.select("title");
@@ -37,7 +39,7 @@ public class CrawlingController {
         Elements img = doc.select("meta[property=og:image]");
 
         String title = top.html();
-
+        // 타이틀이 없을 경우 OR SUB 타이틀도 없을 경우에는 url로 대체 ( url 길이가 너무 길면 자르기 )
         if(title.isEmpty()) {
             title = sub.attr("content");
         } else if(sub.attr("content").isEmpty()){
@@ -70,5 +72,7 @@ public class CrawlingController {
         link.setCategory(category);
         link.setAccount(account);
         linkRepository.save(link);
+
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }
