@@ -7,6 +7,8 @@ import my.examples.pouch.dto.Joinform;
 import my.examples.pouch.security.CustomSecurityUser;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.EmailService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,12 +28,12 @@ public class AccountController {
 
     // 계정 토큰 발급
     @PostMapping(value = "/auth")
-    public AccountInfo accountInfo(@AuthenticationPrincipal CustomSecurityUser customSecurityUser) {
+    public ResponseEntity<AccountInfo> accountInfo(@AuthenticationPrincipal CustomSecurityUser customSecurityUser) {
         AccountInfo accountInfo = new AccountInfo();
         accountInfo.setId(customSecurityUser.getId());
         accountInfo.setEmail(customSecurityUser.getEmail());
         accountInfo.setRoles(customSecurityUser.getAuthorities());
-        return accountInfo;
+        return new ResponseEntity<>(accountInfo, HttpStatus.OK);
     }
 
     //내 정보 가져오기
@@ -46,56 +48,58 @@ public class AccountController {
 
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
-    public String findPassword(String email) {
-        String result = "fail";
+    public ResponseEntity<String> findPassword(String email) {
         Account account = accountService.findAccountByEmail(email);
-        if(account!=null) {
+
+        // 요청한 이메일 계정이 있는 경우
+        if (account != null) {
             String password = UUID.randomUUID().toString();
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             account.setPasswd(passwordEncoder.encode(password));
             accountService.updateUserPassword(account);
             emailService.sendEmail(account, password);
-            result = "success";
-            System.out.println(result);
-        }else{
-            result = "fail";
-            System.out.println(result);
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        // 요청한 이메일 계정이 없는 경우
+        } else {
+            return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
         }
-        return result;
     }
 
     //이메일 중복 확인하기
     @PostMapping(value = "/emailcheck")
-    public String emailCheck(String email, Model model) {
+    public ResponseEntity<String> emailCheck(String email, Model model) {
         Account emailCheck = accountService.findAccountByEmail(email);
-        String result = "fail";
-        if(emailCheck == null){
-            result = "success";
+        if (emailCheck == null) {
+            return new ResponseEntity<>("success", HttpStatus.OK);
         } else {
-            result = "duplicate";
+            return new ResponseEntity<>("duplicate", HttpStatus.CONFLICT);
         }
-        return result;
     }
 
 
     //회원가입
     @PostMapping(value = "/join")
-    public Account join(@Valid Joinform joinform,
-                        BindingResult bindingResult, Model model) {
+    public ResponseEntity<Account> join(@Valid Joinform joinform,
+                                        BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            System.out.println("---"); }
-
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
-        if(emailCheck == null){
+
+        // 이메일이 중복되지 않는 경우
+        if (emailCheck == null) {
             Account account = new Account();
             account.setName(joinform.getName());
             account.setEmail(joinform.getEmail());
             account.setNickName(joinform.getNickname());
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
-            return accountService.join(account);
-        } else {
-            return null;
+            accountService.join(account);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        // 이메일이 중복되는 경우 (409 : 요청 충돌, CONFLICT)
+        else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 }
