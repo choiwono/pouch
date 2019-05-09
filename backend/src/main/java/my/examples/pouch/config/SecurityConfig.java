@@ -20,6 +20,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -46,9 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader(CorsConfiguration.ALL);
-        configuration.addAllowedMethod(CorsConfiguration.ALL);
-        configuration.addAllowedOrigin(CorsConfiguration.ALL);
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.addAllowedOrigin("http://localhost:8080");
+        //configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
@@ -79,7 +81,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
                 .logoutSuccessHandler(logoutSuccessHandler)
-                .deleteCookies("JSESSIONID")
                 .and()
                 .csrf().ignoringAntMatchers("/**");
     }

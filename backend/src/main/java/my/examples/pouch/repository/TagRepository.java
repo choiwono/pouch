@@ -10,10 +10,6 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag,Long> {
 
-    /*@Query(value = "SELECT distinct t FROM Tag t, Link l " +
-                   "inner join fetch t.links " +
-                    "where l.email = :email and l.category.id = :id")*/
-
     @Query(value = "SELECT t.id AS id,t.tag_name AS tagName,COUNT(*) AS cnt FROM tag t " +
                    "inner join tag_mapping tp ON t.id=tp.tag_id " +
                    "inner join link li ON tp.board_id=li.id " +
