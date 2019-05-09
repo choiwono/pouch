@@ -38,12 +38,14 @@ public class AccountController {
 
     //내 정보 가져오기
     @GetMapping(value = "/me")
-    public void getMyAccount() {
+    public ResponseEntity getMyAccount() {
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //내 정보 수정하기
     @PutMapping(value = "/me")
     public void editMyAccount() {
+
     }
 
     //패스워드 찾기

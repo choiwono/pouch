@@ -1,6 +1,7 @@
 package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
+import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
@@ -19,6 +20,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final LinkService linkService;
+    private final AccountService accountService;
 
     @Transactional
     public Category getCategory(Long id) {
@@ -42,7 +44,7 @@ public class CategoryService {
         }
     }
 
-    public List<CustomCategory> getCustomCategory(List<Category> categories){
+    public List<CustomCategory> getCustomCategories(List<Category> categories){
         List<CustomCategory> customCategories = new ArrayList<>();
         for(int i=0; i<categories.size(); i++){
             CustomCategory customCategory = new CustomCategory();
@@ -68,8 +70,29 @@ public class CategoryService {
         for(int i=0; i<links.size(); i++){
             linkService.deleteTagMappingByLinkId(links.get(i).getId());
             linkService.deleteLink(links.get(i).getId());
-            //System.out.println(link.getId());
         }
         categoryRepository.deleteByCategoryId(id);
+    }
+
+    public CustomCategory getCustomCategory(Category category) {
+        CustomCategory customCategory = new CustomCategory();
+        customCategory.setId(category.getId());
+        customCategory.setNickName(category.getAccount().getNickName());
+        customCategory.setName(category.getCategoryName());
+        customCategory.setLinks(linkService.getCustomLinks(category.getLinks()));
+        customCategory.setEmail(category.getAccount().getEmail());
+        return customCategory;
+    }
+
+    public Category shareCategory(String email, Category category) {
+        Category copyCategory = new Category();
+        Account account = accountService.findAccountByEmail(email);
+        copyCategory.setAccount(account);
+        copyCategory.setCategoryName(category.getCategoryName());
+        Category shareCategory = saveCategory(copyCategory);
+        for (Link link : category.getLinks()) {
+            linkService.share(link, account,shareCategory.getId());
+        }
+        return shareCategory;
     }
 }

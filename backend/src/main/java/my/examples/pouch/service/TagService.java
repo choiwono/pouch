@@ -1,8 +1,10 @@
 package my.examples.pouch.service;
 
 import lombok.RequiredArgsConstructor;
+import my.examples.pouch.domain.Link;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.Custom.CustomTag;
+import my.examples.pouch.dto.Custom.CustomTagItem;
 import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.serviceImpl.CustomTagDto;
 import org.modelmapper.ModelMapper;
@@ -68,5 +70,19 @@ public class TagService {
 
     public Tag saveOne(Tag tag) {
         return tagRepository.save(tag);
+    }
+
+    public void saveTags(Link link, CustomTagItem customTagItem, String email) {
+        Set<Link> linkset = new HashSet<>();
+        linkset.add(link);
+
+        for(String str : customTagItem.getTags()){
+            Tag tag = new Tag();
+            tag.setLinks(linkset);
+            tag.setTagName(str);
+            tag.setRegDate(new Date());
+            tag.setEmail(email);
+            saveOne(tag);
+        }
     }
 }
