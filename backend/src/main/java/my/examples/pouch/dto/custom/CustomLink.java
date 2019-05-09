@@ -1,7 +1,6 @@
-package my.examples.pouch.dto.Custom;
+package my.examples.pouch.dto.custom;
 
 import lombok.Data;
-import my.examples.pouch.service.serviceImpl.CustomTagDto;
 
 import java.util.*;
 

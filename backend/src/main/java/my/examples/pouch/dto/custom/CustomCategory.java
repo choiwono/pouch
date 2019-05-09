@@ -1,4 +1,4 @@
-package my.examples.pouch.dto.Custom;
+package my.examples.pouch.dto.custom;
 
 import lombok.Data;
 

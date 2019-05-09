@@ -1,4 +1,4 @@
-package my.examples.pouch.service.serviceImpl;
+package my.examples.pouch.dto.custom;
 
 public interface CustomTagDto {
     Long getId();

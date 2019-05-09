@@ -2,14 +2,12 @@ package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Link;
-import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.Custom.CustomTag;
-import my.examples.pouch.dto.Custom.CustomTagItem;
+import my.examples.pouch.dto.custom.CustomTag;
+import my.examples.pouch.dto.custom.CustomTagItem;
 import my.examples.pouch.dto.ResponseDto;
-import my.examples.pouch.repository.TagRepository;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
-import my.examples.pouch.service.serviceImpl.CustomTagDto;
+import my.examples.pouch.dto.custom.CustomTagDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
