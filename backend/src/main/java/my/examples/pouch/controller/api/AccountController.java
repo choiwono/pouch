@@ -39,14 +39,18 @@ public class AccountController {
 
     //내 정보 가져오기
     @GetMapping(value = "/me")
-    public ResponseEntity getMyAccount() {
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<ResponseDto> getMyAccount() {
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setMessage("OK, successful");
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 
     //내 정보 수정하기
     @PutMapping(value = "/me")
-    public void editMyAccount() {
-
+    public ResponseEntity<ResponseDto> editMyAccount() {
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setMessage("OK, successful");
+        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 
     //패스워드 찾기
@@ -54,15 +58,10 @@ public class AccountController {
     public ResponseEntity<ResponseDto> findPassword(String email) {
         Account account = accountService.findAccountByEmail(email);
         ResponseDto responseDto = new ResponseDto();
-
         // 요청한 이메일 계정이 있는 경우
         if (account != null) {
-            String password = UUID.randomUUID().toString();
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            account.setPasswd(passwordEncoder.encode(password));
-            accountService.updateUserPassword(account);
-            emailService.sendEmail(account, password);
-                responseDto.setMessage("success");
+            emailService.sendEmail(account, accountService.updateUserPassword(account));
+            responseDto.setMessage("success");
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         // 요청한 이메일 계정이 없는 경우
         } else {
@@ -88,27 +87,23 @@ public class AccountController {
 
     //회원가입
     @PostMapping(value = "/join")
-    public ResponseEntity<Account> join(@Valid Joinform joinform,
+    public ResponseEntity<ResponseDto> join(@Valid Joinform joinform,
                                         BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
-
+        ResponseDto responseDto = new ResponseDto();
         // 이메일이 중복되지 않는 경우
         if (emailCheck == null) {
-            Account account = new Account();
-            account.setName(joinform.getName());
-            account.setEmail(joinform.getEmail());
-            account.setNickName(joinform.getNickname());
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
-            accountService.join(account);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            accountService.join(joinform);
+            responseDto.setMessage("OK, Created");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
         }
         // 이메일이 중복되는 경우 (409 : 요청 충돌, CONFLICT)
         else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            responseDto.setMessage("Error, duplicated");
+            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CONFLICT);
         }
     }
 }

@@ -1,6 +1,7 @@
 package my.examples.pouch.dto.custom;
 
 import lombok.Data;
+import my.examples.pouch.domain.Account;
 
 import java.util.List;
 
@@ -11,6 +12,5 @@ public class CustomCategory {
     private List<CustomLink> links;
     private String nickName;
     private String email;
-
 }
 

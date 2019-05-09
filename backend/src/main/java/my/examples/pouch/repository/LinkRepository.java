@@ -17,17 +17,11 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
     @Query("SELECT B FROM Link B WHERE B.email=:email AND B.repository=1")
     List<Link> repositoryByEmail(@Param("email") String email);
 
-    /*@Query("SELECT B.tags FROM Link B inner join fetch B.tags where B.id=:id")
-    List<Tag> getTagsByLinkId(@Param("id") Long id);*/
-
     @Query("SELECT DISTINCT L FROM Link L inner join fetch L.category" +
            " left join fetch L.tags"+
            " WHERE L.category.id=:categoryId and L.email=:email")
     List<Link> getMyPouchByCategory(@Param("categoryId") Long categoryId,@Param("email") String email);
 
-    /*@Query(value = "SELECT L FROM Link L " +
-                   "INNER join fetch L.tags tags " +
-                   "WHERE L.category.id=:categoryId and tags.tagName like CONCAT('%',:tagName,'%')")*/
     @Query(value = "SELECT l.* FROM Link l " +
                    "INNER JOIN tag_mapping tp ON L.id=tp.board_id " +
                    "INNER JOIN tag t ON tp.tag_id=t.id " +

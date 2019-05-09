@@ -19,13 +19,6 @@ public class LinkController {
     private final LinkService linkService;
     private final TagService tagService;
 
-    //링크 추가하기
-    @PostMapping
-    public ResponseEntity<ResponseDto> addLink(){
-        ResponseDto responseDto = new ResponseDto();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.CREATED);
-    }
-
     // 링크 수정하기
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> editLink(@PathVariable(value="id") Long id){
@@ -37,6 +30,7 @@ public class LinkController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteLink(@PathVariable(value="id") Long id){
         ResponseDto responseDto = new ResponseDto();
+        responseDto.setMessage("OK, successful");
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
