@@ -22,6 +22,7 @@
               <v-card-text class="vertical-center">
                 <h6 class="mx-auto d-block">'{{ category.nickName }}' 의</h6>
                 <h4 class="mx-auto d-block">{{ category.name }}</h4>
+                <h4>{{ category }}</h4>
               </v-card-text>
             </router-link>
 

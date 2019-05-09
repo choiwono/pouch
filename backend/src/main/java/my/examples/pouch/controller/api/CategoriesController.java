@@ -32,6 +32,7 @@ public class CategoriesController {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
         List<CustomCategory> list = categoryService.getCustomCategories(categories);
         return new ResponseEntity<List<CustomCategory>>(list, HttpStatus.OK);
+        //return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
     }
 
     //특정 유저의 카테고리 목록 가져오기
@@ -57,6 +58,7 @@ public class CategoriesController {
         Category category = new Category();
         category.setCategoryName(name);
         category.setAccount(account);
+
         ResponseDto responseDto = new ResponseDto();
         if(categoryService.addCategory(category) == null){
             responseDto.setMessage("OK, created");
