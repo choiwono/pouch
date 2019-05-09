@@ -3,7 +3,6 @@ package my.examples.pouch.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import my.examples.pouch.dto.UseEnum;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,9 +20,8 @@ public class Message {
     @Column(name="receive_id")
     private String receiveId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name="use_yn")
-    private UseEnum useYn;
+    private String useYn;
 
     @Column(name="reg_date")
     private Date regDate;

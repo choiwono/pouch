@@ -1,8 +1,6 @@
-package my.examples.pouch.dto.Custom;
+package my.examples.pouch.dto.custom;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.util.*;
 
 @Data
 public class CustomTag {

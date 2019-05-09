@@ -1,9 +1,8 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.config.handler.HttpLogoutSuccessHandler;
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.Custom.CustomLink;
+import my.examples.pouch.dto.custom.CustomLink;
 import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;

@@ -151,7 +151,14 @@
           data.append('passwd', this.password)
 
           this.$http.post('/accounts/join', data).then((response) => {
-            alert('환영합니다');
+            //alert('환영합니다');
+            this.$notify({
+              group:'notify',
+              title:'성공',
+              text:'회원가입이 완료되었습니다.',
+              type:'success',
+              width:'300px'
+            });
             this.$router.push('login');
           }, (err) => {
             console.log('err', err)
