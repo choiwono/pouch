@@ -7,6 +7,8 @@ import my.examples.pouch.dto.Joinform;
 import my.examples.pouch.security.CustomSecurityUser;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.EmailService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,17 +38,19 @@ public class AccountController {
 
     //내 정보 가져오기
     @GetMapping(value = "/me")
-    public void getMyAccount() {
+    public ResponseEntity getMyAccount() {
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //내 정보 수정하기
     @PutMapping(value = "/me")
     public void editMyAccount() {
+
     }
 
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
-    public String findPassword(String email) {
+    public String findPassword(String email){
         String result = "fail";
         Account account = accountService.findAccountByEmail(email);
         if(account!=null) {
@@ -56,10 +60,8 @@ public class AccountController {
             accountService.updateUserPassword(account);
             emailService.sendEmail(account, password);
             result = "success";
-            System.out.println(result);
         }else{
             result = "fail";
-            System.out.println(result);
         }
         return result;
     }
