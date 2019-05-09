@@ -20,7 +20,7 @@
           <v-text-field
             v-model="nickName"
             :counter="10"
-            :rules="nameRules"
+            :rules="nicknameRules"
             label="닉네임"
             required
           ></v-text-field>
@@ -84,7 +84,7 @@
     name: "Join",
     computed: {
       comparePasswords() {
-        return this.password === this.passwordCheck || 'Passwords don\'t match';
+        return this.password === this.passwordCheck || '비밀번호가 일치하지 않습니다';
       },
       emailError() {
         return this.emailFlag === true || '이미 사용중인 이메일입니다.';
@@ -99,23 +99,26 @@
       name: '',
       nickName: '',
       nameRules: [
-        v => !!v || 'NickName is required',
-        v => (v && 2 <= v.length && v.length <= 10) || 'Name must be less than 10 characters'
+        v => !!v || '이름을 입력하세요',
+        v => (v && 2 <= v.length && v.length <= 10) || '최소 2자, 최대 10자로 입력하세요'
+      ],
+      nicknameRules: [
+        v => !!v || '닉네임을 입력하세요',
+        v => (v && 2 <= v.length && v.length <= 10) || '최소 2자, 최대 10자로 입력하세요'
       ],
       email: '',
       emailFlag: false,
       emailCheckFlag : false,
       emailRules: {
-        rule1: v => !!v || 'E-mail is required',
-        rule2: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        rule1: v => !!v || '이메일을 입력하세요',
+        rule2: v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || '이메일 양식에 맞춰 입력하세요'
       },
-
 
       password: '',
       passwordCheck: '',
       rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 4 || 'Min 4 characters',
+        required: value => !!value || '비밀번호를 입력하세요',
+        min: v => v.length >= 4 || '최소 4자, 최대 10자로 입력하세요',
       },
 
     }),
@@ -133,11 +136,9 @@
               console.log('duplicate check'+this.emailFlag);
               alert("이미 사용중인 이메일입니다")
               this.email=''
-
             }
           })
         }
-
       },
 
       submit() {
