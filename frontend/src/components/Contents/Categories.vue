@@ -85,7 +85,7 @@
                 <span @click="removeLink(item.id)" v-if="!iconFlag">
                    <icon name="minus-circle" class="m-2 cursor-pointer remove-icon"></icon>
                 </span>
-                <span v-b-modal="'{{item.id}}'"  v-if="iconFlag">
+                <span @click="linkModal(item.id)"  v-if="iconFlag">
                    <icon name="share" class="m-2 cursor-pointer "></icon>
                 </span>
 
@@ -106,6 +106,23 @@
                   <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
                 <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
               </div>
+              <b-modal
+                :ref="item.id"
+                title="내 파우치에 저장하시겠습니까?"
+                @ok="saveLink(item.id)"
+                ok-only
+                centered>
+                <form @submit.stop.prevent="saveLink()">
+                  <p>{{item.title}}</p>
+                  <b-form-select  id="category" variant="light" class="m-sm-2">
+                    <option disabled>어떤 카테고리에 저장하시겠습니까?</option>
+                    <option v-for="category in $store.getters.getCategories" id="category.id">
+                      {{ category.name }}, {{category.id}}
+                    </option>
+                  </b-form-select>
+
+                </form>
+              </b-modal>
               <b-modal
                 :ref="item.id"
                 title="태그편집"
@@ -133,20 +150,6 @@
           </div>
         </div>
       </div>
-      <b-modal
-        id="item.id"
-        title="내 파우치에 저장하시겠습니까?"
-        @ok="saveLink(item.id)"
-        centered>
-        <!--<p>{{item.title}}</p>-->
-        <b-form-select  id="category" variant="light" class="m-sm-2">
-          <option disabled>어떤 카테고리에 저장하시겠습니까?</option>
-          <option v-for="category in $store.getters.getCategories" id="category.id">
-            {{ category.name }}, {{category.id}}
-          </option>
-        </b-form-select>
-
-      </b-modal>
     </div>
   </div>
 </template>
@@ -191,10 +194,18 @@
       }
     },
     methods: {
+      linkModal(id) {
+        this.$refs[id][0].show();
+        this.$http.get("/tags/" + id)
+          .then((result) => {
+            this.linkTags = result;
+          })
+      },
       saveLink(id) {
         let data = new FormData();
         data.append('id', id);
-        this.$http.post('/categories/save', data)
+        data.append('category.id', categoryId);
+        this.$http.post('/links/save', data)
           .then((result) => {
             console.log(result);
           })
@@ -232,6 +243,7 @@
         this.$http.post('/categories/save', data)
           .then((result) => {
             console.log(result);
+            alert("저장되었습니다")
           })
       },
       fetchData() {

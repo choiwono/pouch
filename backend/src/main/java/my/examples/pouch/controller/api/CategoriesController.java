@@ -85,15 +85,15 @@ public class CategoriesController {
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
     @PostMapping(value = "/save")
-    public ResponseEntity<ResponseDto> shareCategory(@RequestParam(name = "id") Long id, Principal principal) {
+    public ResponseEntity<ResponseDto> saveCategory(@RequestParam(name = "id") Long id, Principal principal) {
         Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
-        if(categoryService.shareCategory(principal.getName(),category) == null){
+        if(categoryService.saveCategory(principal.getName(),category) == null){
             responseDto.setMessage("error, not Created");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
         } else {
             responseDto.setMessage("OK, Created");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
+            return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
         }
     }
 
@@ -104,7 +104,7 @@ public class CategoriesController {
         //Category category = categoryService.getCategory(id);
         //accountService.findAccountByEmail(email);
         ResponseDto responseDto = new ResponseDto();
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
+        return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
     }
 }
 
