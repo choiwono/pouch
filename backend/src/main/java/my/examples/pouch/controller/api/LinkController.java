@@ -2,14 +2,14 @@ package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Tag;
-import my.examples.pouch.dto.custom.CustomLink;
 import my.examples.pouch.dto.ResponseDto;
+import my.examples.pouch.dto.custom.CustomLink;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -41,6 +41,25 @@ public class LinkController {
         Tag tag = tagService.getTagById(tagId);
         List<CustomLink> list = linkService.getLinkByTagName(categoryId,tag.getTagName());
         return new ResponseEntity<List<CustomLink>>(list,HttpStatus.OK);
+    }
+
+    // 다른 유저의 링크를 복사해서 내 카테고리에 저장하기
+    @PostMapping(value = "/save")
+    public ResponseEntity<ResponseDto> saveLink(@RequestParam(name = "id") Long id,
+                                                @RequestParam(name="category")  Long categoryId, Principal principal) {
+        System.out.println(categoryId);
+        System.out.println(id);
+        linkService.getLinkById(id);
+
+//                Category category = categoryService.getCategory(id);
+        ResponseDto responseDto = new ResponseDto();
+//        if(categoryService.saveCategory(principal.getName(),category) == null){
+//            responseDto.setMessage("error, not Created");
+//            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+//        } else {
+//            responseDto.setMessage("OK, Created");
+            return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
+//        }
     }
 }
 
