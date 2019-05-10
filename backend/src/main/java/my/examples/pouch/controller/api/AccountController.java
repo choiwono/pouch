@@ -11,14 +11,11 @@ import my.examples.pouch.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -41,7 +38,7 @@ public class AccountController {
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseDto> getMyAccount() {
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setMessage("OK, successful");
+        responseDto.setMessage("OK, success");
         return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 
@@ -49,7 +46,7 @@ public class AccountController {
     @PutMapping(value = "/me")
     public ResponseEntity<ResponseDto> editMyAccount() {
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setMessage("OK, successful");
+        responseDto.setMessage("OK, success");
         return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
     }
 

@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category saveCategory(Category sharedCategory) {
+    public Category save(Category sharedCategory) {
         return categoryRepository.save(sharedCategory);
     }
 
@@ -99,12 +99,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category shareCategory(String email, Category category) {
+    public Category saveCategory(String email, Category category) {
         Category copyCategory = new Category();
         Account account = accountService.findAccountByEmail(email);
         copyCategory.setAccount(account);
-        copyCategory.setCategoryName(category.getCategoryName());
-        Category shareCategory = saveCategory(copyCategory);
+        copyCategory.setCategoryName(category.getCategoryName()+" from "+category.getAccount().getNickName());
+        Category shareCategory = save(copyCategory);
         for (Link link : category.getLinks()) {
             linkService.share(link, account,shareCategory.getId());
         }
