@@ -84,7 +84,7 @@ public class CategoriesController {
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/copy")
     public ResponseEntity<ResponseDto> saveCategory(@RequestParam(name = "id") Long id, Principal principal) {
         Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
