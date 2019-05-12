@@ -1,4 +1,4 @@
-package my.examples.pouch.config.handler;
+package my.examples.pouch.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
