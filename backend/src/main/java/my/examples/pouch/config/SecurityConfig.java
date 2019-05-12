@@ -1,10 +1,10 @@
 package my.examples.pouch.config;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.config.handler.AuthFailerHandler;
-import my.examples.pouch.config.handler.AuthSuccessHandler;
-import my.examples.pouch.config.handler.HttpLogoutSuccessHandler;
-import my.examples.pouch.config.handler.RestAuthenticationEntryPoint;
+import my.examples.pouch.handler.AuthFailerHandler;
+import my.examples.pouch.handler.AuthSuccessHandler;
+import my.examples.pouch.handler.HttpLogoutSuccessHandler;
+import my.examples.pouch.handler.RestAuthenticationEntryPoint;
 import my.examples.pouch.security.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
