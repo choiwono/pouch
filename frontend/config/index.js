@@ -19,7 +19,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'http://15.164.26.183', // can be overwritten by process.env.HOST
+    host : 'ec2-15-164-26-183.ap-northeast-2.compute.amazonaws.com',
+    //host: 'http://15.164.26.183', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
