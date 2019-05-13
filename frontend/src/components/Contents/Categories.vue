@@ -33,7 +33,7 @@
       <div class="container text-center" v-else>
         <h5>{{nickName}}의 </h5>
         <h3>{{ selectedCategory }}
-          <b-button id="show-btn2" @click="test" class="v-btn--round">
+          <b-button id="show-btn2" @click="shareModal" class="v-btn--round">
             <icon width="20px" height="20px" class="cursor-pointer" name="share"></icon>
           </b-button>
         </h3>
@@ -114,9 +114,9 @@
                 centered>
                 <form @submit.stop.prevent="saveLink()">
                   <p>{{item.title}}</p>
-                  <b-form-select  id="category" variant="light" class="m-sm-2">
+                  <b-form-select id = category variant="light" class="m-sm-2">
                     <option disabled>어떤 카테고리에 저장하시겠습니까?</option>
-                    <option v-for="category in $store.getters.getCategories" id="category.id">
+                    <option v-for="category in $store.getters.getCategories" id="categoryId">
                       {{ category.name }}, {{category.id}}
                     </option>
                   </b-form-select>
@@ -201,17 +201,17 @@
             this.linkTags = result;
           })
       },
-      saveLink(id) {
+      saveLink(id, categoryId) {
         let data = new FormData();
         data.append('id', id);
-        data.append('category.id', categoryId);
-        this.$http.post('/links/save', data)
+        data.append('categoryId', categoryId);
+        this.$http.post('/links/copy', data)
           .then((result) => {
             console.log(result);
           })
 
       },
-      test() {
+      shareModal() {
         this.$refs['share'].show()
       },
       sendCategory() {
@@ -240,7 +240,7 @@
         let id = this.$router.history.current.params.id;
         let data = new FormData();
         data.append('id', id);
-        this.$http.post('/categories/save', data)
+        this.$http.post('/categories/copy', data)
           .then((result) => {
             console.log(result);
             alert("저장되었습니다")

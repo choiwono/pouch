@@ -19,19 +19,19 @@ public class LinkController {
     private final LinkService linkService;
     private final TagService tagService;
 
-    // 링크 수정하기
+    // 링크 수정하기 TODO
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> editLink(@PathVariable(value="id") Long id){
         ResponseDto responseDto = new ResponseDto();
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    //링크 삭제하기
+    //링크 삭제하기 TODO
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteLink(@PathVariable(value="id") Long id){
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setMessage("OK, successful");
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        responseDto.setMessage("OK, success");
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     //태그 이름에 해당하는 링크 가져오기
@@ -40,16 +40,17 @@ public class LinkController {
                                        @RequestParam(name = "tag-id") Long tagId){
         Tag tag = tagService.getTagById(tagId);
         List<CustomLink> list = linkService.getLinkByTagName(categoryId,tag.getTagName());
-        return new ResponseEntity<List<CustomLink>>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
     // 다른 유저의 링크를 복사해서 내 카테고리에 저장하기
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/copy")
     public ResponseEntity<ResponseDto> saveLink(@RequestParam(name = "id") Long id,
-                                                @RequestParam(name="category")  Long categoryId, Principal principal) {
-        System.out.println(categoryId);
+                                                @RequestParam(name = "categoryId") Long categoryId, Principal principal) {
         System.out.println(id);
+        System.out.println(categoryId);
         linkService.getLinkById(id);
+
 
 //                Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
