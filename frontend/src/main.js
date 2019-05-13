@@ -18,7 +18,7 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(VueAxios);
-Vue.axios.defaults.baseURL = 'http://ec2-15-164-26-183.ap-northeast-2.compute.amazonaws.com:3000/api';
+Vue.axios.defaults.baseURL = 'http://15.164.26.183:3000/api';
 Vue.router = router;
 Vue.use(Notifications);
 Vue.prototype.$axios = axios;
