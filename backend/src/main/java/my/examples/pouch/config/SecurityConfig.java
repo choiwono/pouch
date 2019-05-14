@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2/*").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/accounts/auth").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/accounts/join").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/accounts/findpswd").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/accounts/emailcheck").permitAll()
