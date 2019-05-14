@@ -1,7 +1,6 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
-import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.dto.custom.CustomLink;
@@ -54,9 +53,8 @@ public class LinkController {
         System.out.println(id);
         System.out.println(categoryId);
         linkService.getLinkById(id);
-
-
-                Category category = categoryService.getCategory(id);
+        System.out.println("test");
+//                Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
 //        if(categoryService.saveCategory(principal.getName(),category) == null){
 //            responseDto.setMessage("error, not Created");
