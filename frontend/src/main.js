@@ -18,7 +18,7 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(VueAxios);
-Vue.axios.defaults.baseURL = 'http://localhost:8080/api';
+Vue.axios.defaults.baseURL = 'http://15.164.26.183:3000/api';
 Vue.router = router;
 Vue.use(Notifications);
 Vue.prototype.$axios = axios;
