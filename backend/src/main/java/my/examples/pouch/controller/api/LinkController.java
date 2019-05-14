@@ -1,14 +1,17 @@
 package my.examples.pouch.controller.api;
 
 import lombok.RequiredArgsConstructor;
+import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Tag;
 import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.dto.custom.CustomLink;
+import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.LinkService;
 import my.examples.pouch.service.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 import java.util.List;
 
@@ -16,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/links")
 @RequiredArgsConstructor
 public class LinkController {
+    private final CategoryService categoryService;
     private final LinkService linkService;
     private final TagService tagService;
 
@@ -52,7 +56,7 @@ public class LinkController {
         linkService.getLinkById(id);
 
 
-//                Category category = categoryService.getCategory(id);
+                Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
 //        if(categoryService.saveCategory(principal.getName(),category) == null){
 //            responseDto.setMessage("error, not Created");
