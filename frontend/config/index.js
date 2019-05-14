@@ -10,7 +10,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://15.164.26.183:3000/api',
+        target: 'ec2-15-164-26-183.ap-northeast-2.compute.amazonaws.com:3000/api',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
