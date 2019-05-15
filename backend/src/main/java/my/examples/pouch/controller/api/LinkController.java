@@ -50,11 +50,8 @@ public class LinkController {
     @PostMapping(value = "/copy")
     public ResponseEntity<ResponseDto> saveLink(@RequestParam(name = "id") Long id,
                                                 @RequestParam(name = "categoryId") Long categoryId, Principal principal) {
-        System.out.println(id);
-        System.out.println(categoryId);
         linkService.getLinkById(id);
-        System.out.println("test");
-//                Category category = categoryService.getCategory(id);
+//      Category category = categoryService.getCategory(id);
         ResponseDto responseDto = new ResponseDto();
 //        if(categoryService.saveCategory(principal.getName(),category) == null){
 //            responseDto.setMessage("error, not Created");
