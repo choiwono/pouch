@@ -32,7 +32,6 @@ public class CategoriesController {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
         List<CustomCategory> list = categoryService.getCustomCategories(categories);
         return new ResponseEntity<List<CustomCategory>>(list, HttpStatus.OK);
-        //return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
     }
 
     //특정 유저의 카테고리 목록 가져오기
