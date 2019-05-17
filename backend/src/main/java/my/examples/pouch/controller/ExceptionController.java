@@ -11,7 +11,6 @@ public class ExceptionController {
 
     @GetMapping("/categories/**")
     public String category(){
-        System.out.println("categories 접근!!");
         return "index";
     }
 }
