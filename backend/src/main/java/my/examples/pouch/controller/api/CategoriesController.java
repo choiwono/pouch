@@ -21,9 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoriesController {
     private final CategoryService categoryService;
-    private final LinkService linkService;
     private final AccountService accountService;
-    private final TagService tagService;
 
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
@@ -59,7 +57,7 @@ public class CategoriesController {
         category.setAccount(account);
 
         ResponseDto responseDto = new ResponseDto();
-        if(categoryService.addCategory(category) == null){
+        if(categoryService.addCategory(category) != null){
             responseDto.setMessage("OK, created");
             return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
         } else {

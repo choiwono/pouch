@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -54,6 +55,7 @@ public class AccountController {
     @PutMapping(value = "/findpswd")
     public ResponseEntity<ResponseDto> findPassword(String email) {
         Account account = accountService.findAccountByEmail(email);
+
         ResponseDto responseDto = new ResponseDto();
         // 요청한 이메일 계정이 있는 경우
         if (account != null) {
