@@ -3,12 +3,10 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
-import my.examples.pouch.dto.custom.CustomCategory;
 import my.examples.pouch.dto.ResponseDto;
+import my.examples.pouch.dto.custom.CustomCategory;
 import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.CategoryService;
-import my.examples.pouch.service.LinkService;
-import my.examples.pouch.service.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoriesController {
     private final CategoryService categoryService;
-    private final LinkService linkService;
     private final AccountService accountService;
-    private final TagService tagService;
 
     //검색해서 카테고리 목록 가져오기
     @GetMapping(value = "/search")
@@ -31,7 +27,7 @@ public class CategoriesController {
                                                                  @RequestParam(name = "searchStr") String searchStr) {
         List<Category> categories = categoryService.getCategoriesBySearch(searchType, searchStr);
         List<CustomCategory> list = categoryService.getCustomCategories(categories);
-        return new ResponseEntity<List<CustomCategory>>(list, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     //특정 유저의 카테고리 목록 가져오기
@@ -39,7 +35,7 @@ public class CategoriesController {
     public ResponseEntity<List<CustomCategory>> getCategoryByAccount(@RequestParam(name = "email") String email) {
         List<Category> categories = categoryService.findMyCategoryList(email);
         List<CustomCategory> list = categoryService.getCustomCategories(categories);
-        return new ResponseEntity<List<CustomCategory>>(list,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
     //특정 카테고리 가져오기
@@ -47,7 +43,7 @@ public class CategoriesController {
     public ResponseEntity<CustomCategory> getCategory(@PathVariable(value = "id") Long id) {
         Category category = categoryService.getCategory(id);
         CustomCategory customCategory = categoryService.getCustomCategory(category);
-        return new ResponseEntity<CustomCategory>(customCategory,HttpStatus.OK);
+        return new ResponseEntity<>(customCategory,HttpStatus.OK);
     }
 
     @PostMapping
@@ -71,7 +67,7 @@ public class CategoriesController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> editCategory(@PathVariable(value = "id") Long id) {
         ResponseDto responseDto = new ResponseDto();
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
     //카테고리 삭제
@@ -79,7 +75,7 @@ public class CategoriesController {
     public ResponseEntity<ResponseDto> deleteCategory(@PathVariable(value = "id") Long id) {
         categoryService.deleteCategory(id);
         ResponseDto responseDto = new ResponseDto();
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
     // 다른 유저의 카테고리를 복사해서 내 카테고리로 저장하기

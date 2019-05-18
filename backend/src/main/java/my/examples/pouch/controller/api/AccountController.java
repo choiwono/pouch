@@ -53,6 +53,7 @@ public class AccountController {
     //패스워드 찾기
     @PutMapping(value = "/findpswd")
     public ResponseEntity<ResponseDto> findPassword(String email) {
+        // 옵셔널 객체를 만들면 좋다. 자바 8 문법을 적극적으로 사용하는 것
         Account account = accountService.findAccountByEmail(email);
         ResponseDto responseDto = new ResponseDto();
         // 요청한 이메일 계정이 있는 경우
