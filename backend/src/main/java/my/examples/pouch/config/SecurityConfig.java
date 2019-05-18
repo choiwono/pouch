@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.httpBasic()
             .and()
-            .exceptionHandling().accessDeniedHandler().authenticationEntryPoint(restAuthenticationEntryPoint)
+            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
             .authorizeRequests()
             .antMatchers("/").permitAll()
