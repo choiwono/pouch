@@ -17,16 +17,13 @@
 
       <v-flex md3 sm12 xs12 :key="category.id" v-for="category in $store.state.searchCategory">
         <v-layout column>
+          <router-link :to="{ name: 'categories',params:{ id:category.id }}">
           <v-card class="card-title">
-            <router-link :to="{ name: 'categories',params:{ id:category.id }}">
               <v-card-text class="vertical-center">
-                <h6 class="mx-auto d-block">'{{ category.nickName }}' 의</h6>
-                <h4 class="mx-auto d-block">{{ category.name }}</h4>
-                <h4>{{ category }}</h4>
+                <h3 class="mx-auto d-block">'{{ category.nickName }}' 의 {{ category.name }}</h3>
               </v-card-text>
-            </router-link>
-
           </v-card>
+          </router-link>
         </v-layout>
       </v-flex>
     </div>

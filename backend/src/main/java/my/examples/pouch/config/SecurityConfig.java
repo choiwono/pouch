@@ -1,6 +1,5 @@
 package my.examples.pouch.config;
 
-import com.google.common.collect.ImmutableList;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.handler.AuthFailerHandler;
 import my.examples.pouch.handler.AuthSuccessHandler;
@@ -20,12 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -55,8 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .requestMatchers(new AntPathRequestMatcher("/**.html"))
                 .requestMatchers(new AntPathRequestMatcher("/templates/**"))
-                .requestMatchers(new AntPathRequestMatcher("/static/**"))
-                .requestMatchers(new AntPathRequestMatcher("/tmp/**"));
+                .requestMatchers(new AntPathRequestMatcher("/static/**"));
     }
 
     @Override
@@ -71,9 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);*/
 
-        http.httpBasic()/*and().cors().configurationSource(source)*/
+        http.httpBasic()
             .and()
-            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
+            .exceptionHandling().accessDeniedHandler().authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
             .authorizeRequests()
             .antMatchers("/").permitAll()
