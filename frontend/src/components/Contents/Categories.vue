@@ -85,7 +85,7 @@
                 <span @click="removeLink(item.id)" v-if="!iconFlag">
                    <icon name="minus-circle" class="m-2 cursor-pointer remove-icon"></icon>
                 </span>
-                <span @click="linkModal(item.id)"  v-if="iconFlag">
+                <span @click="linkModal(item.id)"  v-if="!iconFlag">
                    <icon name="share" class="m-2 cursor-pointer "></icon>
                 </span>
 
@@ -124,7 +124,7 @@
                 </form>
               </b-modal>
               <b-modal
-                :ref="item.id"
+                :ref="'tag'+item.id"
                 title="태그편집"
                 @ok="handleOk(item.id)"
                 ok-only
@@ -332,7 +332,7 @@
         })
       },
       showModal(id) {
-        this.$refs[id][0].show();
+        this.$refs['tag'+id][0].show();
         this.$http.get("/tags/" + id)
           .then((result) => {
             this.linkTags = result;

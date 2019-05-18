@@ -135,6 +135,7 @@
               text:'데이터가 저장되었습니다.',
               type:'success'
             });
+
           }, (err) => {
             console.log('err', err)
           })

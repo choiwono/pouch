@@ -10,6 +10,7 @@ import my.examples.pouch.service.AccountService;
 import my.examples.pouch.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class AccountController {
     private final EmailService emailService;
 
     // 계정 토큰 발급
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @PostMapping(value = "/auth")
     public ResponseEntity<AccountInfo> accountInfo(@AuthenticationPrincipal CustomSecurityUser customSecurityUser) {
         AccountInfo accountInfo = new AccountInfo();
