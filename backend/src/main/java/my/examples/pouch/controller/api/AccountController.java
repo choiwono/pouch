@@ -17,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -37,20 +36,20 @@ public class AccountController {
         return new ResponseEntity<>(accountInfo, HttpStatus.OK);
     }
 
-    //내 정보 가져오기
+    //내 정보 가져오기 TODO 작업 전
     @GetMapping(value = "/me")
     public ResponseEntity<ResponseDto> getMyAccount() {
         ResponseDto responseDto = new ResponseDto();
         responseDto.setMessage("OK, success");
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
-    //내 정보 수정하기
+    //내 정보 수정하기 TODO 작업 전
     @PutMapping(value = "/me")
     public ResponseEntity<ResponseDto> editMyAccount() {
         ResponseDto responseDto = new ResponseDto();
         responseDto.setMessage("OK, success");
-        return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
     //패스워드 찾기
@@ -58,7 +57,6 @@ public class AccountController {
     public ResponseEntity<ResponseDto> findPassword(String email) {
         // 옵셔널 객체를 만들면 좋다. 자바 8 문법을 적극적으로 사용하는 것
         Account account = accountService.findAccountByEmail(email);
-
         ResponseDto responseDto = new ResponseDto();
         // 요청한 이메일 계정이 있는 경우
         if (account != null) {

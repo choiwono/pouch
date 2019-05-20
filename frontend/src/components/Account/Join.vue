@@ -128,15 +128,23 @@
           let data = new FormData();
           data.append('email', this.email)
           this.$http.post('/accounts/emailcheck', data).then((data) => {
-            if (data == "success") {
-              this.emailFlag = true;
-              this.emailCheckFlag = true;
-            } else if (data == "duplicate") {
-              this.emailFlag = false;
-              console.log('duplicate check'+this.emailFlag);
-              alert("이미 사용중인 이메일입니다")
-              this.email=''
-            }
+            this.emailFlag = true;
+            this.emailCheckFlag = true;
+            this.$notify({
+              group:'notify',
+              title:'성공',
+              text:'사용 가능한 이메일입니다.',
+              type:'success'
+            });
+          }).catch((error)=>{
+            this.emailFlag = false;
+            this.email='';
+            this.$notify({
+              group:'notify',
+              title:'중복된 이메일입니다',
+              text:'다른 이메일을 입력해주세요.',
+              type:'error'
+            });
           })
         }
       },
