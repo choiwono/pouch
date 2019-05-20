@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -65,33 +65,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.httpBasic()
             .and()
-            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
-            .authorizeRequests()
-            .antMatchers("/").permitAll()
-            .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/accounts/auth").hasRole("USER")
-            .antMatchers(HttpMethod.POST, "/api/accounts/join").permitAll()
-            .antMatchers(HttpMethod.PUT, "/api/accounts/findpswd").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/accounts/emailcheck").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/categories/**").hasRole("USER")
-            .antMatchers("/api/accounts/**").hasRole("USER")
-            .antMatchers("/api/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
+                .authorizeRequests()
+                // 권한이 없어도 허용 (로그인, 회원가입, 회원가입시 이메일 중복 체크, 비밀번호 찾기)
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/accounts/join", "/api/accounts/emailcheck").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/accounts/findpswd").permitAll()
+                // user 권한이면 허용(token 발급, 카테고리 접근, 계정 관련 페이지)
+                .antMatchers(HttpMethod.POST,"/api/accounts/auth").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/categories/**").hasRole("USER")
+                .antMatchers("/api/accounts/**").hasRole("USER")
+                // admin 권한이면 허용
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                // 설정한 요청 이외의 요청은 인증된 사용자만이 요청 가능
+                .anyRequest().authenticated()
             .and()
-            .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
-            .loginProcessingUrl("/api/login") // 로그인 화면
-            .usernameParameter("loginId")
-            .passwordParameter("loginPassword")
-            .successHandler(authSuccessHandler)
-            .failureHandler(authFailerHandler)
+                .formLogin() // 사용자가 정의하는 로그인 화면을 만들겠다.
+                .loginProcessingUrl("/api/login") // 로그인 화면
+                .usernameParameter("loginId")
+                .passwordParameter("loginPassword")
+                .successHandler(authSuccessHandler)
+                .failureHandler(authFailerHandler)
             .and()
-            .logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
-            .logoutSuccessHandler(logoutSuccessHandler)
-            .deleteCookies("JSESSIONID")
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
             .and()
-            .csrf().ignoringAntMatchers("/**");
+                .csrf().ignoringAntMatchers("/**");
     }
 }

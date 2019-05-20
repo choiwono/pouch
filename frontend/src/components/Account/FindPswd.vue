@@ -50,15 +50,20 @@
           data.append('email', this.email)
 
           this.$http.put('/accounts/findpswd', data).then((data) => {
-            if (data == "success") {
-              alert('메일이 발송되었습니다');
-              this.$router.push('login');
-            } else if (data == "fail") {
-              console.log(data);
-              alert("이메일에 해당하는 계정이 없습니다")
-            }
-          }, (err) => {
-            console.log('err', err)
+            this.$router.push('login');
+            this.$notify({
+              group:'notify',
+              title:'성공',
+              text:'메일이 발송되었습니다.',
+              type:'success'
+            });
+          }).catch((error)=>{
+            this.$notify({
+              group:'notify',
+              title:'실패',
+              text:'이메일에 해당하는 계정이 없습니다.',
+              type:'error'
+            });
           })
           this.$nextTick(() => {
             // Wrapped in $nextTick to ensure DOM is rendered before closing
