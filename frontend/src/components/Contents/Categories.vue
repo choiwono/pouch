@@ -5,8 +5,8 @@
 
       <div class="container text-center" v-if="!iconFlag">
         <h3>{{ selectedCategory }}
-          <b-button id="show-btn1" class="v-btn--round">
-            <icon v-b-modal.message width="20px" height="20px" class="cursor-pointer" name="paper-plane"
+          <b-button v-b-modal.message id="show-btn1" class="v-btn--round">
+            <icon width="20px" height="20px" class="cursor-pointer" name="paper-plane"
             ></icon>
           </b-button>
         </h3>
@@ -25,6 +25,7 @@
               label="이메일"
               :rules="emailRules"
               required
+              @ok="sendCategory()"
             ></v-text-field>
           </v-form>
         </b-modal>
@@ -41,7 +42,7 @@
           id="share"
           ref="share"
           title="내 파우치에 저장하시겠습니까?"
-          @ok="saveCategory()"
+          @ok="copyCategory()"
           centered>
           선택한 파우치: <strong>{{selectedCategory}}</strong>
         </b-modal>
@@ -221,22 +222,27 @@
         data.append('id', id);
         data.append('email', email);
 
-        this.$http.post('/accounts/emailcheck', data).then((data) => {
-            if (data == "success") {
-              alert("등록되지 않은 이메일입니다")
-              this.email = ''
-            } else if (data == "duplicate") {
-              this.$http.post('/categories/send', data)
-                .then((result) => {
-                  console.log(result);
-                  this.email = ''
-                })
-            }
-          }
-        )
+        this.$http.post('/accounts/emailcheck', data).then(() => {
+          this.$notify({
+            group:'notify',
+            title:'실패',
+            text:'이메일에 해당하는 계정이 없습니다.',
+            type:'fail'
+          });
+          this.email='';
+        }).catch((error)=>{
+          this.$http.post('/categories/send', data)
+          this.$notify({
+            group:'notify',
+            title:'성공',
+            text:'메세지가 전송되었습니다.',
+            type:'success'
+          });
+          this.email='';
+        })
       },
 
-      saveCategory() {
+      copyCategory() {
         let id = this.$router.history.current.params.id;
         let data = new FormData();
         data.append('id', id);

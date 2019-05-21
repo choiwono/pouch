@@ -159,7 +159,6 @@
           data.append('passwd', this.password)
 
           this.$http.post('/accounts/join', data).then((response) => {
-            //alert('환영합니다');
             this.$notify({
               group:'notify',
               title:'성공',
