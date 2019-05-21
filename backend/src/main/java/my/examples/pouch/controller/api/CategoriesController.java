@@ -3,6 +3,7 @@ package my.examples.pouch.controller.api;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
+import my.examples.pouch.domain.Message;
 import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.dto.custom.CustomCategory;
 import my.examples.pouch.service.AccountService;
@@ -57,20 +58,21 @@ public class CategoriesController {
         ResponseDto responseDto = new ResponseDto();
         if(categoryService.addCategory(category) != null){
             responseDto.setMessage("OK, created");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
+            return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
         } else {
             responseDto.setMessage("Error, not created");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
         }
     }
 
+    //카테고리 수정 TODO 작업 전
     @PutMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> editCategory(@PathVariable(value = "id") Long id) {
         ResponseDto responseDto = new ResponseDto();
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
-    //카테고리 삭제
+    //카테고리 삭제 TODO 작업 전
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteCategory(@PathVariable(value = "id") Long id) {
         categoryService.deleteCategory(id);
@@ -96,8 +98,12 @@ public class CategoriesController {
     @PostMapping(value = "/send")
     public ResponseEntity<ResponseDto> sendCategory(@RequestParam(name="id")Long id,
                                  @RequestParam(name="email") String email){
-        //Category category = categoryService.getCategory(id);
-        //accountService.findAccountByEmail(email);
+        Message message = new Message();
+        message.setReceiveId(email);
+        message.setCategoryId(id);
+        message.setUseYn("N");
+
+
         ResponseDto responseDto = new ResponseDto();
         return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
     }
