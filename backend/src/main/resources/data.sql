@@ -141,8 +141,8 @@ VALUES(30,1,'james@gmail.com','','',NOW(),0,'','코딜리티', 'https://www.codi
 INSERT INTO message_option(id,opt_type,reg_date,type_id)
 VALUES(1,1,NOW(),1);
 
-INSERT INTO message(id,receive_id,use_yn,reg_date,account_id,options_id)
-VALUES(1,'treasureb1330@gmail.com','YES',NOW(),1,1);
+-- INSERT INTO message(id,receive_id,use_yn,reg_date,account_id,options_id)
+-- VALUES(1,'treasureb1330@gmail.com','YES',NOW(),1,1);
 
 
 INSERT INTO tag(id, email, tag_name,options,reg_date)

@@ -77,7 +77,7 @@ public class AccountController {
         Account emailCheck = accountService.findAccountByEmail(email);
         if (emailCheck == null) {
             responseDto.setMessage("success");
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+            return new ResponseEntity<>(responseDto, HttpStatus.IM_USED);
         } else {
             responseDto.setMessage("duplicate");
             return new ResponseEntity<>(responseDto, HttpStatus.CONFLICT);
@@ -98,12 +98,12 @@ public class AccountController {
         if (emailCheck == null) {
             accountService.join(joinform);
             responseDto.setMessage("OK, Created");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CREATED);
+            return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
         }
         // 이메일이 중복되는 경우 (409 : 요청 충돌, CONFLICT)
         else {
             responseDto.setMessage("Error, duplicated");
-            return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.CONFLICT);
+            return new ResponseEntity<>(responseDto,HttpStatus.CONFLICT);
         }
     }
 }

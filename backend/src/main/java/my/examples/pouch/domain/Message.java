@@ -20,6 +20,9 @@ public class Message {
     @Column(name="receive_id")
     private String receiveId;
 
+    @Column(name="category_id")
+    private Long categoryId;
+
     @Column(name="use_yn")
     private String useYn;
 
