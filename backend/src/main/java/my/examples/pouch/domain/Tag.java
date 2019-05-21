@@ -29,7 +29,7 @@ public class Tag {
     private Date regDate;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "tag_mapping",
             joinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "board_id", referencedColumnName = "id")}
