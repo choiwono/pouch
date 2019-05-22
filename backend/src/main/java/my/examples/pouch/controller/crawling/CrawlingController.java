@@ -7,6 +7,8 @@ import my.examples.pouch.domain.Link;
 import my.examples.pouch.repository.LinkRepository;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
+import org.apache.commons.validator.routines.UrlValidator;
+import org.hibernate.validator.internal.constraintvalidators.hv.URLValidator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -31,7 +33,14 @@ public class CrawlingController {
     public ResponseEntity crawling(@RequestParam(required = true) String url,
                                    @RequestParam(required = true) Long categoryId,
                                    Principal principal) throws Exception {
-        // 타임아웃 설정
+
+        String[] schemes = {"http","https"};
+        UrlValidator urlValidator = new UrlValidator(schemes);
+
+        if(!urlValidator.isValid(url)){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
         Document doc = Jsoup.connect(url).timeout(5*1000).get();
 
         Elements top = doc.select("title");
