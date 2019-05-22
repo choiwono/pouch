@@ -116,7 +116,12 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.1.6.RELEASE</version>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.6</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<defaultGoal>pouch</defaultGoal>

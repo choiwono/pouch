@@ -38,8 +38,8 @@
     name: 'Search',
     data() {
       return {
-        category: '',
-        searchCategory: []
+        //category: '',
+        //searchCategory: []
       }
     },
   }
