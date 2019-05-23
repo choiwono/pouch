@@ -155,14 +155,14 @@ export default {
   padding-right:0px !important;
 }
 .first-card {
-  margin:10px;
+  margin:10px 15px 10px 15px;
   min-height:200px;
 }
 
 .card-title {
   max-height:200px;
   min-height:200px;
-  margin:10px;
+  margin:10px 15px 10px 15px;
 }
 
 .btn-secondary {

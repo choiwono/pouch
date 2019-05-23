@@ -1,8 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
     <div class="jumbotron jumbotron-fluid bg-light p-3 mt-1">
-
-
       <div class="container text-center" v-if="!iconFlag">
         <h3>{{ selectedCategory }}
           <b-button v-b-modal.message id="show-btn1" class="v-btn--round">
@@ -59,7 +57,7 @@
     </div>
     <hr>
     <div class="container d-flex">
-      <ul class="col-md-2 list-group">
+      <ul class="col-sm-12 col-md-2 list-group">
         <router-link class="list-group-item cursor-pointer" tag="li"
                      :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">
           전체
@@ -92,15 +90,10 @@
 
               </v-footer>
               <span v-if="item.src.length === 0">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
-                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
-                     focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-                  <title>Placeholder</title>
-                  <rect width="100%" height="100%" fill="#333"></rect>
-                </svg>
+                <img width="100%" height="120" src="../../../no-image.png"/>
               </span>
               <span v-else>
-                <img width="100%" height="180" :src="item.src">
+                <img width="100%" height="120" :src="item.src">
               </span>
               <div class="card-body pb-2">
                 <p class="card-title m-2 d-flex">
@@ -361,6 +354,19 @@
 </script>
 
 <style scoped>
+  @media only screen and (max-width:768px) {
+    .d-flex {
+      display:block !important;
+    }
+    .list-group {
+      margin:0px;
+      max-width:343px;
+      padding-bottom:35px;
+      padding-left:15px;
+      padding-right:15px;
+    }
+  }
+
   .badge {
     padding-bottom: 2.5px !important;
   }
