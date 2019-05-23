@@ -1,9 +1,7 @@
-# pouch 
 
 #### [POUCH 바로가기](http://15.164.26.183:8080)
 
-## 팀구성
-* 백엔드 개발자 2명
+개발: :smiley: [최원오](https://github.com/choiwono) :heart_eyes: [박재희](https://github.com/jaehee0145)
 
 ![슬라이드1](./img/슬라이드1.PNG)
 ![슬라이드2](./img/슬라이드2.PNG)
