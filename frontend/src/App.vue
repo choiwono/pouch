@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <router-view/>
+    <router-view class="main-view"/>
     <Footer/>
     <notifications number :max="2" width="50%" position="top center" group="notify"/>
   </div>
@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style>
+html, body {
+  height:100%;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,8 +32,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.main-view {
+  min-height: calc(100vh - 100px);
+}
 
-/*.router-link-active {
-  color: red;
-}*/
 </style>
