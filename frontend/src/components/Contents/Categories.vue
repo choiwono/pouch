@@ -84,7 +84,7 @@
                 <span @click="removeLink(item.id)" v-if="!iconFlag">
                    <icon name="minus-circle" class="m-2 cursor-pointer remove-icon"></icon>
                 </span>
-                <span @click="linkModal(item.id)"  v-if="!iconFlag">
+                <span @click="linkModal(item.id)"  v-if="iconFlag">
                    <icon name="share" class="m-2 cursor-pointer "></icon>
                 </span>
 
