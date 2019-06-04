@@ -39,22 +39,22 @@
       </b-collapse>
     </b-navbar>
     <b-modal
-      id="modal-link"
-      ref="modal"
-      title="링크를 추가해주세요"
-      @ok="handleOk"
-      @shown="clearName"
-    >
-      <form @submit.stop.prevent="handleSubmit">
-        <b-form-group id="input-group-3" label-for="input-3">
-          <b-form-select v-model="$store.state.categoryId">
-            <option value="" disabled>카테고리를 선택해주세요</option>
-            <option v-for="item in $store.getters.getCategories" :value="item.id">{{ item.name }}</option>
-          </b-form-select>
-        </b-form-group>
-        <b-form-input v-model="$store.state.url" placeholder="https://..."></b-form-input>
-      </form>
-    </b-modal>
+    id="modal-link"
+    ref="modal"
+    title="링크를 추가해주세요"
+    @ok="handleOk"
+    @shown="clearName"
+  >
+    <form @submit.stop.prevent="handleSubmit">
+      <b-form-group id="input-group-3" label-for="input-3">
+        <b-form-select v-model="$store.state.categoryId">
+          <option value="" disabled>카테고리를 선택해주세요</option>
+          <option v-for="item in $store.getters.getCategories" :value="item.id">{{ item.name }}</option>
+        </b-form-select>
+      </b-form-group>
+      <b-form-input v-model="$store.state.url" placeholder="https://..."></b-form-input>
+    </form>
+  </b-modal>
   </div>
 </template>
 

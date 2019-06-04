@@ -35,6 +35,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE c FROM category AS c WHERE c.id=:id", nativeQuery = true)
+    @Query(value = "DELETE FROM category AS c WHERE c.id=:id", nativeQuery = true)
     void deleteByCategoryId(@Param("id") Long id);
 }

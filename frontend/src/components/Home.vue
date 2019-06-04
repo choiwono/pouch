@@ -28,6 +28,11 @@
             </v-card>
         </v-flex>
         <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
+          <b-modal :ref="bv-modal" hide-footer>
+            <div class="d-block text-center">
+              <h3>Hello From This Modal!</h3>
+            </div>
+          </b-modal>
           <v-layout column>
               <v-card class="card-title">
                 <router-link :to="{ name: 'categories',params:{ id:item.id }}">
@@ -36,7 +41,9 @@
                 </v-card-text>
                 </router-link>
                 <v-footer>
-                  <icon name="edit" class="edit-icon ml-2 mr-1 cursor-pointer"></icon>
+                  <span @click="modifyCategory(item.id)">
+                    <icon name="edit" class="edit-icon ml-2 mr-1 cursor-pointer"></icon>
+                  </span>
                   <span @click="deleteCategory(item.id)">
                     <icon name="minus-circle" class="remove-icon ml-1 mr-1 cursor-pointer"></icon>
                   </span>
@@ -86,6 +93,9 @@ export default {
             this.fetchCategory();
           });
       }
+    },
+    modifyCategory(id){
+      this.$refs['bv-modal'].show()
     },
     googleSearch(e){
       this.$refs.form.submit()
