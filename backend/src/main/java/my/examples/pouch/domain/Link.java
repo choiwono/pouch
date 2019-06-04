@@ -33,11 +33,11 @@ public class Link {
     private Long linkOption;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     private Set<Tag> tags;
 
     @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="category_id")
     private Category category;
 

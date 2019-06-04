@@ -25,7 +25,7 @@ public class Category {
 
     @JsonIgnore
     @OneToMany(mappedBy = "category",
-            fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+            fetch=FetchType.LAZY)
     private List<Link> links;
 
     @JsonIgnore

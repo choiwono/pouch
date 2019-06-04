@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 // 권한이 없어도 허용 (로그인, 회원가입, 회원가입시 이메일 중복 체크, 비밀번호 찾기)
+                .antMatchers("/h2/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login", "/api/accounts/join", "/api/accounts/emailcheck").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/accounts/findpswd").permitAll()

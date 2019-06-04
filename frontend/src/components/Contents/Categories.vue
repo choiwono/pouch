@@ -45,25 +45,21 @@
           선택한 파우치: <strong>{{selectedCategory}}</strong>
         </b-modal>
       </div>
-
       <b-dropdown id="dropdown-1" text="카테고리를 선택해주세요" variant="light" class="m-md-2" v-if="!iconFlag">
         <b-dropdown-item v-for="item in $store.getters.getCategories" :key="item.id">
           <router-link tag="b-dropdown-item" :to="{ name: 'categories',params:{ id:item.id }}">{{ item.name }}
           </router-link>
         </b-dropdown-item>
       </b-dropdown>
-
-
     </div>
     <hr>
     <div class="container d-flex">
       <ul class="col-sm-12 col-md-2 list-group">
-        <router-link class="list-group-item cursor-pointer" tag="li"
-                     :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">
-          전체
-        </router-link>
-        <router-link @click="selectedTag = item.id" class="list-group-item cursor-pointer" v-for="item in tags"
-                     :key="item.id" tag="li" :to="{ name: 'categoriesByTag',params:{ tagId:item.id }}">
+        <!--<router-link class="list-group-item cursor-pointer" tag="li"
+                     :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">전체
+        </router-link>-->
+        <router-link class="list-group-item cursor-pointer"
+                     v-for="item in tags" :key="item.id" tag="li" :to="{ name: 'categoriesByTag', params:{ tagId:item.id }}">
           {{ item.tagName }}
           <v-badge class="v-badge badge" right color="teal accent-4">
             <span slot="badge">{{ item.cnt }}</span>
@@ -114,7 +110,6 @@
                       {{ category.name }}, {{category.id}}
                     </option>
                   </b-form-select>
-
                 </form>
               </b-modal>
               <b-modal
@@ -166,7 +161,7 @@
         tags: [],
         links: [],
         linkTags: [],
-        selectedTag: undefined,
+        selectedTag: 0,
         selectedCategory: '',
         email: '',
         iconFlag: false
@@ -258,8 +253,7 @@
             }
             this.selectedCategory = result.name;
             this.nickName = result.nickName;
-
-          })
+          });
         this.fetchTag();
       },
       fetchTag() {
@@ -381,7 +375,9 @@
     white-space: nowrap;
     width: 200px;
   }
-
+  .list-group-item {
+    background:none;
+  }
   .list-group-item > a {
     font-size: 0.9rem;
     color: #161613;
@@ -397,7 +393,7 @@
   }
 
   .router-link-active {
-    border-color: #00bfa5;
+    border-color : #00bfa5;
   }
 
   .tag-span {

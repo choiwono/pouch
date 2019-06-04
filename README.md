@@ -1,5 +1,9 @@
 
-#### [POUCH 바로가기](http://15.164.26.183:8080)
+#### [POUCH 바로가기](http://15.164.26.183:3000)
+
+테스트 아이디
+* id : jaehee0145@gmail.com
+* pw : 1234
 
 개발: :smiley: [최원오](https://github.com/choiwono) :heart_eyes: [박재희](https://github.com/jaehee0145)
 
