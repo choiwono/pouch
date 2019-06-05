@@ -354,7 +354,7 @@
     }
     .list-group {
       margin:0px;
-      max-width:343px;
+      max-width:500px;
       padding-bottom:35px;
       padding-left:15px;
       padding-right:15px;

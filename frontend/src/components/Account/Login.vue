@@ -5,10 +5,10 @@
         <div class="card-body">
           <form @submit.prevent="Login" class="form-group">
             <input type="text" class="form-control mb-2" v-model="loginId" name="loginId" placeholder="이메일">
-            <input type="password" class="form-control mb-2" v-model="loginPassword" name="loginPassword" placeholder="패스워드">
+            <input type="password" class="form-control mb-2" v-model="loginPassword" name="loginPassword" placeholder="패스워드"><!---->
             <button type="submit" class="btn btn-md btn-green btn-block">로그인</button>
             <router-link to="/join" class="btn-login btn-md btn-block">회원가입</router-link>
-            <router-link to="/findpswd" class="btn-login btn-md btn-block">비밀번호 찾기</router-link>
+            <!--<router-link to="/findpswd" class="btn-login btn-md btn-block">비밀번호 찾기</router-link>-->
           </form>
         </div>
       </div>
