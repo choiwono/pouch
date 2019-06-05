@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category,Long>, CategoryRepositoryCustom {
 
@@ -33,8 +34,13 @@ public interface CategoryRepository extends JpaRepository<Category,Long>, Catego
     @Query(value = "INSERT INTO Category (account_id, category_name, ordering) ", nativeQuery = true)
     Category share(Category category);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM category AS c WHERE c.id=:id", nativeQuery = true)
     void deleteByCategoryId(@Param("id") Long id);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "UPDATE Category c SET c.categoryName=:title WHERE c.id=:id")
+    int updateCategory(@Param("id") Long id, @Param("title") String title);
 }

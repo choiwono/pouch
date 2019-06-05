@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,11 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Category> getCategoriesBySearch(int searchType, String searchStr){
+    public List<Category> getCategoriesBySearch(int searchType, String searchStr) {
         List<Category> list = new ArrayList<>();
-        if(searchType == SEARCH_BY_CATEGORY) {
+        if (searchType == SEARCH_BY_CATEGORY) {
             list = categoryRepository.searchCategory(searchStr);
-        } else if(searchType == SEARCH_BY_TAG){
+        } else if (searchType == SEARCH_BY_TAG) {
             list = categoryRepository.searchTag(searchStr);
         }
         return list;
@@ -52,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CustomCategory> getCustomCategories(List<Category> categories) {
         List<CustomCategory> customCategories = new ArrayList<>();
-        for(int i=0; i<categories.size(); i++){
+        for (int i = 0; i < categories.size(); i++) {
             CustomCategory customCategory = new CustomCategory();
             customCategory.setId(categories.get(i).getId());
             customCategory.setName(categories.get(i).getCategoryName());
@@ -79,7 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         Category category = categoryRepository.getOne(id);
         List<Link> links = category.getLinks();
-        for(int i=0; i<links.size(); i++){
+        for (int i = 0; i < links.size(); i++) {
             linkService.deleteTagMappingByLinkId(links.get(i).getId());
             linkService.deleteLink(links.get(i).getId());
         }
@@ -103,11 +104,16 @@ public class CategoryServiceImpl implements CategoryService {
         Category copyCategory = new Category();
         Account account = accountService.findAccountByEmail(email);
         copyCategory.setAccount(account);
-        copyCategory.setCategoryName(category.getCategoryName()+" from "+category.getAccount().getNickName());
+        copyCategory.setCategoryName(category.getCategoryName() + " from " + category.getAccount().getNickName());
         Category shareCategory = save(copyCategory);
         for (Link link : category.getLinks()) {
-            linkService.share(link, account,shareCategory.getId());
+            linkService.share(link, account, shareCategory.getId());
         }
         return shareCategory;
+    }
+
+    @Override
+    public int updateCategory(Long id, String title) {
+        return categoryRepository.updateCategory(id,title);
     }
 }

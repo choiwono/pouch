@@ -28,9 +28,16 @@
             </v-card>
         </v-flex>
         <v-flex md3 sm12 xs12 :key="item.id" v-for="item in $store.getters.getCategories">
-          <b-modal :ref="bv-modal" hide-footer>
-            <div class="d-block text-center">
-              <h3>Hello From This Modal!</h3>
+          <b-modal
+            :ref="'title-modal'+item.id"
+            id="category-title" hide-footer lazy centered>
+            <div class="d-flex">
+              <v-form ref="title-form">
+                <v-text-field class="sm-10" v-model="categoryTitle" autofocus solo required>
+                </v-text-field>
+              </v-form>
+              <b-button @click="titleSubmit(item.id)" class="sm-2 modify-button"
+                        pill variant="info" type="button">수정</b-button>
             </div>
           </b-modal>
           <v-layout column>
@@ -74,10 +81,33 @@ export default {
     return {
       boxOne : '',
       q : '',
-      categoryName: ''
+      categoryName: '',
+      categoryTitle: ''
     }
   },
   methods: {
+    titleSubmit(id){
+      if(!this.categoryTitle){
+        alert('카테고리 이름을 입력해주세요.');
+      } else {
+        console.log(id);
+        let data = new FormData();
+        data.append('name',this.categoryTitle);
+        this.$http.put("/categories/"+id,data).then((result) => {
+          this.$notify({
+            group:'notify',
+            title:'수정성공',
+            text:'성공했습니다',
+            type:'success',
+            width:'300px'
+          });
+          this.fetchCategory();
+        })
+        this.$nextTick(() => {
+          this.$refs['title-modal'+id][0].hide();
+        })
+      }
+    },
     deleteCategory(id){
       let val = confirm("삭제하시겠습니까?");
       if(val === true){
@@ -95,7 +125,13 @@ export default {
       }
     },
     modifyCategory(id){
-      this.$refs['bv-modal'].show()
+      for(let i=0; i<this.$store.getters.getCategories.length; i++){
+        let category = this.$store.getters.getCategories[i];
+        if(category.id === id){
+          this.categoryTitle = category.name;
+        };
+      }
+      this.$refs['title-modal'+id][0].show();
     },
     googleSearch(e){
       this.$refs.form.submit()
@@ -110,7 +146,7 @@ export default {
     },
     handleSubmit(){
       let data = new FormData();
-      data.append('name',this.categoryName)
+      data.append('name',this.categoryName);
       this.categoryName = '';
       this.$http.post('/categories/',data).
       then((result) => {
@@ -215,6 +251,10 @@ a {
 }
 .remove-icon {
   color:#DC143C;
+}
+.modify-button {
+  height:48px;
+  max-width:100px;
 }
 
 </style>

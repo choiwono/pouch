@@ -1,5 +1,6 @@
 package my.examples.pouch.controller.api;
 
+import com.mysema.commons.lang.Assert;
 import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -67,7 +69,9 @@ public class CategoriesController {
 
     //카테고리 수정 TODO 작업 전
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> editCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<ResponseDto> editCategory(@PathVariable(value = "id") Long id,
+                                                    @RequestParam(name="name") String name) {
+        categoryService.updateCategory(id,name);
         ResponseDto responseDto = new ResponseDto();
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
