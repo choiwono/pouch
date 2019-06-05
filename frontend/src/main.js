@@ -1,5 +1,4 @@
-import Es6Promise from 'es6-promise/auto'
-//Es6Promise.polyfill()
+import 'es6-promise/auto'
 import 'babel-polyfill'
 
 import Vue from 'vue'

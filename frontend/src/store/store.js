@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import Notifications from 'vue-notification'
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -15,7 +16,7 @@ export const store = new Vuex.Store({
     url: '',
     paramsId: '',
     auth: '',
-    searchCategory : []
+    searchCategory : [],
   },
   plugins: [createPersistedState()],
   getters: {
