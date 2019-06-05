@@ -25,7 +25,6 @@
             required
           ></v-text-field>
 
-
           <div class="row">
             <v-text-field
               ref="email"
