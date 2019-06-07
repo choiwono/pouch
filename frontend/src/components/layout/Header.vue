@@ -4,11 +4,9 @@
       <b-navbar-brand><router-link to="/home">Pouch</router-link></b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown no-caret right ref="dropdown">
             <b-dropdown-form style="display:flex; min-width:380px;" @submit.prevent="onSubmit">
-
               <b-form-select
                   :value="null"
                   :options="{ '1': '카테고리', '2': '태그' }"
@@ -23,10 +21,8 @@
             </b-dropdown-form>
             <template v-if="$store.getters.getAuth" slot="button-content"><icon name="search"></icon></template>
           </b-nav-item-dropdown>
-
           <b-nav-item v-if="$store.getters.getAuth" href="#"><icon name="envelope"></icon></b-nav-item>
           <b-nav-item v-if="$store.getters.getAuth" @click="showModalLink"><icon name="plus"></icon></b-nav-item>
-
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><icon name="user"></icon></template>
@@ -34,7 +30,6 @@
               <b-dropdown-item v-if="$store.getters.getAuth" @click="logout">로그아웃</b-dropdown-item>
               <router-link v-if="!$store.getters.getAuth" to="/join" tag="b-dropdown-item">회원가입</router-link>
           </b-nav-item-dropdown>
-
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -116,31 +111,21 @@
           this.handleSubmit()
         }
       },
-
-      clearSearch(){
-        this.searchType= null,
-          this.searchStr = ''
-      },
-
       handleSubmit() {
         let data = new FormData();
-        data.append('categoryId',this.$store.state.categoryId)
-        data.append('url',this.$store.state.url)
+        let categoryId = this.$store.state.categoryId;
+        data.append('categoryId',categoryId);
+        data.append('url',this.$store.state.url);
         this.clearName(),
           this.$http.post('/crawling/save',data).
           then((response) => {
-            this.$notify({
-              group:'notify',
-              title:'성공',
-              text:'데이터가 저장되었습니다.',
-              type:'success'
-            });
-
+            this.$notify({ group:'notify', title:'성공', text:'데이터가 저장되었습니다.', type:'success' });
+            //this.$store.commit('getCategoryById',{id:categoryId});
+            this.$store.commit('addLinkList',{id:categoryId,link:response});
           }, (err) => {
             console.log('err', err)
           })
         this.$nextTick(() => {
-          // Wrapped in $nextTick to ensure DOM is rendered before closing
           this.$refs.modal.hide();
         })
       },
@@ -157,8 +142,6 @@
           this.$router.push({name:'search'});
         }, (err) => {
           console.log('err', err)
-        })
-        this.$nextTick(() => {
         })
       },
       showModalLink(){

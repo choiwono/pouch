@@ -60,11 +60,7 @@
         </v-flex>
       </div>
     </div>
-    <b-modal
-      ref="modal"
-      id="category-link"
-      title="카테고리를 추가해주세요"
-      @ok="handleOk" ok-only>
+    <b-modal ref="modal" id="category-link" title="카테고리를 추가해주세요" @ok="handleOk" ok-only>
       <form @submit.stop.prevent="handleSubmit">
         <b-form-input v-model="categoryName" placeholder="카테고리 이름"></b-form-input>
       </form>
@@ -90,17 +86,10 @@ export default {
       if(!this.categoryTitle){
         alert('카테고리 이름을 입력해주세요.');
       } else {
-        console.log(id);
         let data = new FormData();
         data.append('name',this.categoryTitle);
-        this.$http.put("/categories/"+id,data).then((result) => {
-          this.$notify({
-            group:'notify',
-            title:'수정성공',
-            text:'성공했습니다',
-            type:'success',
-            width:'300px'
-          });
+        this.$http.put("/categories/"+id,data).then(() => {
+          this.$notify({ group:'notify', title:'수정성공', text:'성공했습니다', type:'success'});
           this.fetchCategory();
         })
         this.$nextTick(() => {
@@ -112,14 +101,8 @@ export default {
       let val = confirm("삭제하시겠습니까?");
       if(val === true){
         this.$http.delete("/categories/"+id)
-          .then((result) => {
-            this.$notify({
-                group:'notify',
-                title:'삭제성공',
-                text:'성공했습니다',
-                type:'success',
-                width:'300px'
-            });
+          .then(() => {
+            this.$notify({ group:'notify', title:'삭제성공', text:'성공했습니다', type:'success', width:'300px'});
             this.fetchCategory();
           });
       }
@@ -133,7 +116,7 @@ export default {
       }
       this.$refs['title-modal'+id][0].show();
     },
-    googleSearch(e){
+    googleSearch(){
       this.$refs.form.submit()
     },
     handleOk(bvModalEvt){
@@ -149,7 +132,7 @@ export default {
       data.append('name',this.categoryName);
       this.categoryName = '';
       this.$http.post('/categories/',data).
-      then((result) => {
+      then(() => {
         this.$notify({
           group:'notify',
           title:'데이터 저장성공',
@@ -252,9 +235,4 @@ a {
 .remove-icon {
   color:#DC143C;
 }
-.modify-button {
-  height:48px;
-  max-width:100px;
-}
-
 </style>

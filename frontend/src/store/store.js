@@ -28,15 +28,33 @@ export const store = new Vuex.Store({
     },
     getAuth: (state) => {
       return state.auth;
-    }
+    },
+    getCategoryId: (state) => {
+      return state.categoryId;
+    },
+    getLinks: (state,payload) => {
+
+    },
   },
+
   mutations: {
     changeCategories: (state,payload) => {
       return state.categories = payload.arr;
     },
     changeAuth: (state,payload) => {
       return state.auth = payload.value;
-    }
+    },
+    addLinkList: (state,payload) => {
+      state.category.links.push(payload.link);
+    },
+    changeLinkTitle: (state,payload) => {
+      let links = state.category.links;
+      for(let i=0; i<links.length; i++){
+        if(links[i].id === payload.id) {
+          links[i].title = payload.title;
+        }
+      }
+    },
   },
   actions: {
 
