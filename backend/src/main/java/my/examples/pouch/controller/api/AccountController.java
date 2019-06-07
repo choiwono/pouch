@@ -95,13 +95,11 @@ public class AccountController {
         Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
         ResponseDto responseDto = new ResponseDto();
         // 이메일이 중복되지 않는 경우
-        if (emailCheck == null) {
+        if (emailCheck == null){
             accountService.join(joinform);
             responseDto.setMessage("OK, Created");
             return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
-        }
-        // 이메일이 중복되는 경우 (409 : 요청 충돌, CONFLICT)
-        else {
+        } else {
             responseDto.setMessage("Error, duplicated");
             return new ResponseEntity<>(responseDto,HttpStatus.CONFLICT);
         }

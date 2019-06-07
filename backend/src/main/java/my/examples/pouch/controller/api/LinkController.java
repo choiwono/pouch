@@ -24,7 +24,9 @@ public class LinkController {
 
     // 링크 수정하기 TODO
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto> editLink(@PathVariable(value="id") Long id){
+    public ResponseEntity<ResponseDto> editLink(@PathVariable(value="id") Long id,
+                                                @RequestParam String name){
+        linkService.updateLink(id,name);
         ResponseDto responseDto = new ResponseDto();
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -33,6 +35,8 @@ public class LinkController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ResponseDto> deleteLink(@PathVariable(value="id") Long id){
         ResponseDto responseDto = new ResponseDto();
+        linkService.deleteTagMappingByLinkId(id);
+        linkService.deleteLink(id);
         responseDto.setMessage("OK, success");
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

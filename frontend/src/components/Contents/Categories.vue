@@ -8,23 +8,11 @@
             ></icon>
           </b-button>
         </h3>
-        <b-modal
-          id="message"
-          title="친구에게 파우치를 보내시겠습니까?"
-          @ok="sendCategory()"
-          centered>
+        <b-modal id="message" title="친구에게 파우치를 보내시겠습니까?" @ok="sendCategory()" centered>
           선택한 파우치: <strong>{{selectedCategory}}</strong>
-          <v-form
-            ref="form"
-            v-model="valid">
-            <v-text-field
-              ref="email"
-              v-model="email"
-              label="이메일"
-              :rules="emailRules"
-              required
-              @ok="sendCategory()"
-            ></v-text-field>
+          <v-form ref="form" v-model="valid">
+            <v-text-field ref="email" v-model="email" label="이메일" :rules="emailRules"
+                          required @ok="sendCategory()"></v-text-field>
           </v-form>
         </b-modal>
       </div>
@@ -55,9 +43,9 @@
     <hr>
     <div class="container d-flex">
       <ul class="col-sm-12 col-md-2 list-group">
-        <!--<router-link class="list-group-item cursor-pointer" tag="li"
+        <router-link v-if="tags.length == 0" class="list-group-item cursor-pointer" tag="li"
                      :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">전체
-        </router-link>-->
+        </router-link>
         <router-link class="list-group-item cursor-pointer"
                      v-for="item in tags" :key="item.id" tag="li" :to="{ name: 'categoriesByTag', params:{ tagId:item.id }}">
           {{ item.tagName }}
@@ -71,7 +59,7 @@
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
             <div class="card mb-4 shadow-sm links">
               <v-footer>
-                <span v-if="!iconFlag">
+                <span @click="modifyLink(item.id)" v-if="!iconFlag">
                   <icon name="pen" class="m-2 cursor-pointer"></icon>
                 </span>
                 <span @click="showModal(item.id)" v-if="!iconFlag">
@@ -83,7 +71,6 @@
                 <span @click="linkModal(item.id)"  v-if="iconFlag">
                    <icon name="share" class="m-2 cursor-pointer "></icon>
                 </span>
-
               </v-footer>
               <span v-if="item.src.length === 0">
                 <img width="100%" height="120" src="../../../no-image.png"/>
@@ -96,12 +83,16 @@
                   <a target="_blank" :href="item.url" class="link-title">{{ item.title }}</a>
                 <p class="m-2">{{ item.regDate.substr(0,10) }}</p>
               </div>
-              <b-modal
-                :ref="item.id"
-                title="내 파우치에 저장하시겠습니까?"
-                @ok="saveLink(item.id)"
-                ok-only
-                centered>
+              <b-modal :ref="'title-modal'+item.id" id="category-title" hide-footer lazy centered>
+                <div class="d-flex">
+                  <v-form ref="title-form">
+                    <v-text-field class="sm-10" v-model="linkTitle" autofocus solo required></v-text-field>
+                  </v-form>
+                  <b-button @click="titleSubmit(item.id)" class="sm-2 modify-button" pill
+                            variant="info" type="button">수정</b-button>
+                </div>
+              </b-modal>
+              <b-modal :ref="item.id" title="내 파우치에 저장하시겠습니까?" @ok="saveLink(item.id)" ok-only centered>
                 <form @submit.stop.prevent="saveLink()">
                   <p>{{item.title}}</p>
                   <b-form-select id = category variant="light" class="m-sm-2">
@@ -112,20 +103,13 @@
                   </b-form-select>
                 </form>
               </b-modal>
-              <b-modal
-                :ref="'tag'+item.id"
-                title="태그편집"
-                @ok="handleOk(item.id)"
-                ok-only
-                centered>
+              <b-modal :ref="'tag'+item.id" title="태그편집" @ok="handleOk(item.id)" ok-only centered>
                 <form @submit.stop.prevent="handleSubmit()">
                   <ul class="edit-tag-list w-100">
                     <li class="token-input-input-token w-100">
                       <span v-if="linkTags.length > 0">
                         <p v-for="tag in linkTags" class="d-inline-block p-2 border">
-                          <span>
-                            {{ tag.tagName }}
-                            <span type="button" class="close tag-close" @click="removeTagItem($event,tag.id)">x</span>
+                          <span>{{ tag.tagName }}<span type="button" class="close tag-close" @click="removeTagItem($event,tag.id)">x</span>
                           </span>
                         </p>
                       </span>
@@ -154,6 +138,7 @@
     data() {
       return {
         valid: true,
+        linkTitle:'',
         emailRules: [
           v => !!v || 'E-mail is required',
           v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
@@ -167,7 +152,9 @@
         iconFlag: false
       }
     },
-    computed: {},
+    computed: {
+
+    },
     watch: {
       '$route'(to, from) {
         let id = to.params.id;
@@ -190,6 +177,17 @@
             this.linkTags = result;
           })
       },
+      modifyLink(id){
+        let links = this.$store.getters.getCategory.links;
+
+        for(let i=0; i<links.length; i++){
+          if(links[i].id === id) {
+            this.linkTitle = links[i].title;
+            break;
+          }
+        }
+        this.$refs['title-modal'+id][0].show();
+      },
       saveLink(id, categoryId) {
         let data = new FormData();
         data.append('id', id);
@@ -198,7 +196,18 @@
           .then((result) => {
             console.log(result);
           })
-
+      },
+      titleSubmit(id){
+        let data = new FormData();
+        let title = this.linkTitle;
+        data.append('name',title);
+        this.$http.put("/links/"+id,data).then(() => {
+          this.$notify({ group:'notify', title:'수정성공', text:'성공했습니다', type:'success'});
+          this.$store.commit('changeLinkTitle',{id:id,title:title});
+        })
+        this.$nextTick(() => {
+          this.$refs['title-modal'+id][0].hide();
+        })
       },
       shareModal() {
         this.$refs['share'].show()
@@ -211,21 +220,11 @@
         data.append('email', email);
 
         this.$http.post('/accounts/emailcheck', data).then(() => {
-          this.$notify({
-            group:'notify',
-            title:'실패',
-            text:'이메일에 해당하는 계정이 없습니다.',
-            type:'fail'
-          });
+          this.$notify({ group:'notify', title:'실패', text:'이메일에 해당하는 계정이 없습니다.', type:'fail' });
           this.email='';
-        }).catch((error)=>{
+        }).catch(()=>{
           this.$http.post('/categories/send', data)
-          this.$notify({
-            group:'notify',
-            title:'성공',
-            text:'메세지가 전송되었습니다.',
-            type:'success'
-          });
+          this.$notify({ group:'notify', title:'성공', text:'메세지가 전송되었습니다.', type:'success' });
           this.email='';
         })
       },
@@ -262,8 +261,8 @@
             this.tags = result;
           })
       },
-      fetchCategory() {
-        if (this.$store.getters.getCategories.length === 0) {
+      fetchCategory(){
+        if(this.$store.getters.getCategories.length === 0) {
           const email = JSON.parse(localStorage.getItem('pouch_user'));
           if (email != null) {
             this.$http.get('/categories/?email=' + email)
@@ -279,7 +278,7 @@
         let id = this.$router.history.current.params.id;
         let tagId = this.$router.history.current.params.tagId;
 
-        this.$http.get('/links/?category-id=' + id + '&tag-id=' + tagId)
+        this.$http.get('/links/?category-id='+id+'&tag-id='+tagId)
           .then((result) => {
             console.log(result);
             this.links = result;
@@ -334,9 +333,10 @@
       removeLink(id) {
         let val = confirm("정말 삭제하시겠습니까?");
         if (val === true) {
-          console.log(id + " : 동의");
-        } else {
-          console.log(id + " : 거부");
+          this.$http.delete("/links/"+id).then(() => {
+            this.$notify({ group:'notify', title:'성공', text:'삭제 되었습니다', type:'success' });
+          });
+          this.fetchData();
         }
       }
     },

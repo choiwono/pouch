@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
         account.setNickName(joinform.getNickname());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         account.setPasswd(passwordEncoder.encode(joinform.getPasswd()));
-        Role role = roleRepository.getRoleByName("user");
+        Role role = roleRepository.getRoleByName("USER");
         account.addRole(role);
         return accountRepository.save(account);
     }

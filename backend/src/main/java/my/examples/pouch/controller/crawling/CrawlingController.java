@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import my.examples.pouch.domain.Account;
 import my.examples.pouch.domain.Category;
 import my.examples.pouch.domain.Link;
+import my.examples.pouch.dto.ResponseDto;
 import my.examples.pouch.repository.LinkRepository;
 import my.examples.pouch.service.CategoryService;
 import my.examples.pouch.service.AccountService;
@@ -30,8 +31,8 @@ public class CrawlingController {
     private final CategoryService categoryService;
 
     @PostMapping("/save")
-    public ResponseEntity crawling(@RequestParam(required = true) String url,
-                                   @RequestParam(required = true) Long categoryId,
+    public ResponseEntity crawling(@RequestParam String url,
+                                   @RequestParam Long categoryId,
                                    Principal principal) throws Exception {
 
         String[] schemes = {"http","https"};
@@ -82,6 +83,6 @@ public class CrawlingController {
         link.setAccount(account);
         linkRepository.save(link);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(link,HttpStatus.CREATED);
     }
 }
