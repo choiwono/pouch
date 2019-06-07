@@ -35,5 +35,8 @@ html, body {
 .main-view {
   min-height: calc(100vh - 100px);
 }
-
+.modify-button {
+  height:48px;
+  max-width:100px;
+}
 </style>

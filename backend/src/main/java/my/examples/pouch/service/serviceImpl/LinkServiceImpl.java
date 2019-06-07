@@ -33,12 +33,12 @@ public class LinkServiceImpl implements LinkService {
         return list;
     }
 
-    @Override
+    /*@Override
     @Transactional(readOnly = true)
     public List<CustomLink> getSearchPouchByCategory(Long categoryId) {
         List<Link> list = linkRepository.getSearchPouchByCategory(categoryId);
         return getCustomLinks(list);
-    }
+    }*/
 
     @Override
     public List<CustomLink> getCustomLinks(List<Link> links) {
@@ -62,6 +62,12 @@ public class LinkServiceImpl implements LinkService {
     public void share(Link link, Account account, Long categoryId) {
         linkRepository.share(link.getTitle(), link.getUrl(),
                 account.getEmail(), account.getId(), categoryId);
+    }
+
+    @Override
+    @Transactional
+    public int updateLink(Long id, String name) {
+        return linkRepository.updateLink(id,name);
     }
 
     @Override

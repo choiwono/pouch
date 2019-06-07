@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface LinkService {
-    public Link getLinkById(Long id);
-    public List<CustomLink> getLinkByTagName(Long categoryId, String tagName);
-    public List<CustomLink> getSearchPouchByCategory(Long categoryId);
-    public List<CustomLink> getCustomLinks(List<Link> links);
-    public void share(Link link, Account account, Long categoryId);
-    public void deleteTagMappingByLinkId(Long id);
-    public void deleteLink(Long id);
+    Link getLinkById(Long id);
+    List<CustomLink> getLinkByTagName(Long categoryId, String tagName);
+    //List<CustomLink> getSearchPouchByCategory(Long categoryId);
+    List<CustomLink> getCustomLinks(List<Link> links);
+    void share(Link link, Account account, Long categoryId);
+    void deleteTagMappingByLinkId(Long id);
+    void deleteLink(Long id);
+    int updateLink(Long id, String name);
 }
