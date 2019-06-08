@@ -39,4 +39,8 @@ html, body {
   height:48px;
   max-width:100px;
 }
+a {
+  overflow:hidden;
+  word-break:break-all;
+}
 </style>
