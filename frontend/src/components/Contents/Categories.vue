@@ -41,20 +41,22 @@
       </b-dropdown>
     </div>
     <hr>
+    <div class="container">
+      <router-link class="cursor-pointer post-tag"
+                   v-for="item in tags" :key="item.id" tag="a" :to="{ name: 'categoriesByTag', params:{ tagId:item.id }}">
+        {{ item.tagName }}
+        <!--<v-badge class="v-badge badge" right color="teal accent-4">
+          <span slot="badge">{{ item.cnt }}</span>
+        </v-badge>-->
+      </router-link>
+    </div>
     <div class="container d-flex">
-      <ul class="col-sm-12 col-md-2 list-group">
+      <!--<ul class="col-sm-12 col-md-2 list-group">
         <router-link v-if="tags.length == 0" class="list-group-item cursor-pointer" tag="li"
                      :to="{ name: 'categories',params:{ id:$store.state.paramsId }}">전체
         </router-link>
-        <router-link class="list-group-item cursor-pointer"
-                     v-for="item in tags" :key="item.id" tag="li" :to="{ name: 'categoriesByTag', params:{ tagId:item.id }}">
-          {{ item.tagName }}
-          <v-badge class="v-badge badge" right color="teal accent-4">
-            <span slot="badge">{{ item.cnt }}</span>
-          </v-badge>
-        </router-link>
-      </ul>
-      <div class="col-md-10">
+      </ul>-->
+      <div class="col-md-12">
         <div class="row" id="card-row">
           <div v-for="item in links" :key="item.id" class="col-md-4 mb-4 card-list">
             <div class="card mb-4 shadow-sm links">
@@ -444,5 +446,28 @@
     line-height: 0.6;
     padding: 1.5px;
     margin-left: 2px;
+  }
+
+  .post-tag {
+    display:inline-block;
+    background: #dee2e6;
+    padding: 0.75rem 1rem 0.75rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 10px;
+    text-decoration:none;
+    color: #505050;
+    font-family: "PT Sans",Helvetica,Arial,sans-serif;
+    font-size: 90%;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  .post-tag:hover {
+    background-color:#00bfa5;
+    color:white;
+  }
+  .router-link-active {
+    background: #00bfa5;
+    color:white;
   }
 </style>
