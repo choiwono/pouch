@@ -7,7 +7,7 @@
 
 ## 실행 방법
 ```
-git clone https://github.com/jaehee0145/currency-converter.git
+git clone https://github.com/choiwono/pouch.git
 
 cd pouch/backend
 
