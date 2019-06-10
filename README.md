@@ -1,5 +1,5 @@
 
-#### [POUCH 바로가기](http://15.164.26.183:3000)
+### [POUCH 바로가기](http://15.164.26.183:3000)
 
 테스트 아이디
 * id : jaehee0145@gmail.com
@@ -14,8 +14,9 @@ cd pouch/backend
 mvn clean install
 
 java -jar target/pouch-0.0.1-SNAPSHOT.jar
+
+localhost:3000 으로 접속
 ```
-* localhost:3000 으로 접속
 
 개발: :smiley: [최원오](https://github.com/choiwono) :heart_eyes: [박재희](https://github.com/jaehee0145)
 
