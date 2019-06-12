@@ -5,6 +5,8 @@ import Home from "@/components/Home";
 import Join from '@/components/Account/Join'
 import FindPswd from '@/components/Account/FindPswd'
 import Search from '@/components/Contents/Search'
+import Messages from '@/components/Contents/Messages'
+
 import Categories from "../components/Contents/Categories";
 import axios from 'axios';
 
@@ -59,7 +61,13 @@ const router = new Router({
           component: Categories
         }
       ]
-    }
+    },
+    {
+      path: '/messages/',
+      name: 'messages',
+      component: Messages,
+      meta: { requiresAuth: true }
+    },
   ]
 });
 
@@ -89,6 +97,13 @@ router.beforeEach((to,from,next) => {
   } else {
     next();
   }
+
+  // axios.get("/accounts/messages").then((result)=>{
+  //   if(result>0){
+  //     this.$store.messageFlag=true;
+  //   }
+  // })
+
 });
 
 export default router

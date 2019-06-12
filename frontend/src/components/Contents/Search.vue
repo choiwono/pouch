@@ -20,7 +20,7 @@
           <router-link :to="{ name: 'categories',params:{ id:category.id }}">
           <v-card class="card-title">
               <v-card-text class="vertical-center">
-                <h3 class="mx-auto d-block">'{{ category.nickName }}' 의 {{ category.name }}</h3>
+                <h5 class="mx-auto d-block">'{{ category.nickName }}' 의 {{ category.name }}</h5>
               </v-card-text>
           </v-card>
           </router-link>

@@ -25,6 +25,7 @@ public class AccountController {
     private final AccountService accountService;
     private final EmailService emailService;
 
+
     // 계정 토큰 발급
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @PostMapping(value = "/auth")
@@ -83,7 +84,6 @@ public class AccountController {
             return new ResponseEntity<>(responseDto, HttpStatus.CONFLICT);
         }
     }
-
 
     //회원가입
     @PostMapping(value = "/join")

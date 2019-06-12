@@ -16,4 +16,9 @@ public class MessageServiceImpl implements MessageService {
     public Message save(Message message) {
        return messageRepository.save(message);
     }
+
+    @Override
+    public long countNewMessage(String name) {
+        return messageRepository.count();
+    }
 }
