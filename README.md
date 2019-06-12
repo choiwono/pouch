@@ -18,6 +18,17 @@ java -jar target/pouch-0.0.1-SNAPSHOT.jar
 localhost:3000 으로 접속
 ```
 
+## 크롬 익스텐션 사용하기
+
+### [확장도구 추가](https://chrome.google.com/webstore/detail/save-to-pouch/cfohoadkcbnieeiifnkdblhefgeopfac/related?utm_source=chrome-ntp-icon)
+
+```
+
+로그인이 필요합니다. 카테고리를 추가하거나, 확장도구에서 추가하신뒤에 카테고리를 선택하고 
+저장버튼을 누르면 현재 URL에 해당하는 링크가 저장이 됩니다.
+
+```
+
 개발: :smiley: [최원오](https://github.com/choiwono) :heart_eyes: [박재희](https://github.com/jaehee0145)
 
 ![슬라이드1](./img/슬라이드1.PNG)
