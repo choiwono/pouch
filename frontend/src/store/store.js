@@ -17,6 +17,8 @@ export const store = new Vuex.Store({
     paramsId: '',
     auth: '',
     searchCategory : [],
+    //TODO messageFlag
+    // messageFlag: true
   },
   plugins: [createPersistedState()],
   getters: {
