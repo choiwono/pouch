@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -24,7 +25,7 @@ import javax.validation.Valid;
 public class AccountController {
     private final AccountService accountService;
     private final EmailService emailService;
-
+    //private final ResponseDto responseDto;
 
     // 계정 토큰 발급
     @Secured({"ROLE_USER","ROLE_ADMIN"})
@@ -73,16 +74,15 @@ public class AccountController {
 
     //이메일 중복 확인하기
     @PostMapping(value = "/emailcheck")
-    public ResponseEntity<ResponseDto> emailCheck(String email, Model model) {
+    public ResponseEntity<ResponseDto> emailCheck(String email) {
         ResponseDto responseDto = new ResponseDto();
-        Account emailCheck = accountService.findAccountByEmail(email);
-        if (emailCheck == null) {
+        Optional<Account> account = Optional.ofNullable(accountService.findAccountByEmail(email));
+        if (!account.isPresent()) {
             responseDto.setMessage("success");
             return new ResponseEntity<>(responseDto, HttpStatus.IM_USED);
-        } else {
-            responseDto.setMessage("duplicate");
-            return new ResponseEntity<>(responseDto, HttpStatus.CONFLICT);
         }
+        responseDto.setMessage("duplicate");
+        return new ResponseEntity<>(responseDto, HttpStatus.CONFLICT);
     }
 
     //회원가입
@@ -92,16 +92,15 @@ public class AccountController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Account emailCheck = accountService.findAccountByEmail(joinform.getEmail());
+        Account email = accountService.findAccountByEmail(joinform.getEmail());
         ResponseDto responseDto = new ResponseDto();
         // 이메일이 중복되지 않는 경우
-        if (emailCheck == null){
+        if(!Optional.ofNullable(email).isPresent()){
             accountService.join(joinform);
             responseDto.setMessage("OK, Created");
             return new ResponseEntity<>(responseDto,HttpStatus.CREATED);
-        } else {
-            responseDto.setMessage("Error, duplicated");
-            return new ResponseEntity<>(responseDto,HttpStatus.CONFLICT);
         }
+        responseDto.setMessage("Error, duplicated");
+        return new ResponseEntity<>(responseDto,HttpStatus.CONFLICT);
     }
 }
