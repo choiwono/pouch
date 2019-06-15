@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
-    private final EmailService emailService;
+    //private final EmailService emailService;
     //private final ResponseDto responseDto;
 
     // 계정 토큰 발급
@@ -61,15 +61,15 @@ public class AccountController {
         Account account = accountService.findAccountByEmail(email);
         ResponseDto responseDto = new ResponseDto();
         // 요청한 이메일 계정이 있는 경우
-        if (account != null) {
+        /*if (account != null) {
             emailService.sendEmail(account, accountService.updateUserPassword(account));
             responseDto.setMessage("success");
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         // 요청한 이메일 계정이 없는 경우
-        } else {
+        } else {*/
             responseDto.setMessage("fail");
             return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
-        }
+        //}
     }
 
     //이메일 중복 확인하기

@@ -35,19 +35,17 @@ public class LoggingAspect {
                 .collect(Collectors.joining(", "));
     }
 
-    @Pointcut("within(my.examples.pouch.controller.api..*)") // 3
+    @Pointcut("within(my.examples.pouch.controller.api..*)")
     public void onRequest() {}
 
-    //api메서드들이 실행이 되고 나서 무슨 요청이 들어왔는지 log를 보여준다.
-    @After("execution(* my.examples.pouch.controller.api.*.*(..))") // 4
+    @After("execution(* my.examples.pouch.controller.api.*.*(..))")
     public Object doLogging(JoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = // 5
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
-        //파라미터로 받은 값들을 map에 저장
         Map<String, String[]> paramMap = request.getParameterMap();
         String params = "";
-        //파라미터가 비어있지 않다면
+
         if (paramMap.isEmpty() == false) {
             params = " [" + paramMapToString(paramMap) + "]";
         }
