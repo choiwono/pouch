@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    private final JavaMailSender emailSender;
+    //private final JavaMailSender emailSender;
 
-    @Override
+    /*@Override
     public void sendEmail(Account account, String password) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -22,5 +22,5 @@ public class EmailServiceImpl implements EmailService {
 
         message.setText(password);
         emailSender.send(message);
-    }
+    }*/
 }
