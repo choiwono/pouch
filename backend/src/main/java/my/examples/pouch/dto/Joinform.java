@@ -1,5 +1,6 @@
 package my.examples.pouch.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.*;
 
 @Getter
 @Setter
+@Builder
 public class Joinform {
     @NotEmpty(message="이름을 입력해주세요")
     @Size(min=2, max=10)
