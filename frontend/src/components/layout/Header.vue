@@ -176,8 +176,9 @@
     //TODO 화면이 전환될때 메서드를 실행시켜서 새 메세지를 확인하고 싶은데
     // 지금은 홈 화면으로 돌아가야만 실행되는듯 하다
     mounted() {
-      this.$http.get("/messages").then((result)=>{
-            this.$store.messageFlag=true;})
+      this.$http.get("/messages/new").then((result)=>{
+        if(result>0){
+            this.$store.messageFlag=true;}})
 
     }
   }
