@@ -311,6 +311,7 @@
       handleOk(id) {
         this.handleSubmit(id);
       },
+      
       handleSubmit(id) {
         let arr = new Array();
         let tags = this.linkTags;
