@@ -161,7 +161,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>1.6</version>
@@ -180,7 +180,7 @@
 							<npmVersion>6.4.1</npmVersion>
 						</configuration>
 					</execution>
-					<execution>
+					&lt;!&ndash;<execution>
 						<id>npm install</id>
 						<goals>
 							<goal>npm</goal>
@@ -188,8 +188,8 @@
 						<configuration>
 							<arguments>install</arguments>
 						</configuration>
-					</execution>
-					<execution>
+					</execution>&ndash;&gt;
+					&lt;!&ndash;<execution>
 						<id>npm run build</id>
 						<goals>
 							<goal>npm</goal>
@@ -197,9 +197,9 @@
 						<configuration>
 							<arguments>run build</arguments>
 						</configuration>
-					</execution>
+					</execution>&ndash;&gt;
 				</executions>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 
